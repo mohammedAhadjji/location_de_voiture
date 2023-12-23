@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"><meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        
+                    		    <title>CarPoint - Multi Vendor Car Listing Directory</title>
+		    <meta name="description" content="">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        
+
+		<link rel="icon" type="image/png" href="{{ asset('uploads/attachments/' ~sittig.faviconImg ) }}">
+
+		<!-- All CSS -->
+<link rel="stylesheet" href="https://demo.phpscriptpoint.com/carpoint/frontend/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://demo.phpscriptpoint.com/carpoint/frontend/css/jquery-ui.css">
+<link rel="stylesheet" href="https://demo.phpscriptpoint.com/carpoint/frontend/css/animate.min.css">
+<link rel="stylesheet" href="https://demo.phpscriptpoint.com/carpoint/frontend/css/magnific-popup.css">
+<link rel="stylesheet" href="https://demo.phpscriptpoint.com/carpoint/frontend/css/owl.carousel.min.css">
+<link rel="stylesheet" href="https://demo.phpscriptpoint.com/carpoint/frontend/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="https://demo.phpscriptpoint.com/carpoint/frontend/css/select2.min.css">
+<link rel="stylesheet" href="https://demo.phpscriptpoint.com/carpoint/frontend/css/select2-bootstrap.min.css">
+<link rel="stylesheet" href="https://demo.phpscriptpoint.com/carpoint/frontend/css/meanmenu.css">
+<link rel="stylesheet" href="https://demo.phpscriptpoint.com/carpoint/frontend/css/spacing.css">
+<link rel="stylesheet" href="https://demo.phpscriptpoint.com/carpoint/frontend/css/jquery.timepicker.css">
+<link rel="stylesheet" href="https://demo.phpscriptpoint.com/carpoint/frontend/css/toastr.min.css">
+<link rel="stylesheet" href="https://demo.phpscriptpoint.com/carpoint/frontend/css/sweetalert2.min.css">
+<link rel="stylesheet" href="https://demo.phpscriptpoint.com/carpoint/frontend/fontawesome-free/css/all.min.css">
+<link rel="stylesheet" href="https://demo.phpscriptpoint.com/carpoint/frontend/css/style.css">
+
+		<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<!--bootstrap5
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+		--><!-- All Javascripts -->
+<script src="https://demo.phpscriptpoint.com/carpoint/frontend/js/jquery-3.6.0.min.js"></script>
+<script src="https://demo.phpscriptpoint.com/carpoint/frontend/js/bootstrap.min.js"></script>
+<script src="https://demo.phpscriptpoint.com/carpoint/frontend/js/jquery-ui.js"></script>
+<script src="https://demo.phpscriptpoint.com/carpoint/frontend/js/jquery.magnific-popup.min.js"></script>
+<script src="https://demo.phpscriptpoint.com/carpoint/frontend/js/owl.carousel.min.js"></script>
+<script src="https://demo.phpscriptpoint.com/carpoint/frontend/js/wow.min.js"></script>
+<script src="https://demo.phpscriptpoint.com/carpoint/frontend/js/jquery.meanmenu.js"></script>
+<script src="https://demo.phpscriptpoint.com/carpoint/frontend/js/jquery.dataTables.min.js"></script>
+<script src="https://demo.phpscriptpoint.com/carpoint/frontend/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://demo.phpscriptpoint.com/carpoint/frontend/js/select2.full.js"></script>
+<script src="https://demo.phpscriptpoint.com/carpoint/frontend/js/jquery.timepicker.js"></script>
+<script src="https://demo.phpscriptpoint.com/carpoint/frontend/js/fontawesome-iconpicker.js"></script>
+<script src="https://demo.phpscriptpoint.com/carpoint/frontend/js/toastr.min.js"></script>
+<script src="https://demo.phpscriptpoint.com/carpoint/frontend/js/sweetalert2.min.js"></script>
+<script src="https://demo.phpscriptpoint.com/carpoint/frontend/js/sticky_sidebar.js"></script>
+<script src="https://demo.phpscriptpoint.com/carpoint/tinymce/tinymce.min.js"></script>
+<script src='https://www.google.com/recaptcha/api.js'></script>
+				</style>
+
+                    <script src="https://cdn.websitepolicies.io/lib/cookieconsent/1.0.3/cookieconsent.min.js" defer></script><script>window.addEventListener("load",function(){window.wpcc.init({"colors":{"popup":{"background":"#50BF20","text":"#F8FFED","border":"#b3d0e4"},"button":{"background":"#FFFFFF","text":"#000000"}},"position":"bottom","padding":"large","margin":"none","content":{"message":"This website uses cookies to ensure you get the best experience on our website.","button":"ACCEPT"}})});</script>
+        <!--fullcalendra-->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.css" integrity="sha256-uq9PNlMzB+1h01Ij9cx7zeE2OR2pLAfRw3uUUOOPKdA=" crossorigin="anonymous">
+       
+        <!--end fullcalendra-->
+       
+
+        <style>
+            .mobile-nav.mean-container .mean-nav ul li a.active,
+            .main-nav nav .navbar-nav .nav-item a:hover,
+            .main-nav nav .navbar-nav .nav-item a:focus,
+            .main-nav nav .navbar-nav .nav-item a.active,
+            .main-nav nav .navbar-nav .nav-item:hover a,
+            .main-nav nav .navbar-nav .nav-item .dropdown-menu li a:hover,
+            .main-nav nav .navbar-nav .nav-item .dropdown-menu li a:focus,
+            .main-nav nav .navbar-nav .nav-item .dropdown-menu li a.active,
+            .main-nav nav .navbar-nav .nav-item .dropdown-menu li .dropdown-menu li a:hover,
+            .main-nav nav .navbar-nav .nav-item .dropdown-menu li .dropdown-menu li a:focus,
+            .main-nav nav .navbar-nav .nav-item .dropdown-menu li .dropdown-menu li a.active,
+            .main-nav nav .navbar-nav .nav-item .dropdown-menu li:hover a,
+            .main-nav nav .navbar-nav .nav-item .dropdown-menu li a:hover,
+            .listing .listing-item .text .location,
+            .listing .listing-item .text h3 a:hover,
+            .footer-item h2,
+            .footer-item ul li a:hover,
+            .listing-filter .lf-heading,
+            .listing .listing-item .text .location a,
+            .listing-single-banner .listing-items a,
+            .listing-page h2 i,
+            .listing-page .amenities li i,
+            .listing-page .contact a,
+            .listing-page .review-overall .total,
+            .listing-sidebar .ls-widget .agent-contact li,
+            .listing-sidebar .ls-widget .agent-contact li a,
+            .listing-sidebar .ls-widget .category ul li a,
+            .faq h4.panel-title a,
+            .sidebar .widget .type-1 ul li:before,
+            .sidebar .widget .type-1 ul li a:hover,
+            .contact-icon i,
+            .reg-login-form .new-user a,
+            .reg-login-form .link,
+            .listing-page .room-all .item .price,
+            .popular-city .popular-city-item:hover h4 {
+                /*color: #F6552C;*/
+                color: {{ sittig.ThemeColor }};
+            }
+
+            .main-nav nav .navbar-nav .nav-item .dropdown-menu li a:hover,
+            .mean-container a.meanmenu-reveal,
+            .footer-social-link ul li a:hover {
+                color: {{ sittig.ThemeColor }}!important;
+            }
+
+            .search-section .input-group-append button,
+            .listing .listing-item .photo .brand a,
+            .popular-city-carousel .owl-nav .owl-prev,
+            .popular-city-carousel .owl-nav .owl-next,
+            .footer-social-link ul li a,
+            .scroll-top,
+            .page-banner,
+            .filter-button,
+            .listing-sidebar .ls-widget .agent-social ul li a,
+            .listing-sidebar .ls-widget a.agent-view-profile,
+            .pricing .btn,
+            .contact-form .btn,
+            .reg-login-form button,
+            .listing .owl-nav .owl-prev, 
+            .listing .owl-nav .owl-next,
+            .listing-single-banner .social a:hover,
+            .top,
+            .agent-banner .social a:hover,
+            .mean-container a.meanmenu-reveal span,
+            .comment button {
+                background: {{ sittig.ThemeColor }};
+            }
+
+           
+            .footer-social-link ul li a,
+            .contact-form .btn {
+                border-color: {{ sittig.ThemeColor }};
+            }
+
+            .listing-filter .lf-heading {
+                border-bottom-color: {{ sittig.ThemeColor }};
+                
+            }
+        </style>
+        
+        <!--link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>"-->
+        <link rel="icon" type="image/png" href="{{ asset('uploads/attachments/' ~sittig.faviconImg ) }}">
+        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        {% block stylesheets %}
+            <!--bootstrap5
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+		-->
+            {{ encore_entry_link_tags('app') }}
+            
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+    </head>
+    <body>
+        <div id="mySidepanel" class="sidepanel">
+			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+			<a href="#">About</a>
+			<a href="#">Services</a>
+			<a href="#">Clients</a>
+			<a href="#">Contact</a>
+		</div>
+
+        <div class="top" >
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-5 col-sm-12">
+                        <ul class="top-left">                            
+                                                        <li><i class="fas fa-phone-alt"></i> {{ sittig.footerPhone }}</li>
+                                                                                    <li><i class="fas fa-envelope"></i> {{ sittig.footerMail }}</li>
+                                                    </ul>
+                    </div>
+                    <div class="col-lg-6 col-md-7 col-sm-12">
+                                                <ul class="top-right">
+                            <li>
+                                <form action="https://demo.phpscriptpoint.com/carpoint/currency" method="post">
+                                    <input type="hidden" name="_token" value="Tri81Fu1Um1WNFSHwhyQlkgTdQ8H6KhsD2zfgfvr">                                    <select name="currency_name" class="nav-link" onchange="this.form.submit()">
+                                                                                    <option value="USD"  selected >USD</option>
+                                                                                    <option value="INR" >INR</option>
+                                                                                    <option value="BDT" >BDT</option>
+                                                                                    <option value="NGN" >NGN</option>
+                                                                            </select>
+                                </form>
+                            </li>
+                            <li>
+                                                                <a href="{{ path('app_login') }}" class="nav-link"><i class="fas fa-sign-in-alt"></i> Login or Register</a>
+                                                            </li>
+                            <li class="currency">
+                                <a href="#" class="nav-link"><i class="fas fa-plus"></i> Add Listing</a>
+                            </li>                            
+                        </ul>
+                                            </div>
+                </div>
+            </div>
+        </div>
+
+		<!-- Start Navbar Area -->
+<div class="navbar-area" id="stickymenu">
+
+	<!-- Menu For Mobile Device -->
+	<div class="mobile-nav">
+		<a href="{{ path('app_home') }}" class="logo">
+			<img src="{{ asset('uploads/attachments/' ~sittig.logoImg ) }}" alt="">
+		</a>
+	</div>
+
+	<!-- Menu For Desktop Device -->
+	<div class="main-nav">
+		<div class="container">
+			<nav class="navbar navbar-expand-md navbar-light">
+				<a class="navbar-brand" href="{{ path('app_home') }}">
+                    
+					<img src="{{ asset('uploads/attachments/' ~sittig.logoImg ) }}" alt="">
+				</a>
+				<div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
+					<ul class="navbar-nav ml-auto">
+
+						<li class="nav-item">
+							<a href="{{ path('app_home') }}" class="nav-link">Home</a>
+						</li>
+
+                        						<li class="nav-item">
+							<a href="/liste/annonces" class="nav-link">Listings</a>
+						</li>
+                        
+                        						<li class="nav-item">
+							<!--a href="#" class="nav-link">Pricing</!--a-->
+						</li>
+                        
+												<li class="nav-item">
+							<!--a href="#" class="nav-link">FAQ</!--a-->
+						</li>
+						
+                        						<li class="nav-item">
+							<a href="javascript:void;" class="nav-link dropdown-toggle">Pages</a>
+							<ul class="dropdown-menu">
+
+                                								<li class="nav-item">
+									<a href="/locations" class="nav-link">Location</a>
+								</li>
+                                
+                                								<li class="nav-item">
+									<a href="/brands" class="nav-link">Brand</a>
+								</li>
+                                
+                                							</ul>
+						</li>
+                        
+												<li class="nav-item">
+							<a href="/liste/blogs" class="nav-link">Blog</a>
+						</li>
+						
+                        						<li class="nav-item">
+							<a href="#" class="nav-link">Contact</a>
+						</li>
+                        
+					</ul>
+				</div>
+			</nav>
+		</div>
+	</div>
+</div>
+<!-- End Navbar Area -->
+
+        {% block body %}{% endblock %}
+
+		<div class="footer-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="footer-item footer-service">
+                            <h2>Categories</h2>
+                            <ul class="fmain">
+                                                                                                                                            <li>
+                                        <a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/bmw">BMW</a>
+                                    </li>
+                                                                                                                    <li>
+                                        <a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/jaguar">Jaguar</a>
+                                    </li>
+                                                                                                                    <li>
+                                        <a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/lamborghini">Lamborghini</a>
+                                    </li>
+                                                                                                                    <li>
+                                        <a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/mazda">Mazda</a>
+                                    </li>
+                                                                                                                    <li>
+                                        <a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/nissan">Nissan</a>
+                                    </li>
+                                                    </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="footer-item footer-service">
+                            <h2>Locations</h2>
+                            <ul class="fmain">
+                                                                                                                                            <li><a href="https://demo.phpscriptpoint.com/carpoint/listing/location/boston">Boston</a></li>
+                                                                                                                    <li><a href="https://demo.phpscriptpoint.com/carpoint/listing/location/chicago">Chicago</a></li>
+                                                                                                                    <li><a href="https://demo.phpscriptpoint.com/carpoint/listing/location/colorado">Colorado</a></li>
+                                                                                                                    <li><a href="https://demo.phpscriptpoint.com/carpoint/listing/location/los-angeles">Los Angeles</a></li>
+                                                                                                                    <li><a href="https://demo.phpscriptpoint.com/carpoint/listing/location/newyork">NewYork</a></li>
+                                                    </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="footer-item footer-service">
+                            <h2>Footer Menu</h2>
+                            <ul class="fmain">
+                                <li><a href="/">Home</a></li>
+        
+                                                        <li><a href="https://demo.phpscriptpoint.com/carpoint/about">About</a></li>
+                                
+                                                        <li><a href="https://demo.phpscriptpoint.com/carpoint/privacy-policy">Privacy Policy</a></li>
+                                
+                                                        <li><a href="https://demo.phpscriptpoint.com/carpoint/terms-and-conditions">Terms and Conditions</a></li>
+                                
+                                                        <li><a href="https://demo.phpscriptpoint.com/carpoint/blog">Blog</a></li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="footer-item footer-contact">
+                            <h2>Contact</h2>
+                            <ul>
+                                <li>
+                                    <p>ABC Steet, NewYork.</p>
+                                </li>
+                                <li>
+                                    <p>contact@yourwebsite.com</p>
+                                </li>
+                                <li>
+                                    <p>123-456-7878</p>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="footer-item footer-service">
+                            <div class="footer-social-link">
+                                <ul>
+                                                                    <li><a href="https://www.facebook.com/" style="background-color: {{ sittig.ThemeColor }};" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+                                                                    <li><a href="https://www.twitter.com" style="background-color: {{ sittig.ThemeColor }};" target="_blank"><i class="fab fa-twitter"></i></a></li>
+                                                                    <li><a href="https://www.linkedin.com" style="background-color: {{ sittig.ThemeColor }};"  target="_blank"><i class="fab fa-linkedin-in"></i></a></li>
+                                                                    <li><a href="https://www.pinterest.com" style="background-color: {{ sittig.ThemeColor }};" target="_blank"><i class="fab fa-pinterest-p"></i></a></li>
+                                                            </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="copyright">
+                            <p>Copyright 2022. medtech. All Rights Reserved.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+                  <div class="scroll-top">
+                      <i class="fas fa-long-arrow-alt-up"></i>
+                </div>
+                 <!--fullcalendra-->
+                
+        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.js" integrity="sha256-DBxkGZLxKsLKhz054qUpBqtotG00r9AELGpSigJujLg=" crossorigin="anonymous"></script>
+        <!--end fullcalendra-->
+        <!--bootstrap js-->
+        
+                <script src="https://demo.phpscriptpoint.com/carpoint/frontend/js/custom.js"></script>
+            <script src="https://demo.phpscriptpoint.com/carpoint/frontend/js/ltr.js"></script>
+        
+        
+        
+    </body>
+</html>
