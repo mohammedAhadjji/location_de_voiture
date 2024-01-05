@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Log in!
+{% endblock %}
+
+{% block body %}
+    <div class="page-banner" style="background-image: url('https://demo.phpscriptpoint.com/carpoint/uploads/page_banners/02904c59043470e451f0cbf6e0b891d3.jpg')">
+        <div class="page-banner-bg"></div>
+        <h1>
+            Login
+        </h1>
+        <nav>
+            <ol class="breadcrumb justify-content-center">
+                <li class="breadcrumb-item">
+                    <a href="{{ path('app_home') }}">
+                        Home
+                    </a>
+                </li>
+                <li class="breadcrumb-item active">
+                    Login
+                </li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="container" style="min-height: 600px;margin:auto">
+        <div style"margin-top: 20px;">
+            <form method="post" style="height:50%; margin:15%">
+
+                <div class="cader" style="width: 80%;margin:auto">
+
+                    <h1 class="h3 mb-3 font-weight-normal">
+                        Please sign in
+                    </h1>
+                    {% if error %}
+                        <div class="alert alert-danger">
+                            {{ error.messageKey|trans(error.messageData, 'security') }}
+                        </div>
+                    {% endif %}
+                    {% if app.user %}
+                        <div class="mb-3">
+                            <h6>
+                                You are logged in as 
+                                {{ app.user.userIdentifier }}
+                                , 
+                                <a href="{{ path('app_logout') }}">
+                                    Logout
+                                </a>
+                            </h6>
+                        </div>
+                    {% endif %}
+                    <label for="inputEmail">
+                        Email
+                    </label>
+                    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+                        <label for="inputPassword">
+                            Password
+                        </label>
+                        <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                                <div style="margin: 10px 0">
+                                    <button class="btn btn-lg btn-primary" type="submit" >
+                                        Sign in
+                                            
+                                    </button>
+                                    <a href="{{ path('app_forgot_password_request') }}">
+                                        Mot de passe oublié?
+                                    </a>
+                                </div>
+                                <!-- Simple link -->
+
+                                <br>
+                                    <div class="new-user">
+                                        New User? 
+                                        <a href="/register" class="link">
+                                            Register Now
+                                        </a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                {% endblock %}
+               
+                

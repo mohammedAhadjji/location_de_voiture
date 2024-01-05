@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New SittingGenerale{% endblock %}
+
+{% block body %}
+    <h1>Create new SittingGenerale</h1>
+
+    {{ include('sitting_generale/_form.html.twig') }}
+
+    <a href="{{ path('app_sitting_generale_index') }}">back to list</a>
+{% endblock %}

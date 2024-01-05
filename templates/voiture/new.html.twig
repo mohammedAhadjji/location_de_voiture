@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Voiture{% endblock %}
+
+{% block body %}
+    <div class="container" style="min-height: 600px;margin:5% 20%">
+    <h1>Create new Voiture</h1>
+
+    {{ include('voiture/_form.html.twig') }}
+
+    <a class="btn "  href="{{ path('app_voiture_index') }}">back to list</a>
+    </div>
+{% endblock %}

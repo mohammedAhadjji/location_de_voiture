@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"><meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        
+                    		    <title>CarPoint - Multi Vendor Car Listing Directory</title>
+		    <meta name="description" content="">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        
+
+		<link rel="icon" type="image/png" href="https://demo.phpscriptpoint.com/carpoint/uploads/site_photos/c1171d7cd44a7f181fb14af3e3545026.png">
+
+		<!-- All CSS -->
+<link rel="stylesheet" href="https://demo.phpscriptpoint.com/carpoint/frontend/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://demo.phpscriptpoint.com/carpoint/frontend/css/jquery-ui.css">
+<link rel="stylesheet" href="https://demo.phpscriptpoint.com/carpoint/frontend/css/animate.min.css">
+<link rel="stylesheet" href="https://demo.phpscriptpoint.com/carpoint/frontend/css/magnific-popup.css">
+<link rel="stylesheet" href="https://demo.phpscriptpoint.com/carpoint/frontend/css/owl.carousel.min.css">
+<link rel="stylesheet" href="https://demo.phpscriptpoint.com/carpoint/frontend/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="https://demo.phpscriptpoint.com/carpoint/frontend/css/select2.min.css">
+<link rel="stylesheet" href="https://demo.phpscriptpoint.com/carpoint/frontend/css/select2-bootstrap.min.css">
+<link rel="stylesheet" href="https://demo.phpscriptpoint.com/carpoint/frontend/css/meanmenu.css">
+<link rel="stylesheet" href="https://demo.phpscriptpoint.com/carpoint/frontend/css/spacing.css">
+<link rel="stylesheet" href="https://demo.phpscriptpoint.com/carpoint/frontend/css/jquery.timepicker.css">
+<link rel="stylesheet" href="https://demo.phpscriptpoint.com/carpoint/frontend/css/toastr.min.css">
+<link rel="stylesheet" href="https://demo.phpscriptpoint.com/carpoint/frontend/css/sweetalert2.min.css">
+<link rel="stylesheet" href="https://demo.phpscriptpoint.com/carpoint/frontend/fontawesome-free/css/all.min.css">
+<link rel="stylesheet" href="https://demo.phpscriptpoint.com/carpoint/frontend/css/style.css">
+
+		<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<!--bootstrap5
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+		--><!-- All Javascripts -->
+<script src="https://demo.phpscriptpoint.com/carpoint/frontend/js/jquery-3.6.0.min.js"></script>
+<script src="https://demo.phpscriptpoint.com/carpoint/frontend/js/bootstrap.min.js"></script>
+<script src="https://demo.phpscriptpoint.com/carpoint/frontend/js/jquery-ui.js"></script>
+<script src="https://demo.phpscriptpoint.com/carpoint/frontend/js/jquery.magnific-popup.min.js"></script>
+<script src="https://demo.phpscriptpoint.com/carpoint/frontend/js/owl.carousel.min.js"></script>
+<script src="https://demo.phpscriptpoint.com/carpoint/frontend/js/wow.min.js"></script>
+<script src="https://demo.phpscriptpoint.com/carpoint/frontend/js/jquery.meanmenu.js"></script>
+<script src="https://demo.phpscriptpoint.com/carpoint/frontend/js/jquery.dataTables.min.js"></script>
+<script src="https://demo.phpscriptpoint.com/carpoint/frontend/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://demo.phpscriptpoint.com/carpoint/frontend/js/select2.full.js"></script>
+<script src="https://demo.phpscriptpoint.com/carpoint/frontend/js/jquery.timepicker.js"></script>
+<script src="https://demo.phpscriptpoint.com/carpoint/frontend/js/fontawesome-iconpicker.js"></script>
+<script src="https://demo.phpscriptpoint.com/carpoint/frontend/js/toastr.min.js"></script>
+<script src="https://demo.phpscriptpoint.com/carpoint/frontend/js/sweetalert2.min.js"></script>
+<script src="https://demo.phpscriptpoint.com/carpoint/frontend/js/sticky_sidebar.js"></script>
+<script src="https://demo.phpscriptpoint.com/carpoint/tinymce/tinymce.min.js"></script>
+<script src='https://www.google.com/recaptcha/api.js'></script>
+				</style>
+
+                    <script src="https://cdn.websitepolicies.io/lib/cookieconsent/1.0.3/cookieconsent.min.js" defer></script><script>window.addEventListener("load",function(){window.wpcc.init({"colors":{"popup":{"background":"#50BF20","text":"#F8FFED","border":"#b3d0e4"},"button":{"background":"#FFFFFF","text":"#000000"}},"position":"bottom","padding":"large","margin":"none","content":{"message":"This website uses cookies to ensure you get the best experience on our website.","button":"ACCEPT"}})});</script>
+        <!--fullcalendra-->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.css" integrity="sha256-uq9PNlMzB+1h01Ij9cx7zeE2OR2pLAfRw3uUUOOPKdA=" crossorigin="anonymous">
+       
+        <!--end fullcalendra-->
+       
+
+        <style>
+            .mobile-nav.mean-container .mean-nav ul li a.active,
+            .main-nav nav .navbar-nav .nav-item a:hover,
+            .main-nav nav .navbar-nav .nav-item a:focus,
+            .main-nav nav .navbar-nav .nav-item a.active,
+            .main-nav nav .navbar-nav .nav-item:hover a,
+            .main-nav nav .navbar-nav .nav-item .dropdown-menu li a:hover,
+            .main-nav nav .navbar-nav .nav-item .dropdown-menu li a:focus,
+            .main-nav nav .navbar-nav .nav-item .dropdown-menu li a.active,
+            .main-nav nav .navbar-nav .nav-item .dropdown-menu li .dropdown-menu li a:hover,
+            .main-nav nav .navbar-nav .nav-item .dropdown-menu li .dropdown-menu li a:focus,
+            .main-nav nav .navbar-nav .nav-item .dropdown-menu li .dropdown-menu li a.active,
+            .main-nav nav .navbar-nav .nav-item .dropdown-menu li:hover a,
+            .main-nav nav .navbar-nav .nav-item .dropdown-menu li a:hover,
+            .listing .listing-item .text .location,
+            .listing .listing-item .text h3 a:hover,
+            .footer-item h2,
+            .footer-item ul li a:hover,
+            .listing-filter .lf-heading,
+            .listing .listing-item .text .location a,
+            .listing-single-banner .listing-items a,
+            .listing-page h2 i,
+            .listing-page .amenities li i,
+            .listing-page .contact a,
+            .listing-page .review-overall .total,
+            .listing-sidebar .ls-widget .agent-contact li,
+            .listing-sidebar .ls-widget .agent-contact li a,
+            .listing-sidebar .ls-widget .category ul li a,
+            .faq h4.panel-title a,
+            .sidebar .widget .type-1 ul li:before,
+            .sidebar .widget .type-1 ul li a:hover,
+            .contact-icon i,
+            .reg-login-form .new-user a,
+            .reg-login-form .link,
+            .listing-page .room-all .item .price,
+            .popular-city .popular-city-item:hover h4 {
+                color: #F6552C;
+            }
+
+            .main-nav nav .navbar-nav .nav-item .dropdown-menu li a:hover,
+            .mean-container a.meanmenu-reveal,
+            .footer-social-link ul li a:hover {
+                color: #F6552C!important;
+            }
+
+            .search-section .input-group-append button,
+            .listing .listing-item .photo .brand a,
+            .popular-city-carousel .owl-nav .owl-prev,
+            .popular-city-carousel .owl-nav .owl-next,
+            .footer-social-link ul li a,
+            .scroll-top,
+            .page-banner,
+            .filter-button,
+            .listing-sidebar .ls-widget .agent-social ul li a,
+            .listing-sidebar .ls-widget a.agent-view-profile,
+            .pricing .btn,
+            .contact-form .btn,
+            .reg-login-form button,
+            .listing .owl-nav .owl-prev, 
+            .listing .owl-nav .owl-next,
+            .listing-single-banner .social a:hover,
+            .top,
+            .agent-banner .social a:hover,
+            .mean-container a.meanmenu-reveal span,
+            .comment button {
+                background: #F6552C;
+            }
+
+            .footer-social-link ul li a,
+            .contact-form .btn {
+                border-color: #F6552C;
+            }
+
+            .listing-filter .lf-heading {
+                border-bottom-color: #F6552C;
+            }
+
+        </style>
+        
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        {% block stylesheets %}
+            <!--bootstrap5
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+		-->
+            {{ encore_entry_link_tags('app') }}
+            
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+    </head>
+    <body>
+<!--nav id="header" class="navbar navbar-expand-lg navbar-light bg-light fixed-top"> <div class="container"> <a class="navbar-brand" href="https://flexphperia.net/yc/demo/demo1en.php"> <img src="https://flexphperia.net/yc/demo/demo/img/demo1en.php?dir=uploads&amp;width=340&amp;filename=logo.svg"> </a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2"> <span class="navbar-toggler-icon"></span> </button> <div class="navbar-collapse collapse dual-collapse2"> <ul class="navbar-nav ml-auto"> <li class="nav-item mr-md-3"> <a class="nav-link active" href="https://flexphperia.net/yc/demo/demo1en.php"><svg class="icon "><use xlink:href="#calendar"></use></svg><span>Browsing</span></a> </li> <li class="nav-item dropdown mr-md-3"> <div class="btn-group d-flex flex-wrap"> <a class="nav-link pr-2 pr-md-0 " href="https://flexphperia.net/yc/demo/demo1en.php/edit" role="button"><svg class="icon "><use xlink:href="#calendar-plus"></use></svg><span>Events editing</span></a> <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a> <div class="w-100 d-md-none"></div> <!-- breaker --> <div class="dropdown-menu flex-grow-1"> <a class="dropdown-item" href="https://flexphperia.net/yc/demo/demo1en.php/edit-select">Edit for the selected item</a> </div> </div> </li> </ul> </div> <div class="navbar-collapse collapse dual-collapse2"> <ul class="navbar-nav ml-auto"> <li class="nav-item dropdown "> <a class="nav-link " href="https://flexphperia.net/yc/demo/demo1en.php/login" role="button"> <svg class="icon "><use xlink:href="#lock"></use></svg><span>Login</span> </a> </li> </ul> </div> </div> </!--nav>
+{% block body %}
+    
+{% endblock %}
+    
+</body>
+</html>

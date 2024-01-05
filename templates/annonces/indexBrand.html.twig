@@ -1,0 +1,345 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Annonces index{% endblock %}
+    {% block stylesheets %}
+        <!--bootstrap5
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    -->
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+
+{% block body %}
+    <!--div class="container" style="min-height: 600px;margin:5% 20%">
+    <h1>Annonces index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Created_at</th>
+                <th>Descriptions</th>
+                <th>Prix_locat</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {# for annonce in annonces %}
+            <tr>
+                <td>{{ annonce.id }}</td>
+                <td>{{ annonce.title }}</td>
+                <td>{{ annonce.createdAt ? annonce.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ annonce.descriptions }}</td>
+                <td>{{ annonce.prixLocat }}</td>
+                <td>
+                    <a class="btn" href="{{ path('app_annonces_show', {'id': annonce.id}) }}">show</a>
+                    <a class="btn" href="{{ path('app_annonces_edit', {'id': annonce.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn" href="{{ path('app_annonces_new') #}">Create new</a>
+    </div-->
+    {# dump(annonces) #}
+    <!-- End Navbar Area -->
+
+		
+    <div class="page-banner" style="background-image: url('https://demo.phpscriptpoint.com/carpoint/uploads/page_banners/0c753632e3dc3980af6fc3c30ba32a2b.jpg')">
+    <div class="page-banner-bg"></div>
+    <h1>Listing Brand: {{brand.name}}</h1>
+    <nav>
+        <ol class="breadcrumb justify-content-center">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/brands">Listing Brand</a></li>
+            <li class="breadcrumb-item active">{{brand.name}}</li>
+        </ol>
+    </nav>
+</div>
+
+
+    <div class="page-content">
+        <div class="container">
+            <div class="row listing pt_0 pb_0">
+                
+
+                    
+            {% for annonce in annonces %}
+                <div class="col-lg-4 col-md-6 col-sm-12 wow fadeInLeft">
+                    <div class="listing-item effect-item">
+                        <div class="photo image-effect">
+                            <a href="{{ path("annonce_detail", {id: annonce.id})}}"><img src="{{ asset('uploads/attachments/'~annonce.voiture.images[0].name) }}" alt="">
+                            </a>
+                            <div class="brand" >
+                                <a href="{{ path("annonce_detail", {id: annonce.id})}}" style="background-color: {{ sittig.ThemeColor }};">{{ annonce.voiture.modele.brand.name }}</a>
+                            </div>
+                            <div class="wishlist">
+                                <a href="https://demo.phpscriptpoint.com/carpoint/customer/wishlist/add/13">
+                                    <i class="fas fa-heart"></i>
+                                </a>
+                            </div>
+                            <div class="featured-text">plus {{annonce.occur}} <i class="fa-solid fa-eye"></i></div>
+                        </div>
+                        <div class="text">
+    
+                            <div class="type-price">
+                                <div class="type">
+                                    <div class="inner-new">
+                                        {{ annonce.voiture.type.title }}
+                                    </div>
+                                </div>
+                                <div class="price">
+                                    Price: {{ (annonce.prix_locat / 100)|format_currency('MAD') }} dh 
+                                </div>
+                            </div>
+    
+                            <h3>
+                                <a href="https://demo.phpscriptpoint.com/carpoint/listing-detail/13/2015-mazda-mazda5-sport">{{ annonce.voiture.annee|date('Y') }} {{ annonce.voiture.modele.name }} {{ annonce.voiture.modele.brand.name }}</a>
+                            </h3>
+                            <div class=" location"style="color: {{ sittig.ThemeColor }};">
+                                <i class="fas fa-map-marker-alt"></i>
+                                {{ annonce.voiture.location.locale }}
+                            </div>
+    
+    
+                            <!--div class="review">
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <span>(0 Reviews)</span>
+                            </div-->
+    
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}     
+                    
+                        <!--div class="col-lg-4 col-md-6 col-sm-12 wow fadeInUp">
+                            <div class="listing-item effect-item">
+                                <div class="photo image-effect">
+                                    <a href="https://demo.phpscriptpoint.com/carpoint/listing-detail/3/2022-toyota-4runner-limited"><img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_featured_photos/5244eaad7aa66e19f458f166b13366a8.jpg" alt=""></a>
+                                    <div class="brand">
+                                        <a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/toyota">Toyota</a>
+                                    </div>
+                                    <div class="wishlist">
+                                        <a href="https://demo.phpscriptpoint.com/carpoint/customer/wishlist/add/3"><i class="fas fa-heart"></i></a>
+                                    </div>
+                                                                            <div class="featured-text">Featured</div>
+                                                                    </div>
+                                <div class="text">
+
+                                    <div class="type-price">
+                                        <div class="type">
+                                                                                        <div class="inner-new">
+                                                New Car
+                                            </div>
+                                                                                    </div>
+                                        <div class="price">
+                                                                                            $50,627
+                                                                                    </div>
+                                    </div>
+
+
+                                    <h3><a href="https://demo.phpscriptpoint.com/carpoint/listing-detail/3/2022-toyota-4runner-limited">2022 Toyota 4Runner Limited</a></h3>
+                                    <div class="location">
+                                        <a href="https://demo.phpscriptpoint.com/carpoint/listing/location/los-angeles"><i class="fas fa-map-marker-alt"></i> Los Angeles</a>
+                                    </div>
+                                    
+                                    
+                                                                                                                                                                                                                
+                                        
+                                                                                    
+                                        
+                                    
+                                    <div class="review">
+                                                                                    <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star-half-alt"></i>
+                                            <i class="far fa-star"></i>
+                                                                                <span>(2 Reviews)</span>
+                                    </div>
+
+                                    
+
+                                </div>
+                            </div>
+                        </div>
+                    
+                                                                                        
+                        <div class="col-lg-4 col-md-6 col-sm-12 wow fadeInUp">
+                            <div class="listing-item effect-item">
+                                <div class="photo image-effect">
+                                    <a href="https://demo.phpscriptpoint.com/carpoint/listing-detail/5/2022-nissan-frontier-pro-4x"><img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_featured_photos/34481dd4588dac0ca090e3786c60a8e4.jpg" alt=""></a>
+                                    <div class="brand">
+                                        <a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/nissan">Nissan</a>
+                                    </div>
+                                    <div class="wishlist">
+                                        <a href="https://demo.phpscriptpoint.com/carpoint/customer/wishlist/add/5"><i class="fas fa-heart"></i></a>
+                                    </div>
+                                                                            <div class="featured-text">Featured</div>
+                                                                    </div>
+                                <div class="text">
+
+                                    <div class="type-price">
+                                        <div class="type">
+                                                                                        <div class="inner-new">
+                                                New Car
+                                            </div>
+                                                                                    </div>
+                                        <div class="price">
+                                                                                            $18,000
+                                                                                    </div>
+                                    </div>
+
+
+                                    <h3><a href="https://demo.phpscriptpoint.com/carpoint/listing-detail/5/2022-nissan-frontier-pro-4x">2022 Nissan Frontier PRO 4X</a></h3>
+                                    <div class="location">
+                                        <a href="https://demo.phpscriptpoint.com/carpoint/listing/location/los-angeles"><i class="fas fa-map-marker-alt"></i> Los Angeles</a>
+                                    </div>
+                                    
+                                    
+                                                                                                                                                                                                                
+                                        
+                                                                                    
+                                        
+                                    
+                                    <div class="review">
+                                                                                    <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star-half-alt"></i>
+                                                                                <span>(2 Reviews)</span>
+                                    </div>
+
+                                    
+
+                                </div>
+                            </div>
+                        </div>
+                    
+                    
+                        <div class="col-lg-4 col-md-6 col-sm-12 wow fadeInUp">
+                            <div class="listing-item effect-item">
+                                <div class="photo image-effect">
+                                    <a href="https://demo.phpscriptpoint.com/carpoint/listing-detail/7/2020-bmw-m340-i"><img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_featured_photos/de51e0ec9808b68b5cad2aa3ae33c739.jpg" alt=""></a>
+                                    <div class="brand">
+                                        <a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/bmw">BMW</a>
+                                    </div>
+                                    <div class="wishlist">
+                                        <a href="https://demo.phpscriptpoint.com/carpoint/customer/wishlist/add/7"><i class="fas fa-heart"></i></a>
+                                    </div>
+                                                                            <div class="featured-text">Featured</div>
+                                                                    </div>
+                                <div class="text">
+
+                                    <div class="type-price">
+                                        <div class="type">
+                                                                                        <div class="inner-used">
+                                                Used Car
+                                            </div>
+                                                                                    </div>
+                                        <div class="price">
+                                                                                            $50,800
+                                                                                    </div>
+                                    </div>
+
+
+                                    <h3><a href="https://demo.phpscriptpoint.com/carpoint/listing-detail/7/2020-bmw-m340-i">2020 BMW M340 i</a></h3>
+                                    <div class="location">
+                                        <a href="https://demo.phpscriptpoint.com/carpoint/listing/location/los-angeles"><i class="fas fa-map-marker-alt"></i> Los Angeles</a>
+                                    </div>
+                                    
+                                    
+                                                                                                                            
+                                        
+                                                                                    
+                                        
+                                    
+                                    <div class="review">
+                                                                                    <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                                                                <span>(1 Reviews)</span>
+                                    </div>
+
+                                    
+
+                                </div>
+                            </div>
+                        </div>
+                    
+                    
+                        <div class="col-lg-4 col-md-6 col-sm-12 wow fadeInUp">
+                            <div class="listing-item effect-item">
+                                <div class="photo image-effect">
+                                    <a href="https://demo.phpscriptpoint.com/carpoint/listing-detail/12/2022-mazda-mx-5-miata-grand-touring"><img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_featured_photos/657e270e48cebafa381b724042c03f63.jpg" alt=""></a>
+                                    <div class="brand">
+                                        <a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/mazda">Mazda</a>
+                                    </div>
+                                    <div class="wishlist">
+                                        <a href="https://demo.phpscriptpoint.com/carpoint/customer/wishlist/add/12"><i class="fas fa-heart"></i></a>
+                                    </div>
+                                                                            <div class="featured-text">Featured</div>
+                                                                    </div>
+                                <div class="text">
+
+                                    <div class="type-price">
+                                        <div class="type">
+                                                                                        <div class="inner-used">
+                                                Used Car
+                                            </div>
+                                                                                    </div>
+                                        <div class="price">
+                                                                                            $32,450
+                                                                                    </div>
+                                    </div>
+
+
+                                    <h3><a href="https://demo.phpscriptpoint.com/carpoint/listing-detail/12/2022-mazda-mx-5-miata-grand-touring">2022 Mazda MX-5 Miata Grand Touring</a></h3>
+                                    <div class="location">
+                                        <a href="https://demo.phpscriptpoint.com/carpoint/listing/location/los-angeles"><i class="fas fa-map-marker-alt"></i> Los Angeles</a>
+                                    </div>
+                                    
+                                    
+                                    
+                                    <div class="review">
+                                                                                    <i class="far fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                                                                <span>(0 Reviews)</span>
+                                    </div>
+
+                                    
+
+                                </div>
+                            </div>
+                        </div>
+                    
+                    <div class="col-md-12">
+                        
+                    </div-->
+
+                
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+{% endblock %}

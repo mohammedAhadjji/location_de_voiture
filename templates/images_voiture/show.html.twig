@@ -1,0 +1,630 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ImagesVoiture{% endblock %}
+
+{% block body %}
+   {#} <h1>ImagesVoiture</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ images_voiture.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ images_voiture.name }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_images_voiture_index') }}">back to list</a>
+
+    <a href="{{ path('app_images_voiture_edit', {'id': images_voiture.id}) }}">edit</a>
+
+    {{ include('images_voiture/_delete_form.html.twig') #}
+    <!-- End Navbar Area -->
+
+		
+<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5993ef01e2587a001253a261&product=inline-share-buttons' async='async'></script>
+
+<div class="listing-single-banner" style="background-image: url('https://demo.phpscriptpoint.com/carpoint/uploads/listing_featured_photos/3bb970bc46e0a47b20bd0efeda35d14d.jpg');">
+	<div class="bg"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h1>2015 Mazda Mazda5 Sport</h1>
+				<div class="price">
+											$11,960
+									</div>
+				<div class="location">
+					<i class="fas fa-map-marker-alt"></i> San Diego
+				</div>
+				<div class="review">
+                                            <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                    					<span>(0 Reviews)</span>
+				</div>
+				<div class="call">
+					<i class="fas fa-phone-volume"></i> (606) 862-0015
+				</div>
+				<div class="listing-items">
+					<a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/mazda">
+						<i class="far fa-edit"></i> Mazda
+					</a>
+					<a href="https://demo.phpscriptpoint.com/carpoint/customer/wishlist/add/13">
+						<i class="fas fa-heart"></i> Add to Wishlist
+					</a>
+					<a href="" data-toggle="modal" data-target="#send_message_modal">
+						<i class="far fa-envelope"></i> Send Message
+					</a>
+
+                    <!-- Send Message Modal -->
+                    <div class="modal fade modal_listing_detail" id="send_message_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Send Message</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="https://demo.phpscriptpoint.com/carpoint/listing/listing/send-message" method="post">
+                                        <input type="hidden" name="_token" value="lo33Eu4tudQ175ongLBWeRkX8iLCuZZdCYryioR9">                                        <input type="hidden" name="listing_name" value="2015 Mazda Mazda5 Sport">
+                                        <input type="hidden" name="listing_slug" value="2015-mazda-mazda5-sport">
+                                        <input type="hidden" name="agent_name" value="Morshedul Arefin">
+                                        <input type="hidden" name="agent_email" value="admin@gmail.com">
+                                        <div class="form-group">
+                                            <label for="">Name</label>
+                                            <div>
+                                                <input type="text" name="name" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Email</label>
+                                            <div>
+                                                <input type="email" name="email" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Phone</label>
+                                            <div>
+                                                <input type="text" name="phone" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Message</label>
+                                            <div>
+                                                <textarea name="message" class="form-control h-100" cols="30" rows="10" required></textarea>
+                                            </div>
+                                        </div>
+                                                                                <div class="form-group">
+                                            <div>
+                                                <button type="submit" class="btn btn-success">Send Message</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- // Send Message Modal -->
+
+
+					<a href="" data-toggle="modal" data-target="#report_modal">
+						<i class="far fa-flag"></i> Report
+					</a>
+
+
+                    <!-- Report Modal -->
+                    <div class="modal fade modal_listing_detail" id="report_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Submit Report</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="https://demo.phpscriptpoint.com/carpoint/listing/listing/report-listing" method="post">
+                                        <input type="hidden" name="_token" value="lo33Eu4tudQ175ongLBWeRkX8iLCuZZdCYryioR9">                                        <input type="hidden" name="listing_name" value="2015 Mazda Mazda5 Sport">
+                                        <input type="hidden" name="listing_slug" value="2015-mazda-mazda5-sport">
+                                        <div class="form-group">
+                                            <label for="">Name</label>
+                                            <div>
+                                                <input type="text" name="name" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Email</label>
+                                            <div>
+                                                <input type="email" name="email" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Phone</label>
+                                            <div>
+                                                <input type="text" name="phone" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Message</label>
+                                            <div>
+                                                <textarea name="message" class="form-control h-100" cols="30" rows="10" required></textarea>
+                                            </div>
+                                        </div>
+                                                                                <div class="form-group">
+                                            <div>
+                                                <button type="submit" class="btn btn-success">Submit Report</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- // Report Modal -->
+
+
+				</div>
+
+								<div class="social">
+					<ul>
+												                    	
+                    							<li>
+							<a href="#"><i class="fab fa-facebook-f"></i></a>
+						</li>
+												                    	
+                    							<li>
+							<a href="#"><i class="fab fa-twitter"></i></a>
+						</li>
+												                    	
+                    							<li>
+							<a href="#"><i class="fab fa-linkedin-in"></i></a>
+						</li>
+												                    	
+                    							<li>
+							<a href="#"><i class="fab fa-youtube"></i></a>
+						</li>
+											</ul>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="page-content">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-md-12 col-sm-12">
+				<div class="listing-page">
+					<h2><i class="fas fa-folder"></i> Description</h2>
+					<p>
+						<p>Lorem ipsum dolor sit amet, nibh saperet te pri, at nam diceret disputationi. Quo an consul impedit, usu possim evertitur dissentiet ei, ridens minimum nominavi et vix. An per mutat adipisci. Ut pericula dissentias sed, est ea modus gloriatur. Aliquip persius has cu, oportere adversarium mei an, justo fabulas in vix.</p>
+<p>Nec in rebum primis causae. Affert iisque ex pri, vis utinam vivendo definitionem ad, nostrum omnesque per et. Omnium antiopam cotidieque cu sit. Id pri placerat voluptatum, vero dicunt dissentiunt eum et, adhuc iisque vis no. Eu suavitate contentiones definitionem mel, ex vide insolens ocurreret eam. Et dico blandit mea. Sea tollit vidisse mandamus te, qui movet efficiendi ex.</p>
+<p>Doming aliquid te pro. Mei et quodsi ornatus praesent, summo debet vis eu, dolor soleat nostrud sea eu. Cu altera possim sanctus est. Ea iriure repudiandae per, no eam legendos consectetuer. Mel at justo doming voluptatum. Mel mentitum fabellas deserunt no, et duo amet unum appetere.</p>
+<p>Quo id nemore dignissim persequeris, unum melius option ei vix, oratio vidisse eam ei. Altera neglegentur cum te. Latine probatus cum cu. Vim dicta sonet intellegebat ne, ei mazim decore eleifend nam, no malis soleat usu. Est ei tale praesent, ad nibh iudicabit has.</p>
+					</p>
+
+										<div class="gap"></div>
+					<h2><i class="fas fa-image"></i> Photos</h2>
+					<div class="photo-all">
+						<div class="row">
+														<div class="col-md-6 col-lg-4">
+								<div class="item">
+									<a href="https://demo.phpscriptpoint.com/carpoint/uploads/listing_photos/2f7851292074666cc02f2c2f4e67a794.jpg" class="magnific">
+										<img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_photos/2f7851292074666cc02f2c2f4e67a794.jpg" alt="">
+										<div class="icon">
+											<i class="fas fa-plus"></i>
+										</div>
+										<div class="bg"></div>
+									</a>
+								</div>
+							</div>
+														<div class="col-md-6 col-lg-4">
+								<div class="item">
+									<a href="https://demo.phpscriptpoint.com/carpoint/uploads/listing_photos/9704007af58c2384e15210901812eb71.jpg" class="magnific">
+										<img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_photos/9704007af58c2384e15210901812eb71.jpg" alt="">
+										<div class="icon">
+											<i class="fas fa-plus"></i>
+										</div>
+										<div class="bg"></div>
+									</a>
+								</div>
+							</div>
+														<div class="col-md-6 col-lg-4">
+								<div class="item">
+									<a href="https://demo.phpscriptpoint.com/carpoint/uploads/listing_photos/face1ff2ee5b27dbabb2c3501f9ab8f1.jpg" class="magnific">
+										<img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_photos/face1ff2ee5b27dbabb2c3501f9ab8f1.jpg" alt="">
+										<div class="icon">
+											<i class="fas fa-plus"></i>
+										</div>
+										<div class="bg"></div>
+									</a>
+								</div>
+							</div>
+													</div>
+					</div>
+					
+
+										<div class="gap"></div>
+					<h2><i class="fas fa-video"></i> Videos</h2>
+					<div class="video-all">
+						<div class="row">
+														<div class="col-md-6 col-lg-4">
+								<div class="item">
+									<a class="video-button" href="http://www.youtube.com/watch?v=7PYZMoQQqsU">
+										<img src="http://img.youtube.com/vi/7PYZMoQQqsU/0.jpg" alt="">
+										<div class="icon">
+											<i class="far fa-play-circle"></i>
+										</div>
+										<div class="bg"></div>
+									</a>
+								</div>
+							</div>
+														<div class="col-md-6 col-lg-4">
+								<div class="item">
+									<a class="video-button" href="http://www.youtube.com/watch?v=CrE0Qt-i1vM">
+										<img src="http://img.youtube.com/vi/CrE0Qt-i1vM/0.jpg" alt="">
+										<div class="icon">
+											<i class="far fa-play-circle"></i>
+										</div>
+										<div class="bg"></div>
+									</a>
+								</div>
+							</div>
+														<div class="col-md-6 col-lg-4">
+								<div class="item">
+									<a class="video-button" href="http://www.youtube.com/watch?v=uScUBMGPBcU">
+										<img src="http://img.youtube.com/vi/uScUBMGPBcU/0.jpg" alt="">
+										<div class="icon">
+											<i class="far fa-play-circle"></i>
+										</div>
+										<div class="bg"></div>
+									</a>
+								</div>
+							</div>
+													</div>
+					</div>
+					
+
+										<div class="gap"></div>
+					<h2><i class="fas fa-map"></i> Location Map</h2>
+					<div class="map">
+						<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3237.7024268769424!2d-83.97154938525155!3d35.75811813335977!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x885e9fd3fccccd2b%3A0x4b27a99931ed8fd8!2s333%20E%20Broadway%20Ave%2C%20Maryville%2C%20TN%2037804%2C%20USA!5e0!3m2!1sen!2sbd!4v1625719037629!5m2!1sen!2sbd" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+					</div>
+					
+
+					<div class="gap"></div>
+					<h2><i class="fas fa-atom"></i> Features</h2>
+					<div class="contact">
+						<div class="table-responsive">
+							<table class="table table-bordered">
+								<tr>
+									<td class="w-300">Price</td>
+									<td>
+																					$11,960
+																			</td>
+								</tr>
+
+								<tr>
+									<td>Type</td>
+									<td>
+										New Car
+									</td>
+								</tr>
+
+																<tr>
+									<td>Exterior Color</td>
+									<td>
+										Silver
+									</td>
+								</tr>
+								
+																<tr>
+									<td>Interior Color</td>
+									<td>
+										Black
+									</td>
+								</tr>
+								
+																<tr>
+									<td>Cylinder</td>
+									<td>
+										6
+									</td>
+								</tr>
+								
+																<tr>
+									<td>Fuel Type</td>
+									<td>
+										Electric
+									</td>
+								</tr>
+								
+																<tr>
+									<td>Transmission</td>
+									<td>
+										Automatic
+									</td>
+								</tr>
+								
+																<tr>
+									<td>Engine Capacity</td>
+									<td>
+										1200 CC
+									</td>
+								</tr>
+								
+																<tr>
+									<td>VIN</td>
+									<td>
+										HHD8923477
+									</td>
+								</tr>
+								
+																<tr>
+									<td>Body</td>
+									<td>
+										SUV
+									</td>
+								</tr>
+								
+																<tr>
+									<td>Seat</td>
+									<td>
+										4
+									</td>
+								</tr>
+								
+																<tr>
+									<td>Wheel</td>
+									<td>
+										4
+									</td>
+								</tr>
+								
+																<tr>
+									<td>Door</td>
+									<td>
+										4
+									</td>
+								</tr>
+								
+																<tr>
+									<td>Mileage</td>
+									<td>
+										12000 KM
+									</td>
+								</tr>
+								
+																<tr>
+									<td>Model Year</td>
+									<td>
+										2015
+									</td>
+								</tr>
+																
+							</table>
+						</div>
+					</div>
+
+
+										<div class="gap"></div>
+					<h2><i class="fas fa-bullhorn"></i> Amenities</h2>
+					<div class="amenities">
+						<ul>
+																					<li><i class="fas fa-check-square"></i> Backup Camera</li>
+																					<li><i class="fas fa-check-square"></i> Air Conditioning</li>
+																					<li><i class="fas fa-check-square"></i> USB Ports</li>
+																					<li><i class="fas fa-check-square"></i> Speech Voice Recognition</li>
+																					<li><i class="fas fa-check-square"></i> Cross Traffic Alert</li>
+													</ul>
+					</div>
+					
+
+										<div class="gap"></div>
+					<h2><i class="far fa-id-card"></i> Additional Features</h2>
+					<div class="contact">
+						<div class="table-responsive">
+							<table class="table table-bordered">
+																<tr>
+									<td class="w-300">Credit Card Allowed?</td>
+									<td>Yes</td>
+								</tr>
+																<tr>
+									<td class="w-300">Installment Available?</td>
+									<td>No</td>
+								</tr>
+															</table>
+						</div>
+					</div>
+					
+
+					<div class="gap"></div>
+					<h2><i class="far fa-id-card"></i> Contact Information</h2>
+					<div class="contact">
+						<div class="table-responsive">
+							<table class="table table-bordered">
+																<tr>
+									<td class="w-200">Address</td>
+									<td>
+										<p>333 East Broadway Avenue<br>
+Maryville, TN 37804</p>
+									</td>
+								</tr>
+								
+								<tr>
+									<td>Phone Number</td>
+									<td>
+										<p>(606) 862-0015</p>
+									</td>
+								</tr>
+
+								
+								
+							</table>
+						</div>
+					</div>
+
+					<div class="gap"></div>
+					<h2>Reviews (0)</h2>
+
+					<div class="review-overall">
+						<div class="review">
+                                                            <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                            						</div>
+						<div class="total">
+							                                (Overall 0 Out of 5)
+													</div>
+					</div>
+
+
+					<div class="reviews">
+
+                                                <span class="text-danger">No Review Found</span>
+                        
+					</div>
+
+
+					<div class="gap"></div>
+					<h2>Write a Review</h2>
+					<div class="review-form">
+
+						
+						<a href="https://demo.phpscriptpoint.com/carpoint/customer/login" class="login-to-review">Login to Review</a>
+						
+
+					</div>
+
+
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-12 col-sm-12">
+				<div class="listing-sidebar" id="sticky_sidebar">
+
+					<div class="ls-widget">
+						<h2>Agent</h2>
+						<div class="agent">
+							<div class="photo">
+																	<img src="https://demo.phpscriptpoint.com/carpoint/uploads/user_photos/9ead0b550b7e8cb1fe5351e7893bea6c.jpg" alt="">
+								
+							</div>
+							<div class="text">
+                                                                                                                                        <h3><a href="https://demo.phpscriptpoint.com/carpoint/agent/admin/1">Morshedul Arefin</a></h3>
+								<h4>Posted on 14 Jun, 2022</h4>
+							</div>
+						</div>
+						<div class="agent-contact">
+							<ul>
+																<li>
+									<i class="fas fa-map-marker-alt"></i> Khulna Khulna Bangladesh
+								</li>
+																								<li><i class="fas fa-phone-volume"></i> +8801912721070</li>
+																								<li><i class="fas fa-envelope"></i> admin@gmail.com</li>
+																								<li><a href="https://www.arefindev.com" target="_blank"><i class="fas fa-globe"></i> https://www.arefindev.com</a></li>
+															</ul>
+						</div>
+
+
+												<div class="agent-social">
+							<ul>
+																<li><a href="https://www.facebook.com/groups/arefindev" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+								
+								
+																<li><a href="https://www.linkedin.com/in/arefindev" target="_blank"><i class="fab fa-linkedin-in"></i></a></li>
+								
+								
+																<li><a href="https://www.youtube.com/channel/UCcfYd3bm-e_sLUK29abXb-A" target="_blank"><i class="fab fa-youtube"></i></a></li>
+															</ul>
+						</div>
+						
+						<a href="https://demo.phpscriptpoint.com/carpoint/agent/admin/1" class="btn btn-primary btn-block agent-view-profile">View Profile</a>
+					</div>
+
+                    					<div class="ls-widget">
+						<h2>Opening Hours</h2>
+						<div class="openning-hour">
+							<div class="table-responsive">
+								<table class="table table-bordered">
+									<tr>
+										<td>Monday</td>
+										<td>9 AM to 5 PM</td>
+									</tr>
+									<tr>
+										<td>Tuesday</td>
+										<td>9 AM to 5 PM</td>
+									</tr>
+									<tr>
+										<td>Wednesday</td>
+										<td>9 AM to 5 PM</td>
+									</tr>
+									<tr>
+										<td>Thursday</td>
+										<td>9 AM to 5 PM</td>
+									</tr>
+									<tr>
+										<td>Friday</td>
+										<td>9 AM to 5 PM</td>
+									</tr>
+									<tr>
+										<td>Saturday</td>
+										<td>9 AM to 5 PM</td>
+									</tr>
+									<tr>
+										<td>Sunday</td>
+										<td>9 AM to 5 PM</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+                    
+					<div class="ls-widget">
+						<h2>Brands</h2>
+						<div class="category">
+							<ul>
+																<li><a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/bmw"><i class="fas fa-angle-right"></i> BMW</a></li>
+																<li><a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/jaguar"><i class="fas fa-angle-right"></i> Jaguar</a></li>
+																<li><a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/lamborghini"><i class="fas fa-angle-right"></i> Lamborghini</a></li>
+																<li><a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/mazda"><i class="fas fa-angle-right"></i> Mazda</a></li>
+																<li><a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/nissan"><i class="fas fa-angle-right"></i> Nissan</a></li>
+																<li><a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/porsche"><i class="fas fa-angle-right"></i> Porsche</a></li>
+																<li><a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/toyota"><i class="fas fa-angle-right"></i> Toyota</a></li>
+																<li><a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/volkswagen"><i class="fas fa-angle-right"></i> Volkswagen</a></li>
+															</ul>
+						</div>
+					</div>
+
+					<div class="ls-widget">
+						<h2>Locations</h2>
+						<div class="category">
+							<ul>
+																<li><a href="https://demo.phpscriptpoint.com/carpoint/listing/location/boston"><i class="fas fa-angle-right"></i> Boston</a></li>
+																<li><a href="https://demo.phpscriptpoint.com/carpoint/listing/location/chicago"><i class="fas fa-angle-right"></i> Chicago</a></li>
+																<li><a href="https://demo.phpscriptpoint.com/carpoint/listing/location/colorado"><i class="fas fa-angle-right"></i> Colorado</a></li>
+																<li><a href="https://demo.phpscriptpoint.com/carpoint/listing/location/los-angeles"><i class="fas fa-angle-right"></i> Los Angeles</a></li>
+																<li><a href="https://demo.phpscriptpoint.com/carpoint/listing/location/newyork"><i class="fas fa-angle-right"></i> NewYork</a></li>
+																<li><a href="https://demo.phpscriptpoint.com/carpoint/listing/location/oakland"><i class="fas fa-angle-right"></i> Oakland</a></li>
+																<li><a href="https://demo.phpscriptpoint.com/carpoint/listing/location/portland"><i class="fas fa-angle-right"></i> Portland</a></li>
+																<li><a href="https://demo.phpscriptpoint.com/carpoint/listing/location/san-diego"><i class="fas fa-angle-right"></i> San Diego</a></li>
+															</ul>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

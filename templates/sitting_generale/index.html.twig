@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SittingGenerale index{% endblock %}
+
+{% block body %}
+    <h1>SittingGenerale index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Logo_img</th>
+                <th>Favicon_img</th>
+                <th>Theme_color</th>
+                <th>Footer_adrss</th>
+                <th>Footer_mail</th>
+                <th>Footer_phone</th>
+                <th>Custome_listing_option</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for sitting_generale in sitting_generales %}
+            <tr>
+                <td>{{ sitting_generale.id }}</td>
+                <td>{{ sitting_generale.logoImg }}</td>
+                <td>{{ sitting_generale.faviconImg }}</td>
+                <td>{{ sitting_generale.themeColor }}</td>
+                <td>{{ sitting_generale.footerAdrss }}</td>
+                <td>{{ sitting_generale.footerMail }}</td>
+                <td>{{ sitting_generale.footerPhone }}</td>
+                <td>{{ sitting_generale.customeListingOption ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('app_sitting_generale_show', {'id': sitting_generale.id}) }}">show</a>
+                    <a href="{{ path('app_sitting_generale_edit', {'id': sitting_generale.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_sitting_generale_new') }}">Create new</a>
+{% endblock %}

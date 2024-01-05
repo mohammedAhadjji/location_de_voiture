@@ -1,0 +1,553 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Annonces{% endblock %}
+    {% block stylesheets %}
+        <!--bootstrap5  
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  -->
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+
+{% block body %}
+    <!-- End Navbar Area -->
+
+		
+<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5993ef01e2587a001253a261&product=inline-share-buttons' async='async'></script>
+
+<div class="listing-single-banner" style="background-image: url('{{ asset('uploads/attachments/'~annonce.voiture.images[0].name) }}');">
+	<div class="bg"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h1>{{ annonce.voiture.annee|date('Y') }} {{ annonce.voiture.modele.name }} {{ annonce.voiture.modele.brand.name }}</h1>
+				<div class="price">
+					Price: {{ (annonce.prix_locat / 100)|format_currency('MAD') }} dh
+									</div>
+				<div class="location">
+					<i class="fas fa-map-marker-alt"></i> {{ annonce.voiture.location.locale }}
+				</div>
+				<div class="review">
+                                            <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                    					<span>(0 Reviews)</span>
+				</div>
+				<div class="call">
+					<i class="fas fa-phone-volume"></i> (606) 862-0015
+				</div>
+				<div class="listing-items">
+					<a href="{{ path("annonce_with_brand", {id: annonce.voiture.location.id})}}">
+						<i class="far fa-edit"></i> {{ annonce.voiture.modele.brand.name }}
+					</a>
+					<a href="" data-toggle="modal" data-target="#add_modal">
+						<i class="fas fa-shop"></i> Add to Wishlist
+					</a>
+					<a href="" data-toggle="modal" data-target="#send_message_modal">
+						<i class="far fa-envelope"></i> Send Message
+					</a>
+					<!--addwhish-->
+					<div  class="modal fade modal_listing_detail" id="add_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">{#  #}
+						<!--div style="margin: 10% 30%; border:solid #eee 1px;background-color:white;padding:2% 3%;border-radius: 5px;"-->
+							<!--form action="{#{path('annonce_detail',{id: annonce.id} )}}" method="post">
+    <!-- Champ reservationDate >
+    <label for="reservationDate">Reservation Date</label>
+    <input class="form-control" type="date" id="reservationDate" name="your_form_name[reservationDate]" class="datepicker" />
+
+    <!-- Champ numberOfDays >
+    <label for="numberOfDays">Number of Days
+    <input class="form-control" style="" type="number" id="numberOfDays" name="your_form_name[numberOfDays]" />
+</label>
+    <!-- Bouton de soumission >
+    <button class="form-control" style="margin:2%;background-color: {{sittig.themeColor}#};color:white" type="submit">Submit</button>
+</form-->
+<div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Réservation</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                
+{{form(form)}}
+</div></div>
+</div>
+					</div>
+
+                    <!-- Send Message Modal -->
+                    <div class="modal fade modal_listing_detail" id="send_message_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Send Message</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="https://demo.phpscriptpoint.com/carpoint/listing/listing/send-message" method="post">
+                                        <input type="hidden" name="_token" value="GFda6wHM3V032gTtsCrlGywfSnYE1rtl7hnvpupE">                                        <input type="hidden" name="listing_name" value="{{ annonce.voiture.annee|date('Y') }} {{ annonce.voiture.modele.name }} {{ annonce.voiture.modele.brand.name }}">
+                                        <input type="hidden" name="listing_slug" value="2015-mazda-mazda5-sport">
+                                        <input type="hidden" name="agent_name" value="Morshedul Arefin">
+                                        <input type="hidden" name="agent_email" value="admin@gmail.com">
+                                        <div class="form-group">
+                                            <label for="">Name</label>
+                                            <div>
+                                                <input type="text" name="name" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Email</label>
+                                            <div>
+                                                <input type="email" name="email" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Phone</label>
+                                            <div>
+                                                <input type="text" name="phone" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Message</label>
+                                            <div>
+                                                <textarea name="message" class="form-control h-100" cols="30" rows="10" required></textarea>
+                                            </div>
+                                        </div>
+                                                                                <div class="form-group">
+                                            <div>
+                                                <button type="submit" class="btn btn-success">Send Message</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- // Send Message Modal -->
+
+
+					<a href="" data-toggle="modal" data-target="#report_modal">
+						<i class="far fa-flag"></i> Report
+					</a>
+
+
+                    <!-- Report Modal -->
+                    <div class="modal fade modal_listing_detail" id="report_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Submit Report</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="https://demo.phpscriptpoint.com/carpoint/listing/listing/report-listing" method="post">
+                                        <input type="hidden" name="_token" value="GFda6wHM3V032gTtsCrlGywfSnYE1rtl7hnvpupE">                                        <input type="hidden" name="listing_name" value="2015 Mazda Mazda5 Sport">
+                                        <input type="hidden" name="listing_slug" value="2015-mazda-mazda5-sport">
+                                        <div class="form-group">
+                                            <label for="">Name</label>
+                                            <div>
+                                                <input type="text" name="name" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Email</label>
+                                            <div>
+                                                <input type="email" name="email" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Phone</label>
+                                            <div>
+                                                <input type="text" name="phone" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Message</label>
+                                            <div>
+                                                <textarea name="message" class="form-control h-100" cols="30" rows="10" required></textarea>
+                                            </div>
+                                        </div>
+                                                                                <div class="form-group">
+                                            <div>
+                                                <button type="submit" class="btn btn-success">Submit Report</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- // Report Modal -->
+
+
+				</div>
+
+								<div class="social">
+					<ul>
+												                    	
+                    							<li>
+							<a href="#"><i class="fab fa-facebook-f"></i></a>
+						</li>
+												                    	
+                    							<li>
+							<a href="#"><i class="fab fa-twitter"></i></a>
+						</li>
+												                    	
+                    							<li>
+							<a href="#"><i class="fab fa-linkedin-in"></i></a>
+						</li>
+												                    	
+                    							<li>
+							<a href="#"><i class="fab fa-youtube"></i></a>
+						</li>
+											</ul>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="page-content">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-md-12 col-sm-12">
+				<div class="listing-page">
+					<h2><i class="fas fa-folder"></i> Description</h2>
+					<p>
+						<p>{{annonce.descriptions|raw}}</p>
+
+										<div class="gap"></div>
+					<h2><i class="fas fa-image"></i> Photos</h2>
+					<div class="photo-all">
+						<div class="row">
+							{% for images in annonce.voiture.images %}
+									<div class="col-md-6 col-lg-4">
+								<div class="item">
+									<a href="{{ asset('uploads/attachments/'~images.name) }}" class="magnific">
+										<img src="{{ asset('uploads/attachments/'~images.name) }}" alt="">
+										<div class="icon">
+											<i class="fas fa-plus"></i>
+										</div>
+										<div class="bg"></div>
+									</a>
+								</div>
+							</div>
+							{% endfor %}
+													
+														<!--div class="col-md-6 col-lg-4">
+								<div class="item">
+									<a href="https://demo.phpscriptpoint.com/carpoint/uploads/listing_photos/9704007af58c2384e15210901812eb71.jpg" class="magnific">
+										<img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_photos/9704007af58c2384e15210901812eb71.jpg" alt="">
+										<div class="icon">
+											<i class="fas fa-plus"></i>
+										</div>
+										<div class="bg"></div>
+									</a>
+								</div>
+							</div>
+														<div class="col-md-6 col-lg-4">
+								<div class="item">
+									<a href="https://demo.phpscriptpoint.com/carpoint/uploads/listing_photos/face1ff2ee5b27dbabb2c3501f9ab8f1.jpg" class="magnific">
+										<img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_photos/face1ff2ee5b27dbabb2c3501f9ab8f1.jpg" alt="">
+										<div class="icon">
+											<i class="fas fa-plus"></i>
+										</div>
+										<div class="bg"></div>
+									</a>
+								</div>
+							</div>
+													</div>
+					</div>
+					
+
+										<div class="gap"></div>
+					<h2><i class="fas fa-video"></i> Videos</h2>
+					<div class="video-all">
+						<div class="row">
+														<div class="col-md-6 col-lg-4">
+								<div class="item">
+									<a class="video-button" href="http://www.youtube.com/watch?v=7PYZMoQQqsU">
+										<img src="http://img.youtube.com/vi/7PYZMoQQqsU/0.jpg" alt="">
+										<div class="icon">
+											<i class="far fa-play-circle"></i>
+										</div>
+										<div class="bg"></div>
+									</a>
+								</div>
+							</div>
+														<div class="col-md-6 col-lg-4">
+								<div class="item">
+									<a class="video-button" href="http://www.youtube.com/watch?v=CrE0Qt-i1vM">
+										<img src="http://img.youtube.com/vi/CrE0Qt-i1vM/0.jpg" alt="">
+										<div class="icon">
+											<i class="far fa-play-circle"></i>
+										</div>
+										<div class="bg"></div>
+									</a>
+								</div>
+							</div>
+														<div class="col-md-6 col-lg-4">
+								<div class="item">
+									<a class="video-button" href="http://www.youtube.com/watch?v=uScUBMGPBcU">
+										<img src="http://img.youtube.com/vi/uScUBMGPBcU/0.jpg" alt="">
+										<div class="icon">
+											<i class="far fa-play-circle"></i>
+										</div>
+										<div class="bg"></div>
+									</a>
+								</div>
+							</div-->
+													</div>
+					</div>
+					
+
+										<div class="gap"></div>
+					<!--h2><i class="fas fa-map"></i> Location Map</h2>
+					<div class="map">
+						<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3237.7024268769424!2d-83.97154938525155!3d35.75811813335977!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x885e9fd3fccccd2b%3A0x4b27a99931ed8fd8!2s333%20E%20Broadway%20Ave%2C%20Maryville%2C%20TN%2037804%2C%20USA!5e0!3m2!1sen!2sbd!4v1625719037629!5m2!1sen!2sbd" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+					</div-->
+					
+
+					<div class="gap"></div>
+					<h2><i class="fas fa-atom"></i> Features</h2>
+					<div class="contact">
+						<div class="table-responsive">
+							<table class="table table-bordered">
+								<tr>
+									<td class="w-300">Price</td>
+									<td>
+										{{ (annonce.prix_locat / 100)|format_currency('MAD') }} dh
+																			</td>
+								</tr>
+
+								<tr>
+									<td>Type</td>
+									<td>
+										 {{ annonce.voiture.type.title }} 
+									</td>
+								</tr>
+
+																<tr>
+									<td>Model Year</td>
+									<td>
+										{{ annonce.voiture.annee|date('Y') }}
+									</td>
+								</tr>
+																
+							</table>
+						</div>
+					</div>
+
+
+										<div class="gap"></div>
+					<!--h2><i class="fas fa-bullhorn"></i> Amenities</h2>
+					<div class="amenities">
+						<ul>
+																					<li><i class="fas fa-check-square"></i> Backup Camera</li>
+																					<li><i class="fas fa-check-square"></i> Air Conditioning</li>
+																					<li><i class="fas fa-check-square"></i> USB Ports</li>
+																					<li><i class="fas fa-check-square"></i> Speech Voice Recognition</li>
+																					<li><i class="fas fa-check-square"></i> Cross Traffic Alert</li>
+													</ul>
+					</div-->
+					
+
+										<div class="gap"></div>
+					<!--h2><i class="far fa-id-card"></i> Additional Features</h2>
+					<div class="contact">
+						<div class="table-responsive">
+							<table class="table table-bordered">
+																<tr>
+									<td class="w-300">Credit Card Allowed?</td>
+									<td>Yes</td>
+								</tr>
+																<tr>
+									<td class="w-300">Installment Available?</td>
+									<td>No</td>
+								</tr>
+															</table>
+						</div>
+					</div-->
+					
+
+					<div class="gap"></div>
+					<h2><i class="far fa-id-card"></i> Contact Information</h2>
+					<div class="contact">
+						<div class="table-responsive">
+							<table class="table table-bordered">
+																<tr>
+									<td class="w-200">Address</td>
+									<td>
+										<p>{{ sittig.footerAdrss }}</p>
+									</td>
+								</tr>
+								
+								<tr>
+									<td>Phone Number</td>
+									<td>
+										<p>{{ sittig.footerPhone }}</p>
+									</td>
+								</tr>
+
+								
+								
+							</table>
+						</div>
+					</div>
+
+					<div class="gap"></div>
+					<h2>Reviews (0)</h2>
+
+					<div class="review-overall">
+						<div class="review">
+                                                            <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                            						</div>
+						<div class="total">
+							                                (Overall 0 Out of 5)
+													</div>
+					</div>
+
+
+					<div class="reviews">
+
+                                                <span class="text-danger">No Review Found</span>
+                        
+					</div>
+
+
+					<div class="gap"></div>
+					<h2>Write a Review</h2>
+					<div class="review-form">
+
+						
+						<a href="https://demo.phpscriptpoint.com/carpoint/customer/login" class="login-to-review">Login to Review</a>
+						
+
+					</div>
+
+
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-12 col-sm-12">
+				<div class="listing-sidebar" id="sticky_sidebar">
+
+					<div class="ls-widget">
+						<!--h2>Agent</h2>
+						<div class="agent">
+							<div class="photo">
+																	<img src="https://demo.phpscriptpoint.com/carpoint/uploads/user_photos/9ead0b550b7e8cb1fe5351e7893bea6c.jpg" alt="">
+								
+							</div>
+							<div class="text">
+                                                                                                                                        <h3><a href="https://demo.phpscriptpoint.com/carpoint/agent/admin/1">Morshedul Arefin</a></h3>
+								<h4>Posted on 14 Jun, 2022</h4>
+							</div>
+						</div>
+						<div class="agent-contact">
+							<ul>
+																<li>
+									<i class="fas fa-map-marker-alt"></i> Khulna Khulna Bangladesh
+								</li>
+																								<li><i class="fas fa-phone-volume"></i> +8801912721070</li>
+																								<li><i class="fas fa-envelope"></i> admin@gmail.com</li>
+																								<li><a href="https://www.arefindev.com" target="_blank"><i class="fas fa-globe"></i> https://www.arefindev.com</a></li>
+															</ul>
+						</div>
+
+
+												<div class="agent-social">
+							<ul>
+																<li><a href="https://www.facebook.com/groups/arefindev" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+								
+								
+																<li><a href="https://www.linkedin.com/in/arefindev" target="_blank"><i class="fab fa-linkedin-in"></i></a></li>
+								
+								
+																<li><a href="https://www.youtube.com/channel/UCcfYd3bm-e_sLUK29abXb-A" target="_blank"><i class="fab fa-youtube"></i></a></li>
+															</ul>
+						</div>
+						
+						<a href="https://demo.phpscriptpoint.com/carpoint/agent/admin/1" class="btn btn-primary btn-block agent-view-profile">View Profile</a>
+					</div-->
+
+                    					<div class="ls-widget">
+						<h2>Opening Hours</h2>
+						<div class="openning-hour">
+							<div class="table-responsive">
+								<table class="table table-bordered">
+									<tr>
+										<td>Monday</td>
+										<td>9 AM to 5 PM</td>
+									</tr>
+									<tr>
+										<td>Tuesday</td>
+										<td>9 AM to 5 PM</td>
+									</tr>
+									<tr>
+										<td>Wednesday</td>
+										<td>9 AM to 5 PM</td>
+									</tr>
+									<tr>
+										<td>Thursday</td>
+										<td>9 AM to 5 PM</td>
+									</tr>
+									<tr>
+										<td>Friday</td>
+										<td>9 AM to 5 PM</td>
+									</tr>
+									<tr>
+										<td>Saturday</td>
+										<td>9 AM to 5 PM</td>
+									</tr>
+									<tr>
+										<td>Sunday</td>
+										<td>9 AM to 5 PM</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+                    
+					<div class="ls-widget">
+						<h2>Brands</h2>
+						<div class="category">
+							<ul>
+								{% for brand in brands %}
+									<li><a href="{{ path("annonce_with_brand", {id: brand.id})}}"><i class="fas fa-angle-right"></i> {{brand.name}}</a></li>
+																
+									
+								{% endfor %}
+																</ul>
+						</div>
+					</div>
+
+					<div class="ls-widget">
+						<h2>Locations</h2>
+						<div class="category">
+							<ul>
+								{% for loca in location %}
+									<li><a href="{{ path("annonce_with_location", {id: loca.id})}}"><i class="fas fa-angle-right"></i> {{loca.locale}}</a></li>
+																
+								{% endfor %}
+																		</ul>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

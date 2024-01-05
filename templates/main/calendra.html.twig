@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MainController!{% endblock %}
+    {% block stylesheets %}
+        <!--bootstrap5
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    -->
+    <style>
+        #calendrier{
+            width: 90%;
+            margin: auto;
+            /*min-height: 600px;margin:10% 20%*/
+        }
+        @media(max-width: 767px) {
+            #calendrier{
+                width: 90%;
+                margin: 20% 5%;
+        }
+        }
+    </style>
+    {% endblock %}
+
+{% block body %}
+<div class="container" style="">
+    <div id='calendrier'style=""></div>
+</div>
+{% endblock %} 
+{# block javascripts %}
+    
+
+<script>
+    window.onload = () => {
+        let calendarElt = document.querySelector("#calendrier")
+
+        let calendar = new FullCalendar.Calendar(calendarElt, {
+            initialView: 'dayGridMonth',
+            locale: 'fr',
+            timeZone: 'Europe/Paris',
+            headerToolbar: {
+                start: 'prev,next today',
+                center: 'title',
+                end: 'dayGridMonth,timeGridWeek'
+            },
+            events: {{ data|raw }},
+            editable: true,
+            eventResizableFromStart: true
+        })
+
+       
+        calendar.render()
+    }
+      </script>
+    {% endblock %} #}
+    {% block javascripts %}
+        <script>
+            window.onload = () => {
+                let calendarElt = document.querySelector("#calendrier")
+        
+                let calendar = new FullCalendar.Calendar(calendarElt, {
+                    initialView: 'dayGridMonth',
+                    locale: 'MA',
+                    timeZone: 'Europe/Paris',
+                    headerToolbar: {
+                        start: 'prev,next today',
+                        center: 'title',
+                        end: 'dayGridMonth,timeGridWeek'
+                    },
+                    events: {{ data|raw }},
+                    editable: true,
+                    eventResizableFromStart: true
+                })
+        
+                calendar.on('eventChange', (e) => {
+                    let url = `/api/${e.event.id}/edit`
+                    let donnees = {
+                        "title": e.event.title,
+                        "description": e.event.extendedProps.description,
+                        "start": e.event.start,
+                        "end": e.event.end,
+                        "backgroundColor": e.event.backgroundColor,
+                        "borderColor": e.event.borderColor,
+                        "textColor": e.event.textColor,
+                        "allDay": e.event.allDay
+                    }
+                    
+                    let xhr = new XMLHttpRequest
+        
+                    xhr.open("PUT", url)
+                    xhr.send(JSON.stringify(donnees))
+                })
+        
+                calendar.render()
+            }
+        </script>
+        
+        {% endblock %}

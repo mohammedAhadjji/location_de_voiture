@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    
+    <div class="page-banner" style="background-image: url('https://demo.phpscriptpoint.com/carpoint/uploads/page_banners/c15c06240e63faef21c06a891a52d721.jpg')">
+	<div class="page-banner-bg"></div>
+	<h1>Registrtion</h1>
+	<nav>
+		<ol class="breadcrumb justify-content-center">
+			<li class="breadcrumb-item"><a href="{{ path('app_home')}}">Home</a></li>
+			<li class="breadcrumb-item active">Registrtion</li>
+		</ol>
+	</nav>
+</div>
+    
+ <div class="container" style="width:60%;margin:auto">
+
+		
+<div style="margin:8% 10%">
+			<h2>Registration</h2>
+    
+    {% form_theme registrationForm 'bootstrap_5_layout.html.twig' %}
+{% for flash_error in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+    {{ form_start(registrationForm) }}
+        {{ form_row(registrationForm.name) }}
+        {{ form_row(registrationForm.firstname) }}
+        {{ form_row(registrationForm.email) }}
+        {{ form_row(registrationForm.plainPassword, {
+            label: 'Password'
+        }) }}
+        {{ form_row(registrationForm.agreeTerms) }}
+
+        <button type="submit" class="btn primary">Enregistrer</button>
+    {{ form_end(registrationForm) }}
+    </div></div>
+    
+
+
+    
+{% endblock %}

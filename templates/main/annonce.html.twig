@@ -1,0 +1,107 @@
+{% extends 'base.html.twig' %}
+
+    {% block title %}Listing
+    {% endblock %}
+    
+    {% block body %}
+        <!-- End Navbar Area -->
+
+		
+<div class="page-banner" style="background-image: url('https://demo.phpscriptpoint.com/carpoint/uploads/page_banners/17257fb19420ac1317819843235591d9.jpg')">
+<div class="page-banner-bg"></div>
+<h1>Listing</h1>
+<nav>
+    <ol class="breadcrumb justify-content-center">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item active">Listing</li>
+    </ol>
+</nav>
+</div>
+
+<div class="page-content">
+<div class="container">
+    <div class="row"> <div class="col">
+        
+     
+    <div class=" listing pt_0 pb_0" style="padding: 2%;margin:5px">
+    <div class="heading" style="borde:solid black">
+        <h2>Filters</h2>
+    </div>
+    <div class="listing-filter">
+    <div class="lf-widget">
+        {{ form_start(form, {'action': path('liste_annonces'), 'method': 'POST'}) }}
+
+        {{ form_widget(form) }}
+		
+        <input type="hidden" name="token" value="{{ csrf_token('annonces-item') }}">
+        <button  class = "btn primary"
+            style ="display: inline-block;margin:10px"type="submit">Rechercher</button>
+    
+    {{ form_end(form) }}
+    </div>
+   
+      </div>
+ </div>
+      <div class="col">
+       
+     
+    <div class="row listing pt_0 pb_0">
+        
+
+        {% for annonce in Annonces %}
+			<div class="col-lg-4 col-md-6 col-sm-12 wow fadeInLeft" style="">
+				<div class="listing-item effect-item">
+					<div class="photo image-effect">
+						<a href="{{ path("annonce_detail", {id: annonce.id})}}"><img src="{{ asset('uploads/attachments/' ~ annonce.voiture.images[0].name) }}" alt="">
+						</a>
+						<div class="brand" >
+							<a href="{{ path("annonce_with_brand", {id: annonce.voiture.modele.brand.id})}}" style="background-color: {{ sittig.ThemeColor }};">{{ annonce.voiture.modele.brand.name }}</a>
+						</div>
+						<div class="wishlist">
+							<a href="https://demo.phpscriptpoint.com/carpoint/customer/wishlist/add/13">
+								<i class="fas fa-heart"></i>
+							</a>
+						</div>
+						<div class="featured-text">plus {{annonce.occur}} <i class="fa-solid fa-eye"></i></div>
+					</div>
+					<div class="text">
+
+						<div class="type-price">
+							<div class="type">
+								<div class="inner-new">
+									{{ annonce.voiture.type.title }}
+								</div>
+							</div>
+							<div class="price">
+								Price: {{ (annonce.prix_locat / 100)|format_currency('MAD') }} dh 
+							</div>
+						</div>
+
+						<h3>
+							<a href="https://demo.phpscriptpoint.com/carpoint/listing-detail/13/2015-mazda-mazda5-sport">{{ annonce.voiture.annee|date('Y') }} {{ annonce.voiture.modele.name }} {{ annonce.voiture.modele.brand.name }}</a>
+						</h3>
+						<div class=" location"style="color: {{ sittig.ThemeColor }};">
+							<i class="fas fa-map-marker-alt"></i>
+							{{ annonce.voiture.location.locale }}
+						</div>
+
+
+						<!--div class="review">
+							<i class="far fa-star"></i>
+							<i class="far fa-star"></i>
+							<i class="far fa-star"></i>
+							<i class="far fa-star"></i>
+							<i class="far fa-star"></i>
+							<span>(0 Reviews)</span>
+						</div-->
+
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+    </div>
+</div>
+</div></div> </div></div>
+
+    {% endblock %}
+   

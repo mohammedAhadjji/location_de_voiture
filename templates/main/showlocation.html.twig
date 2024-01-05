@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+    {% block title %}Listing Location
+    {% endblock %}
+    
+    {% block body %}
+        <!-- End Navbar Area -->
+
+		
+    <div class="page-banner" style="background-image: url('https://demo.phpscriptpoint.com/carpoint/uploads/page_banners/023f9a040e41edac2cd1a37fe130be7a.jpg')">
+    <div class="page-banner-bg"></div>
+    <h1>Listing Location</h1>
+    <nav>
+        <ol class="breadcrumb justify-content-center">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active">Listing Location</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="page-content popular-city">
+    <div class="container">
+        <div class="row">
+            {% for loca in location %}
+	
+
+                <div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp">
+                    <div class="popular-city-item effect-item">
+                        <div class="photo image-effect">
+                            <img src="{{ asset('uploads/attachments/' ~ loca.name) }}" alt="">
+                        </div>
+                        <div class="text">
+                            <h4>{{loca.locale}}</h4>
+                            {% set variable_name = 0 %}
+                            {% for v in annonces %}
+                                {% if v.voiture.location.locale == loca.locale %}
+                                    {% set variable_name = variable_name + 1 %}
+                                {% endif %}
+                            {% endfor %}
+                            <p>{{ variable_name }} Listings</p>
+                        </div>
+                        <a href="{{ path("annonce_with_location", {id: loca.id})}}"></a>
+                    </div>
+                </div>{% endfor %}
+                        </div>
+    </div>
+</div>
+
+
+
+    {% endblock %}

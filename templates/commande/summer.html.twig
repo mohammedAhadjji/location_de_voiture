@@ -1,0 +1,112 @@
+﻿{% extends 'base.html.twig' %}
+{% block stylesheets %}
+{{parent()}}
+ <link type="text/css" rel="stylesheet" href="{{ asset('css/waitMe.css') }}">
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+<meta http-equiv="Content-Language" content="tr">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-9">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="now">
+
+<div class="element-wrapper">
+	<div class="element-box">
+		<h5 class="form-header text-uppercase pt-0">
+			<span>RÉSUMÉ DE LA COMMANDE</span>
+		</h5>
+		<div class="row">
+			<div class="col-md-6">
+			    <form id="form_cmi" method="post" action="{{path('request_sendData')}}">
+					<input type="hidden" name="clientid" value="{{clientId}}"> 
+					<input type="hidden" name="amount" value="{{total}}">
+					<input type="hidden" name="okUrl" value="{{successRedirect}}">
+					<input type="hidden" name="failUrl" value="{{failRedirect}}">
+					<input type="hidden" name="TranType" value="PreAuth">
+					<input type="hidden" name="callbackUrl" value="{{calbackRedirect}}">
+					<input type="hidden" name="shopurl" value="{{cancelRedirect}}">
+					<input type="hidden" name="currency" value="">
+					<input type="hidden" name="rnd" value="">
+					<input type="hidden" name="storetype" value="3D_PAY_HOSTING">
+					<input type="hidden" name="hashAlgorithm" value="ver3">
+					<input type="hidden" name="lang" value="fr">
+					<input type="hidden" name="refreshtime" value="5">
+					<!-- begin adress -->
+					<div class="form-group">
+						<label for="">Nom et Prénom</label>
+						<input required value="" type="text" class="form-control" name="BillToName" id="fullname" placeholder=""/>
+					</div>
+					<div class="form-group">
+						<label for="">Societé</label>
+						<input required value="" type="text" class="form-control" name="BillToCompany" id="comanyname" placeholder=""/>
+					</div>
+					<div class="form-group">
+						<label for="">Adresse</label>
+						<input required value="" type="text" class="form-control" name="BillToStreet1" id="adresse" placeholder=""/>
+					</div>
+					<div class="form-group">
+						<label for="">Code postal</label>
+						<input required value="" type="text" class="form-control" name="BillToPostalCode" id="codepostal" placeholder=""/>
+					</div>
+					<div class="form-group">
+						<input type="hidden" value="504" type="text" class="form-control" name="BillToCountry" id="pays" placeholder=""/>
+					</div>
+					<div class="form-group">
+						<label for="">État/Province</label>
+						<input required value="" type="text" class="form-control" name="BillToStateProv" id="province" placeholder=""/>
+					</div>
+					<div class="form-group">
+						<label for="">Ville</label>
+						<input required value="" type="text" class="form-control" name="BillToCity" id="ville" placeholder=""/>
+					</div>
+					<div class="form-group">
+						<label for="">Numéro de téléphone</label>
+						<input required value="" type="text" class="form-control" name="tel" id="tel" placeholder=""/>
+					</div>
+					<div class="form-group">
+						<label for="">E-mail</label>
+						<input required value="" type="email" class="form-control" name="email" id="email" placeholder=""/>
+					</div>
+					
+					<div class="form-buttons-w">
+						<button id="checkout" onclick="checkout(event)" class="btn btn-outline-danger" type="submit">Procéder au paiement</button>
+						<button  class="btn btn-outline-danger" >Valider la commande </button>
+					</div>
+					<!-- end adress -->
+					<input type="hidden" name="encoding" value="UTF-8">
+					<input type="hidden" name="oid" value="{{commandeId}}"> 	
+				</form>
+			</div>
+			<div class="col-md-6">
+				<a style=" direction: rtl;" class="element-box el-tablo four" href="javascript:void(0)">
+					<div class="d-flex justify-content-between align-items-center">
+						<div style="height: auto;" class="el-icon">
+							<i style="width: 100%;padding: 5px;" class="os-icon os-icon-shopping-cart"></i>
+						</div>
+						<div class="value">
+							Total de la commande :	{{total}} MAD
+						</div>
+					</div>
+					<div style="text-align: end;" class="el-title">Sous-total : {{sous_total}} MAD</div>
+					<div style="text-align: end;" class="el-title">Remise	 : {{remise}} MAD</div>
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+{{parent()}}
+<script>
+    function checkout(event){
+		event.preventDefault();
+		$("#form_cmi").submit();
+		return false;
+	}
+</script>
+<script src="{{ asset('js/waitMe.js') }}"></script>
+{% endblock %}

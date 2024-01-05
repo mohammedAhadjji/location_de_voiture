@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+    {% block title %}Listing Brand
+    {% endblock %}
+    
+    {% block body %}
+
+
+
+
+
+
+
+        <!-- End Navbar Area -->
+
+		
+<div class="page-banner" style="background-image: url('https://demo.phpscriptpoint.com/carpoint/uploads/page_banners/0c753632e3dc3980af6fc3c30ba32a2b.jpg')">
+<div class="page-banner-bg"></div>
+<h1>Listing Brand</h1>
+<nav>
+    <ol class="breadcrumb justify-content-center">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item active">Listing Brand</li>
+    </ol>
+</nav>
+</div>
+
+
+<div class="page-content popular-city">
+<div class="container">
+    <div class="row">
+        {% for brand in brands %}
+					
+				
+            <div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp">
+                <div class="popular-city-item effect-item">
+                    <div class="photo image-effect">
+                        <img src="{{ asset('uploads/attachments/' ~ brand.imgBrand) }}" alt="">
+                    </div>
+                    <div class="text">
+                        <h4>{{ brand.name }}</h4>
+                        <p> {% set totalAnnonces = 0 %}
+
+                            {% for modele in brand.modeles %}
+                                {% for voiture in modele.voitures %}
+                                    {% set totalAnnonces = totalAnnonces + voiture.annonces | length %}
+                                {% endfor %}
+                            {% endfor %}
+                            
+                            {{ totalAnnonces }} Items</p>
+                    </div>
+                    <a href="{{ path("annonce_with_brand", {id: brand.id})}}"></a>
+                </div>
+            </div>
+        {% endfor %}
+                </div>
+</div>
+</div>
+
+  
+    
+    {% endblock %}

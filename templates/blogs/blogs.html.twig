@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+    {% block title %}Listing
+    {% endblock %}
+    
+    {% block body %}
+
+
+<!-- End Navbar Area -->
+
+		
+<div class="page-banner" style="background-image: url('https://demo.phpscriptpoint.com/carpoint/uploads/page_banners/4ea2ecf38750ca3c1efd203a3cb27b5e.jpg')">
+	<div class="page-banner-bg"></div>
+	<h1>Blog</h1>
+	<nav>
+		<ol class="breadcrumb justify-content-center">
+			<li class="breadcrumb-item"><a href="/">Home</a></li>
+			<li class="breadcrumb-item active">Blog</li>
+		</ol>
+	</nav>
+</div>
+
+<div class="page-content">
+	<div class="container">
+		<div class="row">
+            {% for blog in blogs %}
+                <div class="col-md-4">
+				<div class="blog-item">
+					<div class="featured-photo">
+						<a href="{{ path("blogs_detail", {id: blog.id})}}"><img src="{{asset('/uploads/attachments/' ~blog.images[0].name)}}"></a>
+					</div>
+					<div class="text">
+						<h2>
+							<a href="{{ path("blogs_detail", {id: blog.id})}}"> {{blog.title}} </a>
+						</h2>
+						<div class="short-description">
+							<p>
+								<p>  {% set text = blog.content|striptags|slice(0,60)|trim %}
+									{{ text|replace({'<img': '', '/>': ''})|raw }}
+									{% if text|length > 60 %}...{% endif %}...</p>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+            {% endfor %}
+						
+						<!--div class="col-md-4">
+				<div class="blog-item">
+					<div class="featured-photo">
+						<a href="https://demo.phpscriptpoint.com/carpoint/post/an-qui-falli-sadipscing-susci-piantur-at-congue"><img src="https://demo.phpscriptpoint.com/carpoint/uploads/post_photos/8fab9f3f622ff6d09db3c031365c3a6a.jpg"></a>
+					</div>
+					<div class="text">
+						<h2>
+							<a href="https://demo.phpscriptpoint.com/carpoint/post/an-qui-falli-sadipscing-susci-piantur-at-congue">An qui falli sadipscing susci piantur at congue</a>
+						</h2>
+						<div class="short-description">
+							<p>
+								<p>Lorem ipsum dolor sit amet, ea qui tation adversarium definitionem, eu labitur denique est. Ad duo quando recusabo petentium.</p>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+						<div class="col-md-4">
+				<div class="blog-item">
+					<div class="featured-photo">
+						<a href="https://demo.phpscriptpoint.com/carpoint/post/debitis-consequuntur-sea-eu-ex-agam"><img src="https://demo.phpscriptpoint.com/carpoint/uploads/post_photos/0dad7ff384e8dee92414a9e824423bac.jpg"></a>
+					</div>
+					<div class="text">
+						<h2>
+							<a href="https://demo.phpscriptpoint.com/carpoint/post/debitis-consequuntur-sea-eu-ex-agam">Debitis consequuntur sea eu ex agam</a>
+						</h2>
+						<div class="short-description">
+							<p>
+								<p>Lorem ipsum dolor sit amet, ea qui tation adversarium definitionem, eu labitur denique est. Ad duo quando recusabo petentium.</p>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div-->
+					</div>
+		<div class="row">
+			<div class="col-md-12">
+            	
+        	</div>
+		</div>
+	</div>
+</div>
+
+
+    {% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reservation{% endblock %}
+
+{% block stylesheets %}
+    <!--bootstrap5  -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    {{ encore_entry_link_tags('app') }}
+{% endblock %}
+
+
+{% block body %}
+    <div class="container" style="min-height: 600px;margin:5% 20%">
+    <h1>Reservation</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ reservation.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ reservation.title }}</td>
+            </tr>
+            <tr>
+                <th>Start</th>
+                <td>{{ reservation.start ? reservation.start|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>End</th>
+                <td>{{ reservation.end ? reservation.end|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ reservation.description }}</td>
+            </tr>
+            <tr>
+                <th>All_day</th>
+                <td>{{ reservation.allDay ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Background_color</th>
+                <td>{{ reservation.backgroundColor }}</td>
+            </tr>
+            <tr>
+                <th>Border_color</th>
+                <td>{{ reservation.borderColor }}</td>
+            </tr>
+            <tr>
+                <th>Text_color</th>
+                <td>{{ reservation.textColor }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_reservation_index') }}">back to list</a>
+
+    <a href="{{ path('app_reservation_edit', {'id': reservation.id}) }}">edit</a>
+
+    {{ include('reservation/_delete_form.html.twig') }}</div>
+{% endblock %}

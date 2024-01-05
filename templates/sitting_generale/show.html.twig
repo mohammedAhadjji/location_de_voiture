@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SittingGenerale{% endblock %}
+
+{% block body %}
+    <h1>SittingGenerale</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ sitting_generale.id }}</td>
+            </tr>
+            <tr>
+                <th>Logo_img</th>
+                <td>{{ sitting_generale.logoImg }}</td>
+            </tr>
+            <tr>
+                <th>Favicon_img</th>
+                <td>{{ sitting_generale.faviconImg }}</td>
+            </tr>
+            <tr>
+                <th>Theme_color</th>
+                <td>{{ sitting_generale.themeColor }}</td>
+            </tr>
+            <tr>
+                <th>Footer_adrss</th>
+                <td>{{ sitting_generale.footerAdrss }}</td>
+            </tr>
+            <tr>
+                <th>Footer_mail</th>
+                <td>{{ sitting_generale.footerMail }}</td>
+            </tr>
+            <tr>
+                <th>Footer_phone</th>
+                <td>{{ sitting_generale.footerPhone }}</td>
+            </tr>
+            <tr>
+                <th>Custome_listing_option</th>
+                <td>{{ sitting_generale.customeListingOption ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_sitting_generale_index') }}">back to list</a>
+
+    <a href="{{ path('app_sitting_generale_edit', {'id': sitting_generale.id}) }}">edit</a>
+
+    {{ include('sitting_generale/_delete_form.html.twig') }}
+{% endblock %}
