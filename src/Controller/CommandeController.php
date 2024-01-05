@@ -23,7 +23,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CommandeController extends AbstractController
-{    
+{   
     private $or;
     private $doctrine;
     private $sittig;
@@ -185,7 +185,9 @@ class CommandeController extends AbstractController
          $config=$em->getRepository(Config::class)->find(1);
          $storeKey = $config->getStoreKey() ;
          
-	
+         $em = $doctrine->getManager();
+         $config = $em->getRepository(Config::class)->find(1);
+         $storeKey = $config->getStoreKey();
 	
         $postParams = array();
         foreach ($_POST as $key => $value){
@@ -266,6 +268,7 @@ class CommandeController extends AbstractController
         return new JsonResponse("ok",Response::HTTP_OK);
  
     }
+
 
     /**
      * @Route("/request/cancel", name="cancel_request")
@@ -630,5 +633,7 @@ class CommandeController extends AbstractController
         return [false, $panier];
     }
     
- 
 }
+
+}
+
