@@ -11,6 +11,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class UsersCrudController extends AbstractCrudController
@@ -27,6 +28,7 @@ class UsersCrudController extends AbstractCrudController
            // IdField::new('id'),
             TextField::new('name'),
             TextField::new('firstname'),
+            ImageField::new('photo')->setUploadDir('/public/uploads/attachments')->setBasePath('/uploads/attachments'),
              EmailField::new('email'),
              BooleanField::new('isVerified'),
              

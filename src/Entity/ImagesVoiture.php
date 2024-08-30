@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ImagesVoitureRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ImagesVoitureRepository::class)]
@@ -17,6 +18,7 @@ class ImagesVoiture
     private ?int $id = null;
 
     #[ORM\Column(length: 255, type:'string', nullable: true)]
+    #[Groups(['annonces'])]
     private ?string $name = null;
 
     #[Vich\UploadableField(mapping:'products',fileNameProperty:'name')]

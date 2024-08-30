@@ -1,15 +1,9 @@
-{% extends "@EasyAdmin/page/content.html.twig" %}
-   
-    {% block stylesheets %}
-        
-        <style>
-            /* Change the background color of the dashboard */
-            
-            aside {
-            background-color:#594fdf00 !important; /* Change this to your desired color */
-        }
-        </style>
-    {% endblock %}
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/admin_custom.css') }}">
+{% endblock %}
 {% block content %}
     <div class="container-fluid">
 

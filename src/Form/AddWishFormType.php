@@ -48,7 +48,7 @@ class AddWishFormType extends AbstractType
             'attr' => [
                 'class' => 'btn',
                 'style' => sprintf(
-                    'background-color: %s; color: white; padding: 5px 20px; margin: 10px',
+                    'background-color: %s; color: white; padding: 5px 20px;margin:15px 0',
                     $sittingGenerale->getThemeColor()
                 ),
             ],

@@ -1,107 +1,184 @@
 {% extends 'base.html.twig' %}
 
-    {% block title %}Listing
-    {% endblock %}
-    
-    {% block body %}
-        <!-- End Navbar Area -->
+{% block title %}Listing{% endblock %}
 
-		
+{% block body %}
 <div class="page-banner" style="background-image: url('https://demo.phpscriptpoint.com/carpoint/uploads/page_banners/17257fb19420ac1317819843235591d9.jpg')">
-<div class="page-banner-bg"></div>
-<h1>Listing</h1>
-<nav>
-    <ol class="breadcrumb justify-content-center">
-        <li class="breadcrumb-item"><a href="/">Home</a></li>
-        <li class="breadcrumb-item active">Listing</li>
-    </ol>
-</nav>
+    <div class="page-banner-bg"></div>
+    <h1>Listing</h1>
+    <nav>
+        <ol class="breadcrumb justify-content-center">
+            <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Home</a></li>
+            <li class="breadcrumb-item active">Listing</li>
+        </ol>
+    </nav>
 </div>
-
-<div class="page-content">
+<br>
 <div class="container">
-    <div class="row"> <div class="col">
-        
-     
-    <div class=" listing pt_0 pb_0" style="padding: 2%;margin:5px">
-    <div class="heading" style="borde:solid black">
-        <h2>Filters</h2>
-    </div>
-    <div class="listing-filter">
-    <div class="lf-widget">
-        {{ form_start(form, {'action': path('liste_annonces'), 'method': 'POST'}) }}
+    <div class="row listing pt-0 pb-0">
+        <style>
+/*.filter-sidebar {
+                display: inline-block !important;
+                width: 30% !important;
+                height: 100% !important;
+            }
+            .listing-card {
+                margin-top: 20px;
+            }*/
+        </style>
 
-        {{ form_widget(form) }}
-		
-        <input type="hidden" name="token" value="{{ csrf_token('annonces-item') }}">
-        <button  class = "btn primary"
-            style ="display: inline-block;margin:10px"type="submit">Rechercher</button>
-    
-    {{ form_end(form) }}
-    </div>
-   
-      </div>
- </div>
-      <div class="col">
-       
-     
-    <div class="row listing pt_0 pb_0">
-        
+        <!-- Formulaire de filtrage -->
+        <div class="col-lg-4 col-md-6 col-sm-12 filter-sidebar">
+            <form id="searchFormId" >
+                <div class="listing-filter">
+                    <div class="lf-heading">Filters</div>
+                    <div class="lf-widget">
+                        <input type="text" id="text" name="text" class="form-control" placeholder="Find anything ...">
+                    </div>
+                    <div class="lf-widget">
+                        <h2>Type</h2>
+                        <select name="listing_type" class="form-control" id="listing_type">
+                            <option value="">All</option>
+                            {% for type in types %}
+                                <option value="{{ type.id }}">{{ type.title }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="lf-widget">
+                        <h2>Brands</h2>
+                        <div class="form-check">
+                            <input name="brand" class="form-check-input" type="radio" value="" id="brand_all" checked>
+                            <label class="form-check-label" for="brand_all">All</label>
+                        </div>
+                        {% for brand in brandslisting %}
+                            <div class="form-check">
+                                <input name="brand" class="form-check-input" type="radio" value="{{ brand.id }}" id="brand_{{ brand.id }}">
+                                <label class="form-check-label" for="brand_{{ brand.id }}">{{ brand.getName() }}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="lf-widget">
+                        <h2>Locations</h2>
+                        {% for locat in locationListing %}
+                            <div class="form-check">
+                                <input name="location" class="form-check-input" type="radio" value="{{ locat.id }}" id="location_{{ locat.id }}">
+                                <label class="form-check-label" for="location_{{ locat.id }}">{{ locat.locale }}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="form-control filter-button btn btn-primary" value="Filter">
+                    </div>
+                </div>
+            </form>
+        </div>
 
-        {% for annonce in Annonces %}
-			<div class="col-lg-4 col-md-6 col-sm-12 wow fadeInLeft" style="">
-				<div class="listing-item effect-item">
-					<div class="photo image-effect">
-						<a href="{{ path("annonce_detail", {id: annonce.id})}}"><img src="{{ asset('uploads/attachments/' ~ annonce.voiture.images[0].name) }}" alt="">
-						</a>
-						<div class="brand" >
-							<a href="{{ path("annonce_with_brand", {id: annonce.voiture.modele.brand.id})}}" style="background-color: {{ sittig.ThemeColor }};">{{ annonce.voiture.modele.brand.name }}</a>
-						</div>
-						<div class="wishlist">
-							<a href="https://demo.phpscriptpoint.com/carpoint/customer/wishlist/add/13">
-								<i class="fas fa-heart"></i>
-							</a>
-						</div>
-						<div class="featured-text">plus {{annonce.occur}} <i class="fa-solid fa-eye"></i></div>
-					</div>
-					<div class="text">
-
-						<div class="type-price">
-							<div class="type">
-								<div class="inner-new">
-									{{ annonce.voiture.type.title }}
-								</div>
-							</div>
-							<div class="price">
-								Price: {{ (annonce.prix_locat / 100)|format_currency('MAD') }} dh 
-							</div>
-						</div>
-
-						<h3>
-							<a href="https://demo.phpscriptpoint.com/carpoint/listing-detail/13/2015-mazda-mazda5-sport">{{ annonce.voiture.annee|date('Y') }} {{ annonce.voiture.modele.name }} {{ annonce.voiture.modele.brand.name }}</a>
-						</h3>
-						<div class=" location"style="color: {{ sittig.ThemeColor }};">
-							<i class="fas fa-map-marker-alt"></i>
-							{{ annonce.voiture.location.locale }}
-						</div>
-
-
-						<!--div class="review">
-							<i class="far fa-star"></i>
-							<i class="far fa-star"></i>
-							<i class="far fa-star"></i>
-							<i class="far fa-star"></i>
-							<i class="far fa-star"></i>
-							<span>(0 Reviews)</span>
-						</div-->
-
-					</div>
-				</div>
-			</div>
-			{% endfor %}
+        <!-- Liste des annonces -->
+        <div class="col-lg-8 col-md-6 col-sm-12">
+            <div class="row align-items-start" id="annoncesContainer">
+                {% if Annonces|length > 0 %}
+                     {% include 'partial/annonces.html.twig' with {'Annonces': Annonces} %}
+                {% else %}
+                    <p>No listings found.</p>
+                {% endif %}
+            </div>
+            <div class="col-12">
+                <div class="psp_pagination d-flex justify-content-center">
+                    <nav aria-label="Pagination">
+                        <ul class="pagination"></ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-</div></div> </div></div>
 
-    {% endblock %}
-   
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('searchFormId');
+        const resultContainer = document.getElementById('annoncesContainer');
+       
+        form.addEventListener('change', function () {
+            const text = document.getElementById('text').value || '';
+            const type = document.getElementById('listing_type').value || '';
+            const brand = document.querySelector('input[name="brand"]:checked')?.value || '';
+            const location = document.querySelector('input[name="location"]:checked')?.value || '';
+              event.preventDefault();
+           resultContainer.innerHTML = '';
+		    const xhr = new XMLHttpRequest();
+            xhr.open('GET', `{{ path('api_annonces_search') }}?mots=${encodeURIComponent(text)}&type=${encodeURIComponent(type)}&brand=${encodeURIComponent(brand)}&location=${encodeURIComponent(location)}`);
+
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    try {
+                        const data = JSON.parse(xhr.responseText);
+                        if (Array.isArray(data) && data.length > 0) {
+                            resultContainer.innerHTML = '';
+                            data.forEach(annonce => {
+                                const imageUrl = annonce.voiture.images?.[0]?.name ? `{{ asset('uploads/attachments/') }}${annonce.voiture.images[0].name}` : '';
+                                const brandName = annonce.voiture.brand?.name || 'Unknown Brand';
+                                const typeTitle = annonce.voiture.type?.title || 'Unknown Type';
+                                const modelName = annonce.voiture.modele?.name || 'Unknown Model';
+                                const carYear = annonce.voiture.annee ? new Date(annonce.voiture.annee).getFullYear() : 'Unknown Year';
+                                const location = annonce.voitureLocale || 'Unknown Location';
+
+                                const html = `
+                                    <div class="col-lg-5 col-md-4 col-sm-12 wow fadeInUp">
+                                        <div class="listing-item effect-item">
+                                            <div class="photo image-effect">
+                                                <a href="/annonces/detail/${annonce.id}">
+                                                    <img src="${imageUrl}" alt="Image voiture">
+                                                </a>
+                                                <div class="brand">
+                                                    <a href="#" style="background-color: #0056b3;">
+                                                        ${brandName}
+                                                    </a>
+                                                </div>
+                                                <div class="wishlist">
+                                                    <a href="/annonces/detail/${annonce.id}">
+                                                        <i class="fas fa-heart"></i>
+                                                    </a>
+                                                </div>
+                                                <div class="featured-text">plus ${annonce.occur} <i class="fa-solid fa-eye"></i></div>
+                                            </div>
+                                            <div class="text">
+                                                <div class="type-price">
+                                                    <div class="type">
+                                                        <div class="inner-used">${typeTitle}</div>
+                                                    </div>
+                                                    <div class="price">MAD ${annonce.prix_locat / 100 }.00 dh</div>
+                                                </div>
+                                                <h3>
+                                                    <a href="#">
+                                                        ${carYear} ${annonce.title} ${brandName}
+                                                    </a>
+                                                </h3>
+                                                <div class="location" style="color: #0056b3;">
+                                                    <i class="fas fa-map-marker-alt"></i> ${location}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>`;
+                                
+                                resultContainer.insertAdjacentHTML('beforeend', html);
+                            });
+                        } else {
+                            resultContainer.innerHTML = '<p>No listings found.</p>';
+                        }
+                    } catch (error) {
+                        resultContainer.innerHTML = '<p>There was an error processing the data.</p>';
+                    }
+                } else {
+                    resultContainer.innerHTML = '<p>Error fetching listings.</p>';
+                }
+            };
+
+            xhr.onerror = function () {
+                resultContainer.innerHTML = '<p>Network error, please try again later.</p>';
+            };
+
+            xhr.send();
+        });
+    });
+</script>
+{% endblock %}

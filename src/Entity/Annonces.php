@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\AnnoncesRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: AnnoncesRepository::class)]
 #[ORM\Index(name: 'annonces_ids', columns: ['title', 'descriptions'], flags: ['fulltext'])]
@@ -20,31 +21,43 @@ class Annonces
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['annonces'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['annonces'])]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE,nullable: true)]
+    #[Groups(['annonces'])]
     public ?\DateTimeInterface $created_at = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['annonces'])]
     private ?string $descriptions = null;
 
     #[ORM\Column]
+    #[Groups(['annonces'])]
     public ?int $prix_locat = null;
 
     #[ORM\ManyToOne(inversedBy: 'annonces')]
+    #[Groups(['annonces'])]
     public ?Voiture $voiture = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['annonces'])]
     private ?string $voitureLocale = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['annonces'])]
     private ?string $brandVoiture = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['annonces'])]
     private ?int $occur = null;
+
+    #[ORM\ManyToOne(inversedBy: 'Annonces')]
+    private ?Reservation $reservation = null;
 
     public function getId(): ?int
     {
@@ -155,10 +168,29 @@ class Annonces
     {
         return $this->occur;
     }
-
+    public function __toString(): string
+    {
+        return sprintf(
+            'Titre: %s, Prix de location: %d dh',
+            $this->title ?? 'Non défini',
+            $this->prix_locat/100 ?? 0
+        );
+    }
     public function setOccur(?int $occur): static
     {
         $this->occur = $occur;
+
+        return $this;
+    }
+
+    public function getReservation(): ?Reservation
+    {
+        return $this->reservation;
+    }
+
+    public function setReservation(?Reservation $reservation): static
+    {
+        $this->reservation = $reservation;
 
         return $this;
     }

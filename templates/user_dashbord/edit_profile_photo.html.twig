@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Profile{% endblock %}
+
+{% block body %}
+<div class="page-banner" style="background-image: url('https://demo.phpscriptpoint.com/carpoint/uploads/page_banners/7eb1650ca5075e2b8c9d96f6ab43839e.jpg')">
+    <div class="page-banner-bg"></div>
+    <h1>Edit Profile Photo</h1>
+    <nav>
+        <ol class="breadcrumb justify-content-center">
+            <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Home</a></li>
+            <li class="breadcrumb-item active">Edit Profile Photo</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                {% include 'partial/_saidbar_user_dashbord.html.twig'  %}
+            </div>
+            <div class="col-md-9">
+            {% for message in app.flashes('error') %}
+                    <div class="alert alert-danger">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                 {% for  message in app.flashes('message') %}
+                    
+                        <div class="alert alert-success">
+                            {{ message }}
+                        </div>
+                    {% endfor %} 
+                <h2>Modification Photo du Profile </h2>
+                 <form method="post" action="{{ path('app_user_edit_profile') }}" enctype="multipart/form-data">
+                    {{ form_start(form) }}
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            {# Affichage de l'image actuelle de l'utilisateur #}
+                            <div class="mb-3">
+                                <img id="profileImage" src="{{ asset('uploads/attachments/' ~ user.photo) }}" alt="Profile Image" class="img-thumbnail" style="max-width: 150px;">
+                            </div>
+
+                            {# Champ pour sélectionner une nouvelle image #}
+                            <div class="mb-3">
+                                {{ form_row(form.name_file) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <br><br>
+                    <button type="submit" class="btn btn-success">Save Changes</button>
+                    {{ form_end(form) }}
+                </form>
+                {# JavaScript pour prévisualiser l'image sélectionnée #}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const input = document.getElementById('{{ form.name_file.vars.id }}');
+    const profileImage = document.getElementById('profileImage');
+
+    input.addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                profileImage.src = e.target.result; // Remplacer l'image affichée par la nouvelle image sélectionnée
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+});
+</script>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

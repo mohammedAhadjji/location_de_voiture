@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\NotNull;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: VoitureRepository::class)]
 class Voiture
@@ -17,12 +19,15 @@ class Voiture
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups(['annonces'])]
     private ?\DateTimeInterface $annee = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['annonces'])]
     private ?bool $desponibilite = null;
 
     #[ORM\OneToMany(mappedBy: 'voiture', targetEntity: ImagesVoiture::class,cascade:["persist","remove"])]
+    #[Groups(['annonces'])]
     private Collection $images;
 
     #[ORM\OneToMany(mappedBy: 'voiture', targetEntity: Annonces::class,cascade:["remove"])]
@@ -32,13 +37,20 @@ class Voiture
     private Collection $reservations;
 
     #[ORM\ManyToOne(inversedBy: 'voitures')]
+    #[Groups(['annonces'])]
     private ?Modele $modele = null;
 
     #[ORM\ManyToOne(inversedBy: 'voitures')]
+    #[Groups(['annonces'])]
     private ?Type $type = null;
 
     #[ORM\ManyToOne(inversedBy: 'voitures')]
+    #[Groups(['annonces'])]
     public ?Location $location = null;
+
+    #[ORM\ManyToOne(inversedBy: 'voitures')]
+    #[Groups(['annonces'])]
+    private ?Brand $brand = null;
 
    
     public function __construct()
@@ -229,6 +241,18 @@ class Voiture
 
     /**
      * Get the value of location
-     */ 
+     */
+
+    public function getBrand(): ?Brand
+    {
+        return $this->brand;
+    }
+
+    public function setBrand(?Brand $brand): static
+    {
+        $this->brand = $brand;
+
+        return $this;
+    } 
    
 }

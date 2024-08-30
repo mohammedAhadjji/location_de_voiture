@@ -31,7 +31,7 @@
 
 		<link rel="icon" type="image/png" href="{{ asset('uploads/attachments/' ~sittig.faviconImg ) }}">
 
-		<!-- All CSS -->
+	<!-- All CSS -->
 <link rel="stylesheet" href="https://demo.phpscriptpoint.com/carpoint/frontend/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://demo.phpscriptpoint.com/carpoint/frontend/css/jquery-ui.css">
 <link rel="stylesheet" href="https://demo.phpscriptpoint.com/carpoint/frontend/css/animate.min.css">
@@ -49,9 +49,8 @@
 <link rel="stylesheet" href="https://demo.phpscriptpoint.com/carpoint/frontend/css/style.css">
 
 		<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<!--bootstrap5
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-		--><!-- All Javascripts -->
+
+	<!-- All Javascripts -->
 <script src="https://demo.phpscriptpoint.com/carpoint/frontend/js/jquery-3.6.0.min.js"></script>
 <script src="https://demo.phpscriptpoint.com/carpoint/frontend/js/bootstrap.min.js"></script>
 <script src="https://demo.phpscriptpoint.com/carpoint/frontend/js/jquery-ui.js"></script>
@@ -69,8 +68,11 @@
 <script src="https://demo.phpscriptpoint.com/carpoint/frontend/js/sticky_sidebar.js"></script>
 <script src="https://demo.phpscriptpoint.com/carpoint/tinymce/tinymce.min.js"></script>
 <script src='https://www.google.com/recaptcha/api.js'></script>
-				</style>
+			
 
+
+                    <script src="https://cdn.websitepolicies.io/lib/cookieconsent/1.0.3/cookieconsent.min.js" defer></script><script>window.addEventListener("load",function(){window.wpcc.init({"colors":{"popup":{"background":"#50BF20","text":"#F8FFED","border":"#b3d0e4"},"button":{"background":"#FFFFFF","text":"#000000"}},"position":"bottom","padding":"large","margin":"none","content":{"message":"This website uses cookies to ensure you get the best experience on our website.","button":"ACCEPT"}})});</script>
+         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
                     <script src="https://cdn.websitepolicies.io/lib/cookieconsent/1.0.3/cookieconsent.min.js" defer></script><script>window.addEventListener("load",function(){window.wpcc.init({"colors":{"popup":{"background":"#50BF20","text":"#F8FFED","border":"#b3d0e4"},"button":{"background":"#FFFFFF","text":"#000000"}},"position":"bottom","padding":"large","margin":"none","content":{"message":"This website uses cookies to ensure you get the best experience on our website.","button":"ACCEPT"}})});</script>
         <!--fullcalendra-->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.css" integrity="sha256-uq9PNlMzB+1h01Ij9cx7zeE2OR2pLAfRw3uUUOOPKdA=" crossorigin="anonymous">
@@ -167,12 +169,22 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 		-->
             {{ encore_entry_link_tags('app') }}
-            
+
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+            <style>
+            body {
+    background-color: #fff;
+}
+            </style>
         {% endblock %}
 
         {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
+        {{ encore_entry_script_tags('app') }}
+           		
+
         {% endblock %}
+        
     </head>
     <body>
         <div id="mySidepanel" class="sidepanel">
@@ -182,7 +194,6 @@
 			<a href="#">Clients</a>
 			<a href="#">Contact</a>
 		</div>
-
         <div class="top" >
             <div class="container">
                 <div class="row">
@@ -195,7 +206,7 @@
                     <div class="col-lg-6 col-md-7 col-sm-12">
                                                 <ul class="top-right">
                             <li>
-                                <form action="https://demo.phpscriptpoint.com/carpoint/currency" method="post">
+                                <form action="#" method="post">
                                     <input type="hidden" name="_token" value="Tri81Fu1Um1WNFSHwhyQlkgTdQ8H6KhsD2zfgfvr">                                    <select name="currency_name" class="nav-link" onchange="this.form.submit()">
                                                                                     <option value="USD"  selected >USD</option>
                                                                                     <option value="INR" >INR</option>
@@ -204,9 +215,13 @@
                                                                             </select>
                                 </form>
                             </li>
-                            <li>
-                                                                <a href="{{ path('app_login') }}" class="nav-link"><i class="fas fa-sign-in-alt"></i> Login or Register</a>
-                                                            </li>
+                            <li> {% if app.user %}
+                                 <a href="{{ path('app_user_dashbord') }}" class="nav-link"><i class="fas fa-sign-in-alt"></i> Dashboard</a>
+                                 {% else %}
+                             <a href="{{ path('app_login') }}" class="nav-link"><i class="fas fa-sign-in-alt"></i> Login or Register</a>
+                                                           
+                            {% endif %}
+                                                               </li>
                             <li class="currency">
                                 <a href="#" class="nav-link"><i class="fas fa-plus"></i> Add Listing</a>
                             </li>                            
@@ -244,6 +259,10 @@
                         						<li class="nav-item">
 							<a href="/liste/annonces" class="nav-link">Listings</a>
 						</li>
+                       
+                        <li class="nav-item">
+							<a href="{{path('app_f_a_q')}}" class="nav-link">FAQ</a>
+						</li>
                         
                         						<li class="nav-item">
 							<!--a href="#" class="nav-link">Pricing</!--a-->
@@ -257,7 +276,8 @@
 							<a href="javascript:void;" class="nav-link dropdown-toggle">Pages</a>
 							<ul class="dropdown-menu">
 
-                                								<li class="nav-item">
+                                								
+                                	<li class="nav-item">
 									<a href="/locations" class="nav-link">Location</a>
 								</li>
                                 
@@ -273,7 +293,7 @@
 						</li>
 						
                         						<li class="nav-item">
-							<a href="#" class="nav-link">Contact</a>
+							<a href="{{path('app_cantact')}}" class="nav-link">Contact</a>
 						</li>
                         
 					</ul>

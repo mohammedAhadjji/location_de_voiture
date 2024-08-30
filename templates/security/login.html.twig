@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body %}
-    <div class="page-banner" style="background-image: url('https://demo.phpscriptpoint.com/carpoint/uploads/page_banners/02904c59043470e451f0cbf6e0b891d3.jpg')">
+    <div class="page-banner" style="background-image: url('{{ asset('uploads/attachments/panel.jpg')}}')">
         <div class="page-banner-bg"></div>
         <h1>
             Login
@@ -24,11 +24,15 @@
         </nav>
     </div>
 
-    <div class="container" style="min-height: 600px;margin:auto">
-        <div style"margin-top: 20px;">
-            <form method="post" style="height:50%; margin:15%">
+    <div class="page-content pt_50 pb_60">
+    <div class="container">
+        <div class="row cart">
+            <div class="col-md-12">
+                <div class="reg-login-form">
+                    <div class="inner">
+            <form method="post" >
 
-                <div class="cader" style="width: 80%;margin:auto">
+                
 
                     <h1 class="h3 mb-3 font-weight-normal">
                         Please sign in
@@ -50,15 +54,14 @@
                             </h6>
                         </div>
                     {% endif %}
-                    <label for="inputEmail">
-                        Email
-                    </label>
-                    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-                        <label for="inputPassword">
+                    <div class="form-group">
+                    <label for="username">Email Address</label>
+                                <input type="email" class="form-control"  value="{{ last_username }}" name="email" id="username"  autocomplete="email" required autofocus>
+                     </div> <div class="form-group">  <label for="inputPassword">
                             Password
                         </label>
                         <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-
+   </div>
                             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                                 <div style="margin: 10px 0">
                                     <button class="btn btn-lg btn-primary" type="submit" >
@@ -78,10 +81,14 @@
                                             Register Now
                                         </a>
                                     </div>
-                                </div>
+                                
                             </form>
                         </div>
-                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
                 {% endblock %}
                
                 

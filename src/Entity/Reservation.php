@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ReservationRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -43,6 +45,14 @@ class Reservation
 
     #[ORM\ManyToOne(inversedBy: 'reservations')]
     private ?Voiture $voiture = null;
+
+    #[ORM\OneToMany(mappedBy: 'reservation', targetEntity: Annonces::class)]
+    private Collection $Annonces;
+
+    public function __construct()
+    {
+        $this->Annonces = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -165,6 +175,36 @@ class Reservation
     public function setVoiture(?Voiture $voiture): static
     {
         $this->voiture = $voiture;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Annonces>
+     */
+    public function getAnnonces(): Collection
+    {
+        return $this->Annonces;
+    }
+
+    public function addAnnonce(Annonces $annonce): static
+    {
+        if (!$this->Annonces->contains($annonce)) {
+            $this->Annonces->add($annonce);
+            $annonce->setReservation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnnonce(Annonces $annonce): static
+    {
+        if ($this->Annonces->removeElement($annonce)) {
+            // set the owning side to null (unless already changed)
+            if ($annonce->getReservation() === $this) {
+                $annonce->setReservation(null);
+            }
+        }
 
         return $this;
     }

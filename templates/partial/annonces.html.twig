@@ -1,0 +1,47 @@
+{% for annonce in Annonces %}
+    <div class="col-lg-5 col-md-4 col-sm-12 wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
+        <div class="listing-item effect-item">
+            <div class="photo image-effect">
+                <a href="{{ path('annonce_detail', { id: annonce.id }) }}">
+                    {% if annonce.voiture.images is not empty and annonce.voiture.images[0].name is not empty %}
+                        <img src="{{ asset('uploads/attachments/' ~ annonce.voiture.images[0].name) }}" alt="Car Image">
+                    {% else %}
+                        <img src="{{ asset('images/no-image-available.png') }}" alt="No Image Available">
+                    {% endif %}
+                </a>
+                <div class="brand">
+                    <a href="{{ path('annonce_with_brand', { id: annonce.voiture.modele.brand.id }) }}" style="background-color: {{ sittig.ThemeColor }};">
+                        {{ annonce.voiture.modele.brand.name }}
+                    </a>
+                </div>
+                <div class="wishlist">
+                    <a href="{{ path('annonce_detail', { id: annonce.id }) }}">
+                        <i class="fas fa-heart"></i>
+                    </a>
+                </div>
+                <div class="featured-text">plus {{ annonce.occur }} <i class="fa-solid fa-eye"></i></div>
+            </div>
+            <div class="text">
+                <div class="type-price">
+                    <div class="type">
+                        <div class="inner-new">
+                            {{ annonce.voiture.type.title }}
+                        </div>
+                    </div>
+                    <div class="price">
+                        Price {{ (annonce.prix_locat / 100)|format_currency('MAD') }} dh
+                    </div>
+                </div>
+                <h3>
+                    <a href="{{ path('annonce_detail', { id: annonce.id }) }}">
+                        {{ annonce.voiture.annee|date('Y') }} {# annonce.voiture.modele.name #}  {{ annonce.Title }}   {{ annonce.voiture.modele.brand.name }}
+                    </a>
+                </h3>
+                <div class="location" style="color: {{ sittig.ThemeColor }};">
+                    <i class="fas fa-map-marker-alt"></i>
+                    {{ annonce.voiture.location.locale }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}

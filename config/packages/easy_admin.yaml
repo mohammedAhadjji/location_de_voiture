@@ -1,0 +1,33 @@
+# config/packages/easy_admin.yaml
+
+easy_admin:
+    design:
+        assets:
+            css:
+                - 'css/custom_admin.css'
+
+        menu:
+            - { entity: 'SittingGenerale', label: 'Sitting Generale' }
+
+    entities:
+        SittingGenerale:
+            class: App\Entity\SittingGenerale
+            list:
+                fields:
+                    - 'field1'
+                    - 'field2'
+                    # ... autres champs de liste
+            edit:
+                fields:
+                    - 'field1'
+                    - 'field2'
+                    # ... autres champs d'édition
+            show:
+                fields:
+                    - 'field1'
+                    - 'field2'
+                    # ... autres champs à afficher
+            actions:
+                - 'detail'
+                - 'edit'
+                # ... autres actions disponibles

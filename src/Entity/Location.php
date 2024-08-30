@@ -30,9 +30,13 @@ class Location
     #[ORM\Column(length: 255)]
     private ?string $locale = null;
 
+    #[ORM\ManyToMany(targetEntity: Brand::class, inversedBy: 'locations')]
+    private Collection $Brands;
+
     public function __construct()
     {
         $this->voitures = new ArrayCollection();
+        $this->Brands = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -106,6 +110,30 @@ class Location
     public function setLocale(string $locale): static
     {
         $this->locale = $locale;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Brand>
+     */
+    public function getBrands(): Collection
+    {
+        return $this->Brands;
+    }
+
+    public function addBrand(Brand $brand): static
+    {
+        if (!$this->Brands->contains($brand)) {
+            $this->Brands->add($brand);
+        }
+
+        return $this;
+    }
+
+    public function removeBrand(Brand $brand): static
+    {
+        $this->Brands->removeElement($brand);
 
         return $this;
     }

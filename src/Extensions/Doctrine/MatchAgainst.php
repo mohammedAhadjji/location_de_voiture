@@ -9,7 +9,7 @@ use Doctrine\ORM\Query\SqlWalker;
 class MatchAgainst extends FunctionNode
 {
     /** @var array list of \Doctrine\ORM\Query\AST\PathExpression */
-    protected $pathExp = null;
+    protected $pathExp = [];
     /** @var string */
     protected $against = null;
     /** @var bool */
@@ -23,7 +23,6 @@ class MatchAgainst extends FunctionNode
         $parser->match(Lexer::T_IDENTIFIER);
         $parser->match(Lexer::T_OPEN_PARENTHESIS);
         // first Path Expression is mandatory
-        $this->pathExp = [];
         $this->pathExp[] = $parser->StateFieldPathExpression();
         // Subsequent Path Expressions are optional
         $lexer = $parser->getLexer();
@@ -33,19 +32,21 @@ class MatchAgainst extends FunctionNode
         }
         $parser->match(Lexer::T_CLOSE_PARENTHESIS);
         // against
-        if (strtolower($lexer->lookahead['value']) !== 'against') {
+        if (strtolower($lexer->lookahead->value) !== 'against') {
             $parser->syntaxError('against');
         }
         $parser->match(Lexer::T_IDENTIFIER);
         $parser->match(Lexer::T_OPEN_PARENTHESIS);
         $this->against = $parser->StringPrimary();
-        if (strtolower($lexer->lookahead['value']) === 'boolean') {
-            $parser->match(Lexer::T_IDENTIFIER);
-            $this->booleanMode = true;
-        }
-        if (strtolower($lexer->lookahead['value']) === 'expand') {
-            $parser->match(Lexer::T_IDENTIFIER);
-            $this->queryExpansion = true;
+        if ($lexer->isNextToken(Lexer::T_IDENTIFIER)) {
+            $value = strtolower($lexer->lookahead->value);
+            if ($value === 'boolean') {
+                $parser->match(Lexer::T_IDENTIFIER);
+                $this->booleanMode = true;
+            } elseif ($value === 'expand') {
+                $parser->match(Lexer::T_IDENTIFIER);
+                $this->queryExpansion = true;
+            }
         }
         $parser->match(Lexer::T_CLOSE_PARENTHESIS);
     }

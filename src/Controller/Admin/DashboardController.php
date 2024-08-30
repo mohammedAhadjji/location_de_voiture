@@ -7,6 +7,7 @@ use App\Entity\Blogs;
 use App\Entity\Brand;
 use App\Entity\Categories;
 use App\Entity\Config;
+use App\Entity\FAQ;
 use App\Entity\ImagesBlogs;
 use App\Entity\ImagesVoiture;
 use App\Entity\Location;
@@ -19,6 +20,7 @@ use App\Entity\SittingGenerale;
 use App\Entity\Type;
 use App\Entity\Users;
 use App\Entity\Voiture;
+use App\Repository\SittingGeneraleRepository;
 use App\Repository\UsersRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -26,6 +28,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 
 use function PHPSTORM_META\type;
@@ -33,10 +36,15 @@ use function PHPSTORM_META\type;
 class DashboardController extends AbstractDashboardController
 {
     private $entityManager;
+    private $sittingGeneraleRepository;
+    private $security;
 
-    public function __construct(EntityManagerInterface $entityManager)
+  
+    public function __construct(EntityManagerInterface $entityManager,SittingGeneraleRepository $sittingGeneraleRepository, Security $security)
     {
         $this->entityManager = $entityManager;
+        $this->sittingGeneraleRepository = $sittingGeneraleRepository;
+        $this->security = $security;
     }
 
     #[Route('/admin', name: 'admin_')]
@@ -89,10 +97,13 @@ class DashboardController extends AbstractDashboardController
 
     public function configureDashboard(): Dashboard
     {
+        $sittingGenerale = $this->sittingGeneraleRepository->findOneBy([]);
+        $logoUrl = $sittingGenerale ? '/uploads/attachments/' . $sittingGenerale->getLogoImg() : '';
+
+
         return Dashboard::new()
-            //->setTitle('Location de Voitures');<img src="https://demo.phpscriptpoint.com/carpoint/uploads/site_photos/a7eb55f8e8c41cbaee0760d15b226f4d.png" alt=""><small>Location de Voiture</small>
-            ->setTitle('<img src="https://demo.phpscriptpoint.com/carpoint/uploads/site_photos/a7eb55f8e8c41cbaee0760d15b226f4d.png" style="height:50px;width:auto"> <br>  <span class="text-small"></span>');
-    }
+            ->setTitle(sprintf('<img src="%s" style="height:50px;width:auto"> <br><small style="padding:10px"><small>Location de Voiture</small></small>', $logoUrl));
+        }
 
     public function configureMenuItems(): iterable
     {
@@ -107,11 +118,13 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Show Main Settings', 'fa fa-tags', SittingGenerale::class)
                 ->setAction('detail')
                 ->setEntityId(1),
-            MenuItem::linkToCrud('Edit Main Settings', 'fa fa-pencil', SittingGenerale::class)
+                MenuItem::linkToCrud('Edit Main Settings', 'fa fa-pencil', SittingGenerale::class)
                 ->setAction('edit')
-                ->setEntityId(1),
+                ->setEntityId(1)
+                //->setLinkRel('http://localhost:8001/admin?crudAction=detail&crudControllerFqcn=App%5CController%5CAdmin%5CSittingGeneraleCrudController&entityId=1'),
           // MenuItem::linkToCrud('Sitting Generale', 'fas fa-plus', SittingGenerale::class)->setAction(Crud::PAGE_NEW),
         //MenuItem::linkToCrud('Sitting Generale', 'fas fa-bars',SittingGenerale::class)
+
         ]);
         yield MenuItem::section('config payment');
         
@@ -127,10 +140,35 @@ class DashboardController extends AbstractDashboardController
           // MenuItem::linkToCrud('Sitting Generale', 'fas fa-plus', SittingGenerale::class)->setAction(Crud::PAGE_NEW),
         //MenuItem::linkToCrud('Sitting Generale', 'fas fa-bars',SittingGenerale::class)
         ]);
+        yield MenuItem::section('FAQ');
+        yield MenuItem::subMenu('FAQ', 'fas fas fa-folder')->setSubItems([
+            MenuItem::linkToCrud('Create FAQ', 'fas fa-plus', FAQ::class)->setAction(Crud::PAGE_NEW),
+            MenuItem::linkToCrud('Show FAQ', 'fas fa-bars', FAQ::class)
+        ]);
         yield MenuItem::section('Users');
         yield MenuItem::subMenu('Users', 'fas fas fa-folder')->setSubItems([
             MenuItem::linkToCrud('Create user', 'fas fa-plus', Users::class)->setAction(Crud::PAGE_NEW),
             MenuItem::linkToCrud('Show users', 'fas fa-bars', Users::class)
+        ]);
+        yield MenuItem::section('listing');
+        yield MenuItem::subMenu('les Voiture', 'fas fas fa-folder')->setSubItems([
+            MenuItem::linkToCrud('Create Voiture', 'fas fa-plus', Voiture::class)->setAction(Crud::PAGE_NEW),
+            MenuItem::linkToCrud('Show voiture', 'fas fa-bars', Voiture::class)
+
+        ]);
+        yield MenuItem::subMenu('les Réservation', 'fas fa-folder')->setSubItems([
+            MenuItem::linkToCrud('Create Reservation', 'fas fa-plus', Reservation::class)->setAction(Crud::PAGE_NEW),
+            MenuItem::linkToCrud('Show Reservation', 'fas fa-bars', Reservation::class)
+        ]);
+        yield MenuItem::subMenu('les Annonces', 'fas fas fa-folder')->setSubItems([
+            MenuItem::linkToCrud('Create Annonce', 'fas fa-plus', Annonces::class)->setAction(Crud::PAGE_NEW),
+            MenuItem::linkToCrud('Show Annonces', 'fas fa-bars', Annonces::class),
+
+        ]);
+        yield MenuItem::subMenu('les Blogs', 'fas fas fa-folder')->setSubItems([
+            MenuItem::linkToCrud('Create Blogs', 'fas fa-plus', Blogs::class)->setAction(Crud::PAGE_NEW),
+            MenuItem::linkToCrud('Show Blogs', 'fas fa-bars', Blogs::class),
+
         ]);
         yield MenuItem::section('configurations');
         yield MenuItem::subMenu('images', 'fas fas fa-folder')->setSubItems([
@@ -168,26 +206,7 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Create brand', 'fas fa-plus',Brand::class)->setAction(Crud::PAGE_NEW),
             MenuItem::linkToCrud('Show brand', 'fas fa-bars', Brand::class)
         ]);
-        yield MenuItem::section('listing');
-        yield MenuItem::subMenu('les Voiture', 'fas fas fa-folder')->setSubItems([
-            MenuItem::linkToCrud('Create Voiture', 'fas fa-plus', Voiture::class)->setAction(Crud::PAGE_NEW),
-            MenuItem::linkToCrud('Show voiture', 'fas fa-bars', Voiture::class)
-
-        ]);
-        yield MenuItem::subMenu('les Réservation', 'fas fa-folder')->setSubItems([
-            MenuItem::linkToCrud('Create Reservation', 'fas fa-plus', Reservation::class)->setAction(Crud::PAGE_NEW),
-            MenuItem::linkToCrud('Show Reservation', 'fas fa-bars', Reservation::class)
-        ]);
-        yield MenuItem::subMenu('les Annonces', 'fas fas fa-folder')->setSubItems([
-            MenuItem::linkToCrud('Create Annonce', 'fas fa-plus', Annonces::class)->setAction(Crud::PAGE_NEW),
-            MenuItem::linkToCrud('Show Annonces', 'fas fa-bars', Annonces::class),
-
-        ]);
-        yield MenuItem::subMenu('les Blogs', 'fas fas fa-folder')->setSubItems([
-            MenuItem::linkToCrud('Create Blogs', 'fas fa-plus', Blogs::class)->setAction(Crud::PAGE_NEW),
-            MenuItem::linkToCrud('Show Blogs', 'fas fa-bars', Blogs::class),
-
-        ]);
+        
         yield MenuItem::section('Logout');
         yield MenuItem::linkToLogout('Logout', 'fa fa-sign-out');
     }

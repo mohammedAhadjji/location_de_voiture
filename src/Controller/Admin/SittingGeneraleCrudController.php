@@ -29,7 +29,7 @@ class SittingGeneraleCrudController extends AbstractCrudController
         return [
             HiddenField::new('id')->onlyOnIndex(),
            
-            HiddenField::new('logo_img_file')->hideOnIndex()->hideOnDetail(),
+            //HiddenField::new('logo_img_file')->hideOnIndex()->hideOnDetail(),
             ImageField::new('logo_img')->setUploadDir('/public/uploads/attachments')->setBasePath('/uploads/attachments'),
             ImageField::new('faviconImg')->setUploadDir('/public/uploads/attachments')->setBasePath('/uploads/attachments'),
           //TextField::new('favicon_img_file')->setFormType(VichImageType::class)->hideOnIndex(),
@@ -42,10 +42,17 @@ class SittingGeneraleCrudController extends AbstractCrudController
     }
     public function configureActions(Actions $actions): Actions
     {
-        //dd($actions);
+        /*dd($actions);
         $actions->disable(action::DELETE)
         ->add(Crud::PAGE_EDIT,Action::DETAIL);
         $actions->disable(Crud::PAGE_INDEX);
+        return $actions;*/
+        $actions->disable(Action::DELETE) 
+        // Désactiver l'action "delete"
+            ->add(Crud::PAGE_EDIT, Action::DETAIL); // Ajouter l'action "detail" lors de l'édition
+        $actions->disable(Crud::PAGE_INDEX); 
+       // $actions->disable(Crud::PAGE_INDEX);// Désactiver l'action "index"
+        
         return $actions;
     }
     

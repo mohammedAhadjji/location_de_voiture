@@ -9,9 +9,15 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
+    
 
 #[ORM\Entity(repositoryClass: UsersRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[Vich\Uploadable]
 class Users implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -46,16 +52,47 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'auth', targetEntity: Blogs::class)]
     private Collection $blogs;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $phone = null;
+
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $ville = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $pays = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $photo = null;
+    
+    #[Vich\UploadableField(mapping:'products',fileNameProperty:'photo')]
+    private ?File $name_file = null;
+
+    #[ORM\OneToMany(mappedBy: 'users', targetEntity: ImageProfile::class)]
+    private Collection $image;
+
     public function __construct()
     {
         $this->reservations = new ArrayCollection();
         $this->blogs = new ArrayCollection();
+        $this->image = new ArrayCollection();
     }
     public function __toString(): string
     {
         return $this->name;
     }
 
+    public function getNameFile(): ?File
+    {
+        return $this->name_file;
+    }
+
+    public function setNameFile(?File $name_file): self
+    {
+        $this->name_file = $name_file;
+
+        return $this;
+    }
 
     public function getId(): ?int
     {
@@ -219,6 +256,84 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($blog->getAuth() === $this) {
                 $blog->setAuth(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(?string $phone): static
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getVille(): ?string
+    {
+        return $this->ville;
+    }
+
+    public function setVille(?string $ville): static
+    {
+        $this->ville = $ville;
+
+        return $this;
+    }
+
+    public function getPays(): ?string
+    {
+        return $this->pays;
+    }
+
+    public function setPays(?string $pays): static
+    {
+        $this->pays = $pays;
+
+        return $this;
+    }
+
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(?string $photo): static
+    {
+        $this->photo = $photo;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ImageProfile>
+     */
+    public function getImage(): Collection
+    {
+        return $this->image;
+    }
+
+    public function addImage(ImageProfile $image): static
+    {
+        if (!$this->image->contains($image)) {
+            $this->image->add($image);
+            $image->setUsers($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(ImageProfile $image): static
+    {
+        if ($this->image->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getUsers() === $this) {
+                $image->setUsers(null);
             }
         }
 

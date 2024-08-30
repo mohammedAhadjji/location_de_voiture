@@ -19,7 +19,7 @@ class ImgVtType extends AbstractType
                 'mapped' => false,
                 'required' => false
             ])
-            ;
+            
         ;
     }
 

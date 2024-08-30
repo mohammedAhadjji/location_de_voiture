@@ -22,144 +22,146 @@ class CartController extends AbstractController
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
-        $sittingGenerale = $this->entityManager->getRepository(SittingGenerale::class)->find(1);
     }
+
     #[Route('/', name: 'index')]
-    public function index(SessionInterface $session, AnnoncesRepository $productsRepository)
+    public function index(SessionInterface $session, AnnoncesRepository $productsRepository): Response
     {
+        // Fetch global settings
         $sittingGenerale = $this->entityManager->getRepository(SittingGenerale::class)->find(1);
-        $panier = $session->get('panier', []);
-      //  dd($panier);
-        $date =$session->get('date', []);
-        $seasonRepository = $this->entityManager->getRepository(Season::class);
+        
+        // Fetch the cart and date from the session
+        $cart = $session->get('panier', []);
+        $date = $session->get('date', []);
+
+        // Get the current season based on the current date
         $currentDateTime = new DateTime();
-
-
+        $seasonRepository = $this->entityManager->getRepository(Season::class);
         $currentSeason = $seasonRepository->createQueryBuilder('s')
             ->where(':currentDateTime >= s.date_debut AND :currentDateTime <= s.date_fin')
             ->setParameter('currentDateTime', $currentDateTime)
             ->getQuery()
             ->getOneOrNullResult();
-        
-        //dd($currentSeason);
-        // On initialise des variables
+
+        // Initialize variables
         $data = [];
         $total = 0;
-        $taux= 0;
-        if($currentSeason){
-           $taux= $currentSeason->getTaux();
-        }
-        
+        $taux = $currentSeason ? $currentSeason->getTaux() : 0;
 
-        foreach($panier as $id => $quantity){
+        // Iterate over cart items
+        foreach ($cart as $id => $quantity) {
             $product = $productsRepository->find($id);
-            if ($currentSeason) {
-                $taux = $currentSeason->getTaux();
-                if ($taux !== null) {
-                    $reduction = $this->entityManager->getRepository(Reduction::class);
-                    $cu = $reduction->createQueryBuilder('s')
-                   ->Where(':quantity >= s.min_day AND :quantity <= s.max_day')
-                   ->setParameter('quantity', $quantity) // Assurez-vous de définir $quantity à la valeur souhaitée
-                    ->getQuery()
-                    ->getOneOrNullResult();
-                    
+            if ($product) {
+                if ($currentSeason) {
+                    // Fetch reduction based on the quantity
+                    $reductionRepository = $this->entityManager->getRepository(Reduction::class);
+                    $reduction = $reductionRepository->createQueryBuilder('r')
+                        ->where(':quantity >= r.min_day AND :quantity <= r.max_day')
+                        ->setParameter('quantity', $quantity)
+                        ->getQuery()
+                        ->getOneOrNullResult();
 
-                    $prixLocat =$product->getPrixLocat()-($product->getPrixLocat()*$cu->getReduction()/100);
-                    
-                    $nouveauPrixLocat = $prixLocat + ($prixLocat * $taux /100);
-                    $product->setPrixLocat($nouveauPrixLocat);
-                
-           
-            $red=$cu->getReduction();
-            $data[] = [
-                'product' => $product,
-                'quantity' => $quantity,
-                'taux'=> $taux,
-                'reduction'=> $red
-            ];
-            
-            $total += $product->getPrixLocat()* $quantity;
+                    // Apply reduction and season rate to the product price
+                    if ($reduction) {
+                        $priceAfterReduction = $product->getPrixLocat() - ($product->getPrixLocat() * $reduction->getReduction() / 100);
+                        $newPrice = $priceAfterReduction + ($priceAfterReduction * $taux / 100);
+                        $product->setPrixLocat($newPrice);
+
+                        $data[] = [
+                            'product' => $product,
+                            'quantity' => $quantity,
+                            'taux' => $taux,
+                            'reduction' => $reduction->getReduction(),
+                        ];
+                        $total += $newPrice * $quantity;
+                    }
+                } else {
+                    // If no current season, use the original product price
+                    $data[] = [
+                        'product' => $product,
+                        'quantity' => $quantity,
+                        'taux' => 0,
+                        'reduction' => 0,
+                    ];
+                    $total += $product->getPrixLocat() * $quantity;
+                }
+            }
         }
-        }
-        }
-        //dd($data);
-        return $this->render('cart/index.html.twig', ['data'=>$data, 'total'=>$total,'sittig'=> $sittingGenerale]);
+
+        return $this->render('cart/index.html.twig', [
+            'data' => $data,
+            'total' => $total,
+            'sittig' => $sittingGenerale,
+        ]);
     }
 
-
     #[Route('/add/{id}', name: 'add')]
-    public function add(Annonces $product, SessionInterface $session)
+    public function add(Annonces $product, SessionInterface $session): Response
     {
-        
-        //On récupère l'id du produit
+        // Fetch the cart from the session
+        $cart = $session->get('panier', []);
+
+        // Increment or set the product quantity
         $id = $product->getId();
-
-        // On récupère le panier existant
-        $panier = $session->get('panier', []);
-
-        // On ajoute le produit dans le panier s'il n'y est pas encore
-        // Sinon on incrémente sa quantité
-        if(empty($panier[$id])){
-            $panier[$id] = 1;
-        }else{
-            $panier[$id]++;
+        if (isset($cart[$id])) {
+            $cart[$id]++;
+        } else {
+            $cart[$id] = 1;
         }
 
-        $session->set('panier', $panier);
-        
-        //On redirige vers la page du panier
+        $session->set('panier', $cart);
+
+        // Redirect to the cart page
         return $this->redirectToRoute('cart_index');
     }
 
     #[Route('/remove/{id}', name: 'remove')]
-    public function remove(Annonces $product, SessionInterface $session)
+    public function remove(Annonces $product, SessionInterface $session): Response
     {
-        //On récupère l'id du produit
+        // Fetch the cart from the session
+        $cart = $session->get('panier', []);
         $id = $product->getId();
 
-        // On récupère le panier existant
-        $panier = $session->get('panier', []);
-
-        // On retire le produit du panier s'il n'y a qu'1 exemplaire
-        // Sinon on décrémente sa quantité
-        if(!empty($panier[$id])){
-            if($panier[$id] > 1){
-                $panier[$id]--;
-            }else{
-                unset($panier[$id]);
+        // Decrement or remove the product quantity
+        if (isset($cart[$id])) {
+            if ($cart[$id] > 1) {
+                $cart[$id]--;
+            } else {
+                unset($cart[$id]);
             }
         }
 
-        $session->set('panier', $panier);
-        
-        //On redirige vers la page du panier
+        $session->set('panier', $cart);
+
+        // Redirect to the cart page
         return $this->redirectToRoute('cart_index');
     }
 
     #[Route('/delete/{id}', name: 'delete')]
-    public function delete(Annonces $product, SessionInterface $session)
+    public function delete(Annonces $product, SessionInterface $session): Response
     {
-        //On récupère l'id du produit
+        // Fetch the cart from the session
+        $cart = $session->get('panier', []);
         $id = $product->getId();
 
-        // On récupère le panier existant
-        $panier = $session->get('panier', []);
-
-        if(!empty($panier[$id])){
-            unset($panier[$id]);
+        // Remove the product from the cart
+        if (isset($cart[$id])) {
+            unset($cart[$id]);
         }
 
-        $session->set('panier', $panier);
-        
-        //On redirige vers la page du panier
+        $session->set('panier', $cart);
+
+        // Redirect to the cart page
         return $this->redirectToRoute('cart_index');
     }
 
     #[Route('/empty', name: 'empty')]
-    public function empty(SessionInterface $session)
+    public function empty(SessionInterface $session): Response
     {
+        // Remove the cart from the session
         $session->remove('panier');
 
+        // Redirect to the cart page
         return $this->redirectToRoute('cart_index');
     }
 }

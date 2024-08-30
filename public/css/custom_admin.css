@@ -1,0 +1,19 @@
+/* Modifier la couleur de fond du tableau de bord */
+.ea-dashboard {
+    background-color: #f0f0f0; /* Exemple de couleur */
+}
+
+/* Modifier la couleur des éléments du menu */
+.sidebar-menu .menu-item a {
+    color: #4CAF50; /* Exemple de couleur */
+}
+
+/* Changer la couleur au survol */
+.sidebar-menu .menu-item a:hover {
+    color: #FF5722; /* Exemple de couleur au survol */
+}
+
+/* Personnaliser la couleur du titre */
+.content-header-title {
+    color: #673AB7; /* Exemple de couleur */
+}

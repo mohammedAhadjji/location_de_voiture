@@ -24,7 +24,55 @@ class AnnoncesRepository extends ServiceEntityRepository
      * Recherche les annonces en fonction du formulaire
      * @return void 
      */
-    public function search($mots = null, $type = null, $brand = null){
+    public function search($mots = null, $type = null, $brand = null, $modele = null, $location = null)
+    {
+        $query = $this->createQueryBuilder('a');
+
+        // Recherche par mots-clés
+        if ($mots != null) {
+            $query->andWhere('MATCH_AGAINST(a.title, a.descriptions) AGAINST (:mots boolean) > 0')
+                ->setParameter('mots', $mots);
+        }
+
+        // Filtrer par type
+        if ($type != null) {
+            $query->leftJoin('a.voiture', 'v_type')
+                ->leftJoin('v_type.type', 'c')      
+                ->andWhere('c.id = :type')
+                ->setParameter('type', $type);
+        }
+
+        // Filtrer par marque
+        if ($brand != null) {
+            $query->leftJoin('a.voiture', 'v_brand')
+                ->leftJoin('v_brand.brand', 'b')      
+                ->andWhere('b.id = :brand')
+                ->setParameter('brand', $brand);
+        }
+
+        // Filtrer par modèle
+        if ($modele != null) {
+            $query->leftJoin('a.voiture', 'v_modele')
+                ->leftJoin('v_modele.modele', 'm')      
+                ->andWhere('m.id = :modele')
+                ->setParameter('modele', $modele);
+        }
+
+        // Filtrer par localisation
+        if ($location != null) {
+            $query->leftJoin('a.voiture', 'v_location')
+                ->leftJoin('v_location.location', 'l')      
+                ->andWhere('l.id = :location')
+                ->setParameter('location', $location);
+        }
+
+        $query->setMaxResults(10);
+        return $query->getQuery()->getResult();
+    }
+
+    
+
+    /*public function search($mots = null, $type = null, $brand = null){
         $query = $this->createQueryBuilder('a');
         if($mots != null){
             $query->andWhere('MATCH_AGAINST(a.title, a.descriptions) AGAINST (:mots boolean)>0')
@@ -38,7 +86,7 @@ class AnnoncesRepository extends ServiceEntityRepository
         }
         $query->setMaxResults(10);
         return $query->getQuery()->getResult();
-    }
+    }*/
 //    /**
 //     * @return Annonces[] Returns an array of Annonces objects
 //     */

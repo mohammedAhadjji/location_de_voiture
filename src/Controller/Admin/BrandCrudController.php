@@ -3,12 +3,14 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Brand;
+use App\Form\ImagesBrandType;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
@@ -25,6 +27,11 @@ class BrandCrudController extends AbstractCrudController
         return [
             //IdField::new('id')->onlyOnIndex(),
             TextField::new('name'),
+            CollectionField::new('logos')
+            //->setEntryIsComplex(false)
+            //->setFormType(ImagesVoitureType::class)
+            ->setEntryType(ImagesBrandType::class)
+            ,
             ImageField::new('imgBrand')->setUploadDir('/public/uploads/attachments')->setBasePath('/uploads/attachments'),
           
         ];

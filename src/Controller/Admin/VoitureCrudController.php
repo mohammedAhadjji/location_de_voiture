@@ -2,8 +2,11 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Brand;
 use App\Entity\Voiture;
 use App\Form\ImagesVoitureType;
+use App\Repository\BrandRepository;
+use App\Repository\ModeleRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
@@ -37,7 +40,18 @@ class VoitureCrudController extends AbstractCrudController
             ->setEntryType(ImagesVoitureType::class)
             ,
             DateField::new('annee'),
-            AssociationField::new('modele'),
+            AssociationField::new('brand')
+                ->setFormTypeOption('query_builder', function (BrandRepository $repo) {
+                    return $repo->createQueryBuilder('b')
+                        ->orderBy('b.name', 'ASC');
+                })
+                ->setFormTypeOption('attr', ['id' => 'brand-select']),
+            AssociationField::new('modele')
+                ->setFormTypeOption('query_builder', function (ModeleRepository $repo) {
+                    return $repo->createQueryBuilder('m')
+                        ->orderBy('m.name', 'ASC');
+                })
+                ->setFormTypeOption('attr', ['id' => 'model-select']),
             AssociationField::new('type'),
             AssociationField::new('location'),
             AssociationField::new('reservations')->hideOnForm(),
@@ -66,8 +80,12 @@ class VoitureCrudController extends AbstractCrudController
 
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
-        //dd($entityInstance);
+        //dd($entityInstance->getLocation());
+        $location= $entityInstance->getLocation();
+        $brand = $entityInstance->getModele()->getBrand();
+        $location->addBrand($brand);
         $entityManager->persist($entityInstance);
+        //dd($entityInstance->getLocation());
         $entityManager->flush();
     }
     
