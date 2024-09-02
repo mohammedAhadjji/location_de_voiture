@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Brand;
 use App\Form\ImagesBrandType;
+use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
@@ -21,25 +22,38 @@ class BrandCrudController extends AbstractCrudController
         return Brand::class;
     }
 
-    
     public function configureFields(string $pageName): iterable
     {
         return [
-            //IdField::new('id')->onlyOnIndex(),
             TextField::new('name'),
             CollectionField::new('logos')
-            //->setEntryIsComplex(false)
-            //->setFormType(ImagesVoitureType::class)
-            ->setEntryType(ImagesBrandType::class)
-            ,
-            ImageField::new('imgBrand')->setUploadDir('/public/uploads/attachments')->setBasePath('/uploads/attachments'),
-          
+                ->setEntryType(ImagesBrandType::class),
+            ImageField::new('imgBrand')
+                ->setUploadDir('public/uploads/attachments')
+                ->setBasePath('/uploads/attachments'),
         ];
     }
+
     public function configureActions(Actions $actions): Actions
     {
-        //dd($actions);
-        $actions->add(Crud::PAGE_INDEX,Action::DETAIL);
+        $actions->add(Crud::PAGE_INDEX, Action::DETAIL);
         return $actions;
+    }
+
+    public function createEntity(string $entityFqcn)
+    {
+        return new $entityFqcn();
+    }
+
+    public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        $entityManager->persist($entityInstance);
+        $entityManager->flush();
+    }
+
+    public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        $entityManager->persist($entityInstance);
+        $entityManager->flush();
     }
 }

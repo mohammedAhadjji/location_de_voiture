@@ -19,25 +19,30 @@ class Brand
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['annonces'])]
+    #[Groups(['annonces','brand'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['brand'])]
     private ?string $imgBrand = null;
 
     #[Vich\UploadableField(mapping: 'products', fileNameProperty: 'imgBrand')]
     private ?File $imgBrandFile = null;
 
     #[ORM\OneToMany(mappedBy: 'brand', targetEntity: Modele::class)]
+    #[Groups(['brand'])]
     private Collection $modeles;
 
     #[ORM\ManyToMany(targetEntity: Location::class, mappedBy: 'brands')]
+    #[Groups(['brand'])]
     private Collection $locations;
 
     #[ORM\OneToMany(mappedBy: 'brand', targetEntity: Voiture::class)]
+    #[Groups(['brand'])]
     private Collection $voitures;
 
     #[ORM\OneToMany(mappedBy: 'brand', targetEntity: ImageBrand::class,cascade:["persist","remove"])]
+    #[Groups(['brand'])]
     private Collection $logos;
 
     public function __construct()

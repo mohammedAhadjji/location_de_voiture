@@ -3,7 +3,7 @@
 {% block title %}Listing{% endblock %}
 
 {% block body %}
-<div class="page-banner" style="background-image: url('https://demo.phpscriptpoint.com/carpoint/uploads/page_banners/17257fb19420ac1317819843235591d9.jpg')">
+<div class="page-banner" style="background-image: url('{{ asset('uploads/attachments/panel.jpg')}}')">
     <div class="page-banner-bg"></div>
     <h1>Listing</h1>
     <nav>
@@ -53,7 +53,7 @@
                         {% for brand in brandslisting %}
                             <div class="form-check">
                                 <input name="brand" class="form-check-input" type="radio" value="{{ brand.id }}" id="brand_{{ brand.id }}">
-                                <label class="form-check-label" for="brand_{{ brand.id }}">{{ brand.getName() }}</label>
+                                <label class="form-check-label" for="brand_{{ brand.id }}"><img src="{{ asset('uploads/attachments/' ~ brand.getLogos()[0].name) }}" width="53px" height="40px" alt="{{ brand.getName() }}">  {{ brand.getName() }}</label>
                             </div>
                         {% endfor %}
                     </div>
@@ -83,7 +83,7 @@
                 {% endif %}
             </div>
             <div class="col-12">
-                <div class="psp_pagination d-flex justify-content-center">
+                <div class="psp_pagination d-flex justify-content-center" >
                     <nav aria-label="Pagination">
                         <ul class="pagination"></ul>
                     </nav>
@@ -104,7 +104,9 @@
             const brand = document.querySelector('input[name="brand"]:checked')?.value || '';
             const location = document.querySelector('input[name="location"]:checked')?.value || '';
               event.preventDefault();
-           resultContainer.innerHTML = '';
+           resultContainer.innerHTML = '';//<img src="{{ asset('loading-gif.gif') }}" alt="Chargement en cours...">
+			resultContainer.innerHTML = '<div class="col-lg-9 col-md-10 col-sm-12 wow fadeInUp d-flex justify-content-center align-items-center"  style="display:flex;justify-content:center;align-items:center ;padding:50px"><img src="{{ asset('loading-gif.gif') }}"  alt="Chargement en cours..." width="50px"  height="auto"></div>';
+
 		    const xhr = new XMLHttpRequest();
             xhr.open('GET', `{{ path('api_annonces_search') }}?mots=${encodeURIComponent(text)}&type=${encodeURIComponent(type)}&brand=${encodeURIComponent(brand)}&location=${encodeURIComponent(location)}`);
 
@@ -139,7 +141,7 @@
                                                         <i class="fas fa-heart"></i>
                                                     </a>
                                                 </div>
-                                                <div class="featured-text">plus ${annonce.occur} <i class="fa-solid fa-eye"></i></div>
+                                                <div class="featured-text">vues ${annonce.occur} <i class="fa-solid fa-eye"></i></div>
                                             </div>
                                             <div class="text">
                                                 <div class="type-price">

@@ -3,7 +3,7 @@
 {% block title %}Edit Profile{% endblock %}
 
 {% block body %}
-<div class="page-banner" style="background-image: url('https://demo.phpscriptpoint.com/carpoint/uploads/page_banners/7eb1650ca5075e2b8c9d96f6ab43839e.jpg')">
+<div class="page-banner" style="background-image: url('{{ asset('uploads/attachments/panel.jpg')}}')">
     <div class="page-banner-bg"></div>
     <h1>Edit Profile Information</h1>
     <nav>
@@ -21,17 +21,13 @@
                 {% include 'partial/_saidbar_user_dashbord.html.twig'  %}
             </div>
             <div class="col-md-9">
-            {% for message in app.flashes('error') %}
-                    <div class="alert alert-danger">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-                 {% for  message in app.flashes('message') %}
-                    
-                        <div class="alert alert-success">
+            {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ label }}">
                             {{ message }}
                         </div>
-                    {% endfor %} 
+                    {% endfor %}
+                {% endfor %}
                 <h2>Modification Information de Profile</h2>
                 <form method="post" action="{{ path('app_user_edit_profile') }}">
                     {{ form_start(form) }}

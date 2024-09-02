@@ -199,7 +199,7 @@ class MainController extends AbstractController
 
             $mailService->sendMail($from, $to, $subject, $donneesFormulaire);
             $this->addFlash('success', 'Votre email a bien été envoyé');
-        }
+        }//debut 
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $this->getUser();
 
@@ -347,7 +347,7 @@ class MainController extends AbstractController
         $locationListing = $this->entityManager->getRepository(Location::class)->findall();
         $Brandslisting = $this->entityManager->getRepository(Brand::class)->findBy([], ['id' => 'ASC']);
         $sittingGenerale = $this->entityManager->getRepository(SittingGenerale::class)->find(1);
-
+//dd($Brandslisting[0]->getLogos());
         return $this->render('main/annonce.html.twig', [
             'Annonces' => $data,
             'types' => $types,

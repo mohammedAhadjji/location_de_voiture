@@ -41,6 +41,10 @@ class UserDashbordController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
+            $this->addFlash(
+               'success',
+               'votre profile mise ajour avec sucees'
+            );
             return $this->redirectToRoute('app_user_edit_profile');
         }
 
@@ -56,12 +60,15 @@ class UserDashbordController extends AbstractController
         $user = $this->getUser();
         $form = $this->createForm(ProfileType::class, $user);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
+            $this->addFlash(
+                'success',
+                'Votre photo de profil a été mise à jour avec succès.'
+            );
             return $this->redirectToRoute('app_user_edit_profile_photo');
         }
-
+      
         $sittingGenerale = $this->entityManager->getRepository(SittingGenerale::class)->find(1);
         return $this->render('user_dashbord/edit_profile_photo.html.twig', [
             'sittig' => $sittingGenerale,

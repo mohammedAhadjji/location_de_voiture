@@ -22,15 +22,15 @@
 							<div
 								class="input-group input-box mb-3">
 								{##}
-								<input type="text" class="form-control" placeholder="Find anything ..." name="text" style="height: 100%;padding: 8.5px;">
-								<select id="location-select" name="location" class="form-control select2">
+								<input type="text" class="form-control" placeholder="Find anything ..." name="text" style=" padding: 19.5px">
+								<select id="location-select" name="location" class="form-control select2" style="height:100%;padding: 7px;">
 								<option value="">Select location</option>
 									{% for local in location %}
 										<option value="{{ local.id }}">{{ local.getLocale() }}</option>
 									{% endfor %}
 								</select>
 
-								<select id="brand-select" name="brand" class="form-control select2">
+								<select id="brand-select" name="brand" class="form-control select2" style="height:100%;padding: 7px;">
 									<option value="">Select Brand</option>
 									{% for brand in Brands %}
 										<option value="{{ brand.getId() }}">{{ brand.name }}</option>
@@ -38,7 +38,7 @@
 									<!-- Options des marques seront chargées ici via AJAX -->
 								</select>
 
-								<select id="model-select" name="model" class="form-control select2">
+								<select id="model-select" name="model" class="form-control select2 " style="height:100%;padding: 7px;">
 									<option value="">Select Model</option>
 									{% for modele in modeles %}
 										<option value="{{ modele.getId }}">{{ modele.name }}</option>

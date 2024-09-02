@@ -24,6 +24,7 @@ class CartController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
+
     #[Route('/', name: 'index')]
     public function index(SessionInterface $session, AnnoncesRepository $productsRepository): Response
     {
@@ -98,6 +99,7 @@ class CartController extends AbstractController
     #[Route('/add/{id}', name: 'add')]
     public function add(Annonces $product, SessionInterface $session): Response
     {
+        
         // Fetch the cart from the session
         $cart = $session->get('panier', []);
 

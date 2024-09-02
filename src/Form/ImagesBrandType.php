@@ -14,11 +14,7 @@ class ImagesBrandType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('name_file', FileType::class, [
-            'label' => 'Brand Logo (Image file)',
-            'mapped' => false, // Disables mapping to the entity
-            'required' => false,
-        ]);
+        ->add('name_file', VichFileType::class)
         ;
     }
 
@@ -26,9 +22,6 @@ class ImagesBrandType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => ImageBrand::class,
-            "allow_extra_fields" => true,
-            'upload_dir' => '/public/uploads/images_voiture', // Substitua pelo caminho real
-            'base_path' => '/public/uploads/images_voiture',
         ]);
     }
 }

@@ -1,7 +1,16 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
+<div class="page-banner" style="background-image: url('{{ asset('uploads/attachments/panel.jpg')}}')">
+    <div class="page-banner-bg"></div>
+    <h1>Panier</h1>
+    <nav>
+        <ol class="breadcrumb justify-content-center">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active">Panier</li>
+        </ol>
+    </nav>
+</div>
 <main class="container" style="min-height: 300px; margin-top: 4%">
 
     <section class="row justify-content-center align-items-center">
