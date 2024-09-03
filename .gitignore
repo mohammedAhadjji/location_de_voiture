@@ -6,6 +6,8 @@
 /public/bundles/
 /var/
 /vendor/
+/public/uploads/attachments
+/public/uploads/profile_pictures
 ###< symfony/framework-bundle ###
 
 ###> phpunit/phpunit ###

@@ -8,18 +8,30 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Image;
 
 class ProfileType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name_file', FileType::class,[
-                'label' => false,
-                'multiple' => true,
-                'mapped' => false,
-                'required' => false
-            ])
+        ->add('name_file', FileType::class, [
+            'label' => 'Photo de profil (fichier image)',
+            'required' => false,
+            'mapped' => false, // Indique que ce champ n'est pas directement lié à l'entité
+            'constraints' => [
+                new Image([
+                    'maxSize' => '5M',
+                    'mimeTypes' => [
+                        'image/jpeg',
+                        'image/png',
+                        'image/gif',
+                    ],
+                ]),
+            ],
+        ])
+    
+          
             
         ;
     }

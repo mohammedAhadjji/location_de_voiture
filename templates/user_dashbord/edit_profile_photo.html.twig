@@ -29,8 +29,8 @@
                     {% endfor %}
                 {% endfor %}
                 <h2>Modification Photo du Profile </h2>
-                 <form method="post" action="{{ path('app_user_edit_profile_photo') }}" enctype="multipart/form-data">
-                    {{ form_start(form) }}
+                 {#<form method="post" action="{{ path('app_user_edit_profile_photo') }}" enctype="multipart/form-data">#}
+                     {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
                     
                     <div class="row">
                         <div class="col-md-6">
@@ -39,7 +39,7 @@
                             <div id="loading" style="display: none;">
     <img src="{{ asset('loading-gif.gif') }}" alt="Chargement en cours...">
 </div>
-                                <img id="profileImage" src="{{ asset('uploads/attachments/' ~ user.photo) }}" alt="Profile Image" class="img-thumbnail" style="max-width: 150px;">
+                                <img id="profileImage" src="{{ asset('uploads/profile_pictures/' ~ user.photo) }}" alt="Profile Image" class="img-thumbnail" style="max-width: 150px;">
                             </div>
 
                             {# Champ pour sélectionner une nouvelle image #}
@@ -50,7 +50,7 @@
                     </div>
                     <button type="submit" class="btn btn-success">Save Changes</button>
                     {{ form_end(form) }}
-                </form>
+                {#</form>#}
                 {# JavaScript pour prévisualiser l'image sélectionnée #}
 <script>
 document.addEventListener('DOMContentLoaded', function() {

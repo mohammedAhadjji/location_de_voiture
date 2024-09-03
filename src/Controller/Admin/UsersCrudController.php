@@ -28,7 +28,7 @@ class UsersCrudController extends AbstractCrudController
            // IdField::new('id'),
             TextField::new('name'),
             TextField::new('firstname'),
-            ImageField::new('photo')->setUploadDir('/public/uploads/attachments')->setBasePath('/uploads/attachments'),
+            ImageField::new('photo')->setUploadDir('/public/uploads/profile_pictures')->setBasePath('uploads/profile_pictures'),
              EmailField::new('email'),
              BooleanField::new('isVerified'),
              

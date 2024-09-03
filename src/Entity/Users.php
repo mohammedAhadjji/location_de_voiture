@@ -65,7 +65,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
     
-    #[Vich\UploadableField(mapping:'products',fileNameProperty:'photo')]
+    #[Vich\UploadableField(mapping:'profile_pictures',fileNameProperty:'photo')]
     private ?File $name_file = null;
 
     #[ORM\OneToMany(mappedBy: 'users', targetEntity: ImageProfile::class)]

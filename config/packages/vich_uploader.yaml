@@ -8,6 +8,12 @@ vich_uploader:
             namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
             delete_on_update: true
             delete_on_remove: true
+       profile_pictures:  # Nouveau mapping pour profile_pictures
+            uri_prefix: '/uploads/profile_pictures'  # URI relative pour accéder aux images
+            upload_destination: '%kernel.project_dir%/public/uploads/profile_pictures'  # Chemin de destination pour les uploads
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer  # Génère un nom unique pour les fichiers uploadés
+            delete_on_update: true  # Supprime l'ancien fichier lors de la mise à jour
+            delete_on_remove: true 
        image_voiture:
             uri_prefix: '%img_voiture%'
             upload_destination: '%kernel.project_dir%/public%img_voiture%'

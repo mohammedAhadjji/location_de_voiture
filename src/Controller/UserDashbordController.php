@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\SittingGenerale;
 use App\Entity\Users;
+use App\Entity\ImageProfile;
 use App\Form\ProfileType;
 use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -60,22 +61,42 @@ class UserDashbordController extends AbstractController
         $user = $this->getUser();
         $form = $this->createForm(ProfileType::class, $user);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
+            $file = $form->get('name_file')->getData();
+
+            $file = $form->get('name_file')->getData();
+if ($file && $file->isValid()) {
+    $filename = uniqid() . '.' . $file->guessExtension();
+
+    $file->move(
+        $this->getParameter('kernel.project_dir') . '/public/uploads/profile_pictures',
+        $filename
+    );
+
+    $user->setPhoto($filename);
+    $this->entityManager->flush();
+} else {
+    $this->addFlash('error', 'Le fichier n\'est pas valide ou est inaccessible.');
+}
+
+
             $this->entityManager->flush();
-            $this->addFlash(
-                'success',
-                'Votre photo de profil a été mise à jour avec succès.'
-            );
+
+            $this->addFlash('success', 'Votre photo de profil a été mise à jour avec succès.');
+
             return $this->redirectToRoute('app_user_edit_profile_photo');
         }
-      
         $sittingGenerale = $this->entityManager->getRepository(SittingGenerale::class)->find(1);
         return $this->render('user_dashbord/edit_profile_photo.html.twig', [
-            'sittig' => $sittingGenerale,
             'form' => $form->createView(),
             'user' => $user,
+            'sittig' => $sittingGenerale,
         ]);
     }
+    
+    
+    
     #[Route('/edit/password', name: 'edit_password')]
     public function editpass(Request $request, UserPasswordHasherInterface $userPasswordHasher): Response
     {

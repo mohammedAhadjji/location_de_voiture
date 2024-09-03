@@ -117,13 +117,23 @@
             .listing-page .room-all .item .price,
             .popular-city .popular-city-item:hover h4 {
                 /*color: #F6552C;*/
-                color: {{ sittig.ThemeColor }};
+                {% if sittig %}
+                    color: {{ sittig.ThemeColor }};
+                    {% else %}
+                    color: #F6552C;
+                {% endif %}
+                
             }
 
             .main-nav nav .navbar-nav .nav-item .dropdown-menu li a:hover,
             .mean-container a.meanmenu-reveal,
             .footer-social-link ul li a:hover {
-                color: {{ sittig.ThemeColor }}!important;
+                {% if sittig %}
+                    color: {{ sittig.ThemeColor }}!important;
+                    {% else %}
+                    color: #F6552C;
+                {% endif %}
+                
             }
 
             .search-section .input-group-append button,
@@ -146,17 +156,32 @@
             .agent-banner .social a:hover,
             .mean-container a.meanmenu-reveal span,
             .comment button {
-                background: {{ sittig.ThemeColor }};
+                
+                 {% if sittig %}
+                    background: {{ sittig.ThemeColor }};
+                    {% else %}
+                    background: #F6552C;
+                {% endif %}
             }
 
            
             .footer-social-link ul li a,
             .contact-form .btn {
-                border-color: {{ sittig.ThemeColor }};
+                
+                   {% if sittig %}
+                    border-color: {{ sittig.ThemeColor }};
+                    {% else %}
+                    border-color: #F6552C;
+                {% endif %}
             }
 
             .listing-filter .lf-heading {
-                border-bottom-color: {{ sittig.ThemeColor }};
+                
+                {% if sittig %}
+                    border-bottom-color: {{ sittig.ThemeColor }};
+                    {% else %}
+                    border-bottom-color: #F6552C;
+                {% endif %}
                 
             }
         </style>
@@ -199,8 +224,16 @@
                 <div class="row">
                     <div class="col-lg-6 col-md-5 col-sm-12">
                         <ul class="top-left">                            
-                                                        <li><i class="fas fa-phone-alt"></i> {{ sittig.footerPhone }}</li>
-                                                                                    <li><i class="fas fa-envelope"></i> {{ sittig.footerMail }}</li>
+                                                        <li><i class="fas fa-phone-alt"></i>  {% if sittig %}
+                   {{ sittig.footerPhone }}
+                    {% else %}
+                    {{ ''}}
+                {% endif %}</li>
+                                                                                    <li><i class="fas fa-envelope"></i> {% if sittig %}
+                   {{ sittig.footerMail }}
+                    {% else %}
+                    {{ ''}}
+                {% endif %} </li>
                                                     </ul>
                     </div>
                     <div class="col-lg-6 col-md-7 col-sm-12">
@@ -236,8 +269,12 @@
 
 	<!-- Menu For Mobile Device -->
 	<div class="mobile-nav">
-		<a href="{{ path('app_home') }}" class="logo">
-			<img src="{{ asset('uploads/attachments/' ~sittig.logoImg ) }}" alt="">
+		<a href="{{ path('app_home') }}" class="logo">{% if sittig %}
+                   <img src="{{ asset('uploads/attachments/' ~sittig.logoImg ) }}" alt="">
+                    {% else %}
+                    {{ ''}}
+                {% endif %}
+			
 		</a>
 	</div>
 
