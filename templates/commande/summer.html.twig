@@ -5,108 +5,133 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container">
-<meta http-equiv="Content-Language" content="tr">
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-9">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="now">
-
-<div class="element-wrapper">
-	<div class="element-box">
-		<h5 class="form-header text-uppercase pt-0">
-			<span>RÉSUMÉ DE LA COMMANDE</span>
-		</h5>
-		<div class="row">
-			<div class="col-md-6">
-			    <form id="form_cmi" method="post" action="{{path('request_sendData')}}">
-					<input type="hidden" name="clientid" value="{{clientId}}"> 
-					<input type="hidden" name="amount" value="{{total}}">
-					<input type="hidden" name="okUrl" value="{{successRedirect}}">
-					<input type="hidden" name="failUrl" value="{{failRedirect}}">
-					<input type="hidden" name="TranType" value="PreAuth">
-					<input type="hidden" name="callbackUrl" value="{{calbackRedirect}}">
-					<input type="hidden" name="shopurl" value="{{cancelRedirect}}">
-					<input type="hidden" name="currency" value="">
-					<input type="hidden" name="rnd" value="">
-					<input type="hidden" name="storetype" value="3D_PAY_HOSTING">
-					<input type="hidden" name="hashAlgorithm" value="ver3">
-					<input type="hidden" name="lang" value="fr">
-					<input type="hidden" name="refreshtime" value="5">
-					<!-- begin adress -->
-					<div class="form-group">
-						<label for="">Nom et Prénom</label>
-						<input required value="" type="text" class="form-control" name="BillToName" id="fullname" placeholder=""/>
-					</div>
-					<div class="form-group">
-						<label for="">Societé</label>
-						<input required value="" type="text" class="form-control" name="BillToCompany" id="comanyname" placeholder=""/>
-					</div>
-					<div class="form-group">
-						<label for="">Adresse</label>
-						<input required value="" type="text" class="form-control" name="BillToStreet1" id="adresse" placeholder=""/>
-					</div>
-					<div class="form-group">
-						<label for="">Code postal</label>
-						<input required value="" type="text" class="form-control" name="BillToPostalCode" id="codepostal" placeholder=""/>
-					</div>
-					<div class="form-group">
-						<input type="hidden" value="504" type="text" class="form-control" name="BillToCountry" id="pays" placeholder=""/>
-					</div>
-					<div class="form-group">
-						<label for="">État/Province</label>
-						<input required value="" type="text" class="form-control" name="BillToStateProv" id="province" placeholder=""/>
-					</div>
-					<div class="form-group">
-						<label for="">Ville</label>
-						<input required value="" type="text" class="form-control" name="BillToCity" id="ville" placeholder=""/>
-					</div>
-					<div class="form-group">
-						<label for="">Numéro de téléphone</label>
-						<input required value="" type="text" class="form-control" name="tel" id="tel" placeholder=""/>
-					</div>
-					<div class="form-group">
-						<label for="">E-mail</label>
-						<input required value="" type="email" class="form-control" name="email" id="email" placeholder=""/>
-					</div>
-					
-					<div class="form-buttons-w">
-						<button id="checkout" onclick="checkout(event)" class="btn btn-outline-danger" type="submit">Procéder au paiement</button>
-						<button  class="btn btn-outline-danger" >Valider la commande </button>
-					</div>
-					<!-- end adress -->
-					<input type="hidden" name="encoding" value="UTF-8">
-					<input type="hidden" name="oid" value="{{commandeId}}"> 	
-				</form>
-			</div>
-			<div class="col-md-6">
-				<a style=" direction: rtl;" class="element-box el-tablo four" href="javascript:void(0)">
-					<div class="d-flex justify-content-between align-items-center">
-						<div style="height: auto;" class="el-icon">
-							<i style="width: 100%;padding: 5px;" class="os-icon os-icon-shopping-cart"></i>
-						</div>
-						<div class="value">
-							Total de la commande :	{{total}} MAD
-						</div>
-					</div>
-					<div style="text-align: end;" class="el-title">Sous-total : {{sous_total}} MAD</div>
-					<div style="text-align: end;" class="el-title">Remise	 : {{remise}} MAD</div>
-				</a>
-			</div>
-		</div>
-	</div>
+<div class="page-banner" style="background-image: url('{{ asset('uploads/attachments/panel.jpg')}}')">
+	<div class="page-banner-bg"></div>
+    <h1>Payment</h1>
+	<nav>
+		<ol class="breadcrumb justify-content-center">
+			<li class="breadcrumb-item"><a href="{{ path('app_home')}}">Home</a></li>
+			<li class="breadcrumb-item active">Payment</li>
+		</ol>
+	</nav>
 </div>
+
+	<div class="container">
+    <meta http-equiv="Content-Language" content="tr">
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-9">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="now">
+
+    <div class="element-wrapper">
+        <div class="element-box" style="background: #ffffff; border-radius: 15px; padding: 20px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);">
+            <h5 class="form-header text-uppercase pt-0" style="text-align: center; font-size: 24px; font-weight: bold; color: #333;">
+                <span>Résumé de la Commande</span>
+            </h5>
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <form id="form_cmi" method="post" action="{{ path('request_sendData') }}">
+                        <input type="hidden" name="clientid" value="{{ clientId }}">
+                        <input type="hidden" name="amount" value="{{ total }}">
+                        <input type="hidden" name="okUrl" value="{{ successRedirect }}">
+                        <input type="hidden" name="failUrl" value="{{ failRedirect }}">
+                        <input type="hidden" name="TranType" value="PreAuth">
+                        <input type="hidden" name="callbackUrl" value="{{ calbackRedirect }}">
+                        <input type="hidden" name="shopurl" value="{{ cancelRedirect }}">
+                        <input type="hidden" name="currency" value="">
+                        <input type="hidden" name="rnd" value="">
+                        <input type="hidden" name="storetype" value="3D_PAY_HOSTING">
+                        <input type="hidden" name="hashAlgorithm" value="ver3">
+                        <input type="hidden" name="lang" value="fr">
+                        <input type="hidden" name="refreshtime" value="5">
+
+                        <!-- Adresse -->
+                        <div class="form-group mb-4">
+                            <label for="fullname">Nom et Prénom</label>
+                            <input required type="text" class="form-control" name="BillToName" id="fullname" placeholder="Entrez votre nom complet" style="padding: 15px; border-radius: 8px; border: 1px solid #ccc;">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="comanyname">Société</label>
+                            <input required type="text" class="form-control" name="BillToCompany" id="comanyname" placeholder="Entrez le nom de votre société" style="padding: 15px; border-radius: 8px; border: 1px solid #ccc;">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="adresse">Adresse</label>
+                            <input required type="text" class="form-control" name="BillToStreet1" id="adresse" placeholder="Entrez votre adresse" style="padding: 15px; border-radius: 8px; border: 1px solid #ccc;">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="codepostal">Code postal</label>
+                            <input required type="text" class="form-control" name="BillToPostalCode" id="codepostal" placeholder="Entrez votre code postal" style="padding: 15px; border-radius: 8px; border: 1px solid #ccc;">
+                        </div>
+                        <input type="hidden" name="BillToCountry" value="504">
+                        <div class="form-group mb-4">
+                            <label for="province">État/Province</label>
+                            <input required type="text" class="form-control" name="BillToStateProv" id="province" placeholder="Entrez votre état ou province" style="padding: 15px; border-radius: 8px; border: 1px solid #ccc;">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="ville">Ville</label>
+                            <input required type="text" class="form-control" name="BillToCity" id="ville" placeholder="Entrez votre ville" style="padding: 15px; border-radius: 8px; border: 1px solid #ccc;">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="tel">Numéro de téléphone</label>
+                            <input required type="text" class="form-control" name="tel" id="tel" placeholder="Entrez votre numéro de téléphone" style="padding: 15px; border-radius: 8px; border: 1px solid #ccc;">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="email">E-mail</label>
+                            <input required type="email" class="form-control" name="email" id="email" placeholder="Entrez votre e-mail" style="padding: 15px; border-radius: 8px; border: 1px solid #ccc;">
+                        </div>
+
+                        <!-- Boutons -->
+                        <div class="form-buttons-w d-flex justify-content-between">
+                            <button id="checkout" onclick="checkout(event)" class="btn btn-success btn-lg" type="submit" style="background-color: {{ sittig.ThemeColor }}; border: none; padding: 10px 20px; border-radius: 5px; font-size: 18px;">
+                                Procéder au paiement
+                            </button>
+                            <button class="btn btn-outline-danger btn-lg" type="button" style="padding: 10px 20px; border-radius: 5px; font-size: 18px;">
+                                Valider la commande
+                            </button>
+                        </div>
+
+                        <input type="hidden" name="encoding" value="UTF-8">
+                        <input type="hidden" name="oid" value="{{ commandeId }}">
+                    </form>
+                </div>
+
+                <!-- Récapitulatif -->
+                <div class="col-md-6">
+                    <div class="element-box el-tablo four" style="background: #f8f9fa; border-radius: 15px; padding: 20px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); text-align: right;">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="el-icon" style="height: auto;">
+                                <i class="os-icon os-icon-shopping-cart" style="font-size: 50px; color: #007bff;"></i>
+                            </div>
+                            <div class="value" style="font-size: 24px; font-weight: bold; color: #333;">
+                                Total de la commande : {{ total }} MAD
+                            </div>
+                        </div>
+                        <div class="el-title mt-3" style="font-size: 18px; color: #666;">
+                            Sous-total : {{ sous_total }} MAD
+                        </div>
+                        <div class="el-title mt-2" style="font-size: 18px; color: #666;">
+                            Remise : {{ remise }} MAD
+                        </div>
+						 <div class="el-title mt-2" style="font-size: 18px; color: #666;">
+                            Tax : {{ tax }} MAD
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 {% endblock %}
 
 {% block javascripts %}
-{{parent()}}
+{{ parent() }}
 <script>
-    function checkout(event){
-		event.preventDefault();
-		$("#form_cmi").submit();
-		return false;
-	}
+    function checkout(event) {
+        event.preventDefault();
+        $("#form_cmi").submit();
+        return false;
+    }
 </script>
 <script src="{{ asset('js/waitMe.js') }}"></script>
 {% endblock %}
+
