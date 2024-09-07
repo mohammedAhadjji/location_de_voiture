@@ -2,37 +2,38 @@
 
 namespace App\Controller;
 
-use App\Entity\Annonces;
+use App\Entity\Type;
 use App\Entity\Blogs;
 use App\Entity\Brand;
-use App\Entity\Categories;
-use App\Entity\Location;
-use App\Entity\Modele;
 use App\Entity\Order;
-use App\Entity\SittingGenerale;
-use App\Entity\Type;
 use App\Entity\Users;
-use App\Form\AddWishFormType;
+use App\Entity\Modele;
+use App\Entity\Annonces;
+use App\Entity\Location;
 use App\Form\RapporType;
+use App\Entity\Categories;
 use App\Form\SendMailType;
+use App\Form\AddWishFormType;
+use App\Services\MailService;
+use App\Entity\SittingGenerale;
 use App\Form\SerchAnnoncesType;
-use App\Repository\AnnoncesRepository;
-use App\Repository\CategoriesRepository;
-use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
 use App\Repository\BlogsRepository;
 use App\Repository\BrandRepository;
-use App\Repository\ReservationRepository;
+use App\Repository\AnnoncesRepository;
 use App\Services\AnnoncesSearchService;
-use App\Services\MailService;
+use App\Repository\CategoriesRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use EasyCorp\Bundle\EasyAdminBundle\Contracts\Orm\EntityPaginatorInterface;
-use phpDocumentor\Reflection\DocBlock\Tags\Var_;
+use App\Repository\ReservationRepository;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use phpDocumentor\Reflection\DocBlock\Tags\Var_;
 use Symfony\Component\Validator\Constraints\DateTime;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
+use EasyCorp\Bundle\EasyAdminBundle\Contracts\Orm\EntityPaginatorInterface;
 
 class MainController extends AbstractController
 {
@@ -323,7 +324,7 @@ class MainController extends AbstractController
         ]);
     }
     #[Route('/liste/annonces', name: 'liste_annonces')]
-    public function annoces(AnnoncesRepository $AnnoncesRepository, Request $request): Response
+    public function annoces(AnnoncesRepository $AnnoncesRepository, Request $request ,PaginatorInterface $paginator): Response
     {
         // Récupération des paramètres de la requête
         $mots = $request->request->get('text');
@@ -331,15 +332,20 @@ class MainController extends AbstractController
         $brand = $request->request->get('brand');
         $model = $request->request->get('model');
         $location = $request->request->get('location');
+        $page = $request->request->getInt('page', 1);
+        $limit = $request->request->getInt('limit',10 );
 
         // Vérifier si des paramètres de filtrage sont présents dans la requête
         if ($mots || $type || $brand || $model || $location) {
             // Effectuer la recherche avec les paramètres
-            $data = $annonces = $this->annoncesSearchService->searchAnnonces($mots, $type, $brand, $model, $location);
-
+            $annonces = $this->annoncesSearchService->searchAnnonces($mots, $type, $brand, $model, $location,$page = $request->query->getInt('page', 1), $limit);
+            $data = $annonces;  // No pagination for filtered results
         } else {
+            $page = $request->query->getInt('page', 1);  // Default to page 1 if no page is set
+            $limit = $request->request->getInt('limit',10 );
+            
             // Afficher le contenu par défaut si aucun paramètre de filtrage
-            $data = $AnnoncesRepository->findBy([], ['occur' => 'DESC']);
+            $data = $paginator->paginate( $AnnoncesRepository->findBy([], ['occur' => 'DESC']),$page,$limit);
            
         }
         
@@ -347,13 +353,26 @@ class MainController extends AbstractController
         $locationListing = $this->entityManager->getRepository(Location::class)->findall();
         $Brandslisting = $this->entityManager->getRepository(Brand::class)->findBy([], ['id' => 'ASC']);
         $sittingGenerale = $this->entityManager->getRepository(SittingGenerale::class)->find(1);
-//dd($Brandslisting[0]->getLogos());
+/*dd($Brandslisting[0]->getLogos()); $mots = $request->request->get('text');
+        $type = $request->request->get('type');
+        $brand = $request->request->get('brand');
+        $model = $request->request->get('model');
+        $location*/
         return $this->render('main/annonce.html.twig', [
             'Annonces' => $data,
             'types' => $types,
             'brandslisting' => $Brandslisting,
             'locationListing' => $locationListing,
-            'sittig' => $sittingGenerale
+            'sittig' => $sittingGenerale,
+            'type' => $type,
+            'brand' => $brand,
+           'model' => $model,
+           'location'=>$location,
+           'mots' => $mots,
+            'page' => $page,
+            'limit' => $limit,
+            'total' => ceil($data->getTotalItemCount() / $limit) // Total pages
+
         ]);
     }
     #[Route('/liste/blogs', name: 'liste_blogs')]

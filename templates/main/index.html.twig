@@ -15,6 +15,19 @@
 					<p>
 						Easily find the perfect car by selecting your preferred brand, location, or model. Use the filters
 					</p>
+					<style>
+						@media(max-width:767px) {
+							.slec {
+								width: 100% !important;
+								border-radius: 5px !important;
+								margin-top: 6px !important;
+							}
+							.sub {
+								margin-top: 6px !important;
+							}
+
+						}
+					</style>
 
 					<div class="box">
 						<form action="{{ path('liste_annonces') }}" method="POST">
@@ -22,15 +35,15 @@
 							<div
 								class="input-group input-box mb-3">
 								{##}
-								<input type="text" class="form-control" placeholder="Find anything ..." name="text" style=" padding: 19.5px">
-								<select id="location-select" name="location" class="form-control select2" style="height:100%;padding: 7px;">
-								<option value="">Select location</option>
+								<input type="text" class="form-control" placeholder="Find anything ..." name="text" style=" padding: 18.5px">
+								<select id="location-select" name="location" class="form-control select2 slec" style="height:100%;padding: 7px;">
+									<option value="">Select location</option>
 									{% for local in location %}
 										<option value="{{ local.id }}">{{ local.getLocale() }}</option>
 									{% endfor %}
 								</select>
 
-								<select id="brand-select" name="brand" class="form-control select2" style="height:100%;padding: 7px;">
+								<select id="brand-select" name="brand" class="form-control select2 slec" style="height:100%;padding: 7px;">
 									<option value="">Select Brand</option>
 									{% for brand in Brands %}
 										<option value="{{ brand.getId() }}">{{ brand.name }}</option>
@@ -38,19 +51,20 @@
 									<!-- Options des marques seront chargées ici via AJAX -->
 								</select>
 
-								<select id="model-select" name="model" class="form-control select2 " style="height:100%;padding: 7px;">
+								<select id="model-select" name="model" class="form-control select2 slec" style="height:100%;padding: 7px;">
 									<option value="">Select Model</option>
 									{% for modele in modeles %}
 										<option value="{{ modele.getId }}">{{ modele.name }}</option>
-									{% endfor %}<!-- Options des modèles seront chargées ici via AJAX -->
+									{% endfor %}
+									<!-- Options des modèles seront chargées ici via AJAX -->
 								</select>
 
 								{#<select id="type-select" name="type[]" class="form-control select2">
-																									<option value="">Select Type</option>
-																									<!-- Options des types seront chargées ici via AJAX -->
-																								</select>#}
+																																	<option value="">Select Type</option>
+																																	<!-- Options des types seront chargées ici via AJAX -->
+																																</select>#}
 							</select>
-							<div class="input-group-append">
+							<div class="input-group-append sub">
 								<button type="submit" style="background-color: {{ sittig.ThemeColor }};height: 100%;padding: 7.5px;">
 									<i class="fa fa-search"></i>
 									Search</button>
@@ -175,89 +189,89 @@ req.send();
 				</div>
 			{% endfor %}
 			<!--div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp">
-																		<div class="popular-city-item effect-item">
-																			<div class="photo image-effect">
-																				<img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_brand_photos/a4f80e32fdb1db3fa0d0310fe7de62b9.jpg" alt="">
-																			</div>
-																			<div class="text">
-																				<h4>Nissan</h4>
-																				<p>2 Items</p>
-																			</div>
-																			<a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/nissan"></a>
-																		</div>
-																	</div>
-																	<div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp">
-																		<div class="popular-city-item effect-item">
-																			<div class="photo image-effect">
-																				<img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_brand_photos/2bc74c80d17eebacf1de098186e028b0.jpg" alt="">
-																			</div>
-																			<div class="text">
-																				<h4>Mazda</h4>
-																				<p>2 Items</p>
-																			</div>
-																			<a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/mazda"></a>
-																		</div>
-																	</div>
-																	<div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp">
-																		<div class="popular-city-item effect-item">
-																			<div class="photo image-effect">
-																				<img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_brand_photos/13d509467d021397f17e943cb68b750c.jpg" alt="">
-																			</div>
-																			<div class="text">
-																				<h4>BMW</h4>
-																				<p>1 Items</p>
-																			</div>
-																			<a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/bmw"></a>
-																		</div>
-																	</div>
-																	<div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp">
-																		<div class="popular-city-item effect-item">
-																			<div class="photo image-effect">
-																				<img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_brand_photos/25aab7366ea773e85be7b731e25d5d75.jpg" alt="">
-																			</div>
-																			<div class="text">
-																				<h4>Lamborghini</h4>
-																				<p>1 Items</p>
-																			</div>
-																			<a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/lamborghini"></a>
-																		</div>
-																	</div>
-																	<div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp">
-																		<div class="popular-city-item effect-item">
-																			<div class="photo image-effect">
-																				<img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_brand_photos/abf8e2d9e822fc23acd219246c658e2c.jpg" alt="">
-																			</div>
-																			<div class="text">
-																				<h4>Volkswagen</h4>
-																				<p>1 Items</p>
-																			</div>
-																			<a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/volkswagen"></a>
-																		</div>
-																	</div>
-																	<div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp">
-																		<div class="popular-city-item effect-item">
-																			<div class="photo image-effect">
-																				<img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_brand_photos/ecda20d11a98085670055e0935530a27.jpg" alt="">
-																			</div>
-																			<div class="text">
-																				<h4>Jaguar</h4>
-																				<p>1 Items</p>
-																			</div>
-																			<a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/jaguar"></a>
-																		</div>
-																	</div>
-																	<div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp">
-																		<div class="popular-city-item effect-item">
-																			<div class="photo image-effect">
-																				<img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_brand_photos/bdef15bf04bb381858b82f34216035a3.jpg" alt="">
-																			</div>
-																			<div class="text">
-																				<h4>Porsche</h4>
-																				<p>0 Items</p>
-																			</div>
-																			<a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/porsche"></a>
-																		</div>
-																	</div-->
+																					<div class="popular-city-item effect-item">
+																						<div class="photo image-effect">
+																							<img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_brand_photos/a4f80e32fdb1db3fa0d0310fe7de62b9.jpg" alt="">
+																						</div>
+																						<div class="text">
+																							<h4>Nissan</h4>
+																							<p>2 Items</p>
+																						</div>
+																						<a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/nissan"></a>
+																					</div>
+																				</div>
+																				<div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp">
+																					<div class="popular-city-item effect-item">
+																						<div class="photo image-effect">
+																							<img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_brand_photos/2bc74c80d17eebacf1de098186e028b0.jpg" alt="">
+																						</div>
+																						<div class="text">
+																							<h4>Mazda</h4>
+																							<p>2 Items</p>
+																						</div>
+																						<a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/mazda"></a>
+																					</div>
+																				</div>
+																				<div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp">
+																					<div class="popular-city-item effect-item">
+																						<div class="photo image-effect">
+																							<img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_brand_photos/13d509467d021397f17e943cb68b750c.jpg" alt="">
+																						</div>
+																						<div class="text">
+																							<h4>BMW</h4>
+																							<p>1 Items</p>
+																						</div>
+																						<a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/bmw"></a>
+																					</div>
+																				</div>
+																				<div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp">
+																					<div class="popular-city-item effect-item">
+																						<div class="photo image-effect">
+																							<img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_brand_photos/25aab7366ea773e85be7b731e25d5d75.jpg" alt="">
+																						</div>
+																						<div class="text">
+																							<h4>Lamborghini</h4>
+																							<p>1 Items</p>
+																						</div>
+																						<a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/lamborghini"></a>
+																					</div>
+																				</div>
+																				<div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp">
+																					<div class="popular-city-item effect-item">
+																						<div class="photo image-effect">
+																							<img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_brand_photos/abf8e2d9e822fc23acd219246c658e2c.jpg" alt="">
+																						</div>
+																						<div class="text">
+																							<h4>Volkswagen</h4>
+																							<p>1 Items</p>
+																						</div>
+																						<a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/volkswagen"></a>
+																					</div>
+																				</div>
+																				<div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp">
+																					<div class="popular-city-item effect-item">
+																						<div class="photo image-effect">
+																							<img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_brand_photos/ecda20d11a98085670055e0935530a27.jpg" alt="">
+																						</div>
+																						<div class="text">
+																							<h4>Jaguar</h4>
+																							<p>1 Items</p>
+																						</div>
+																						<a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/jaguar"></a>
+																					</div>
+																				</div>
+																				<div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp">
+																					<div class="popular-city-item effect-item">
+																						<div class="photo image-effect">
+																							<img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_brand_photos/bdef15bf04bb381858b82f34216035a3.jpg" alt="">
+																						</div>
+																						<div class="text">
+																							<h4>Porsche</h4>
+																							<p>0 Items</p>
+																						</div>
+																						<a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/porsche"></a>
+																					</div>
+																				</div-->
 		</div>
 	</div>
 </div>
@@ -292,36 +306,36 @@ req.send();
 	<div
 		class="row">
 		{#for annonce in annonces %}
-													<div class="col-lg-4 col-md-6 col-sm-12">
-														<div class="card mb-4">
-															<div id="carousel-{{ annonce.id }}" class="carousel slide" data-ride="carousel">
-																<div class="carousel-inner">
-																	{% set isFirst = true %}
-																	{% for image in annonce.voiture.images %}
-																		<div class="carousel-item {% if isFirst %}active{% endif %}">
-																			<img src="{{ asset('uploads/attachments/' ~ image.name) }}" class="d-block w-100" alt="Image">
+															<div class="col-lg-4 col-md-6 col-sm-12">
+																<div class="card mb-4">
+																	<div id="carousel-{{ annonce.id }}" class="carousel slide" data-ride="carousel">
+																		<div class="carousel-inner">
+																			{% set isFirst = true %}
+																			{% for image in annonce.voiture.images %}
+																				<div class="carousel-item {% if isFirst %}active{% endif %}">
+																					<img src="{{ asset('uploads/attachments/' ~ image.name) }}" class="d-block w-100" alt="Image">
+																				</div>
+																				{% set isFirst = false %}
+																			{% endfor %}
 																		</div>
-																		{% set isFirst = false %}
-																	{% endfor %}
+																		<a class="carousel-control-prev" href="#carousel-{{ annonce.id }}" role="button" data-slide="prev">
+																			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+																			<span class="sr-only">Previous</span>
+																		</a>
+																		<a class="carousel-control-next" href="#carousel-{{ annonce.id }}" role="button" data-slide="next">
+																			<span class="carousel-control-next-icon" aria-hidden="true"></span>
+																			<span class="sr-only">Next</span>
+																		</a>
+																	</div>
+																	<div class="card-body">
+																		<h5 class="card-title">{{ annonce.title }}</h5>
+																		<p class="card-text">{{ annonce.descriptions |raw}}</p>
+																		<p class="card-text">Price: ${{ annonce.prix_locat }}</p>
+																		<p class="card-text">Created at: {{ annonce.created_at|date('Y-m-d H:i:s') }}</p>
+																	</div>
 																</div>
-																<a class="carousel-control-prev" href="#carousel-{{ annonce.id }}" role="button" data-slide="prev">
-																	<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-																	<span class="sr-only">Previous</span>
-																</a>
-																<a class="carousel-control-next" href="#carousel-{{ annonce.id }}" role="button" data-slide="next">
-																	<span class="carousel-control-next-icon" aria-hidden="true"></span>
-																	<span class="sr-only">Next</span>
-																</a>
 															</div>
-															<div class="card-body">
-																<h5 class="card-title">{{ annonce.title }}</h5>
-																<p class="card-text">{{ annonce.descriptions |raw}}</p>
-																<p class="card-text">Price: ${{ annonce.prix_locat }}</p>
-																<p class="card-text">Created at: {{ annonce.created_at|date('Y-m-d H:i:s') }}</p>
-															</div>
-														</div>
-													</div>
-												{% endfor #}
+														{% endfor #}
 		{% for annonce in annonces %}
 			<div class="col-lg-4 col-md-6 col-sm-12 wow fadeInLeft">
 				<div class="listing-item effect-item">
@@ -368,410 +382,414 @@ req.send();
 
 
 						<!--div class="review">
-																																<i class="far fa-star"></i>
-																																<i class="far fa-star"></i>
-																																<i class="far fa-star"></i>
-																																<i class="far fa-star"></i>
-																																<i class="far fa-star"></i>
-																																<span>(0 Reviews)</span>
-																															</div-->
+																																						<i class="far fa-star"></i>
+																																						<i class="far fa-star"></i>
+																																						<i class="far fa-star"></i>
+																																						<i class="far fa-star"></i>
+																																						<i class="far fa-star"></i>
+																																						<span>(0 Reviews)</span>
+																																					</div-->
 
 					</div>
 				</div>
 			</div>
 		{% endfor %}
 		<!--div class="col-lg-4 col-md-6 col-sm-12 wow fadeInUp">
-													<div class="listing-item effect-item">
-														<div class="photo image-effect">
-															<a href="https://demo.phpscriptpoint.com/carpoint/listing-detail/14/2019-lamborghini-urus-base"><img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_featured_photos/c05257ca738dd4b947f291f6096c5b5e.jpg" alt=""></a>
-															<div class="brand">
-																<a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/lamborghini">Lamborghini</a>
-															</div>
-															<div class="wishlist">
-																<a href="https://demo.phpscriptpoint.com/carpoint/customer/wishlist/add/14">
-																	<i class="fas fa-heart"></i>
-																</a>
-															</div>
-															<div class="featured-text">Featured</div>
-														</div>
-														<div class="text">
-									
-															<div class="type-price">
-																<div class="type">
-																	<div class="inner-new">
-																		New Car
+															<div class="listing-item effect-item">
+																<div class="photo image-effect">
+																	<a href="https://demo.phpscriptpoint.com/carpoint/listing-detail/14/2019-lamborghini-urus-base"><img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_featured_photos/c05257ca738dd4b947f291f6096c5b5e.jpg" alt=""></a>
+																	<div class="brand">
+																		<a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/lamborghini">Lamborghini</a>
 																	</div>
-																</div>
-																<div class="price">
-																	$242,990
-																</div>
-															</div>
-									
-															<h3>
-																<a href="https://demo.phpscriptpoint.com/carpoint/listing-detail/14/2019-lamborghini-urus-base">2019 Lamborghini Urus Base</a>
-															</h3>
-															<div class="location">
-																<i class="fas fa-map-marker-alt"></i>
-																NewYork
-															</div>
-									
-									
-															<div class="review">
-																<i class="far fa-star"></i>
-																<i class="far fa-star"></i>
-																<i class="far fa-star"></i>
-																<i class="far fa-star"></i>
-																<i class="far fa-star"></i>
-																<span>(0 Reviews)</span>
-															</div>
-									
-														</div>
-													</div>
-												</div>
-												<div class="col-lg-4 col-md-6 col-sm-12 wow fadeInRight">
-													<div class="listing-item effect-item">
-														<div class="photo image-effect">
-															<a href="https://demo.phpscriptpoint.com/carpoint/listing-detail/6/2019-nissan-murano-s"><img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_featured_photos/2bf25c0c094e8963d3bb24109cf2beed.jpg" alt=""></a>
-															<div class="brand">
-																<a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/nissan">Nissan</a>
-															</div>
-															<div class="wishlist">
-																<a href="https://demo.phpscriptpoint.com/carpoint/customer/wishlist/add/6">
-																	<i class="fas fa-heart"></i>
-																</a>
-															</div>
-															<div class="featured-text">Featured</div>
-														</div>
-														<div class="text">
-									
-															<div class="type-price">
-																<div class="type">
-																	<div class="inner-used">
-																		Used Car
+																	<div class="wishlist">
+																		<a href="https://demo.phpscriptpoint.com/carpoint/customer/wishlist/add/14">
+																			<i class="fas fa-heart"></i>
+																		</a>
 																	</div>
+																	<div class="featured-text">Featured</div>
 																</div>
-																<div class="price">
-																	$24,900
-																</div>
-															</div>
-									
-															<h3>
-																<a href="https://demo.phpscriptpoint.com/carpoint/listing-detail/6/2019-nissan-murano-s">2019 Nissan Murano S</a>
-															</h3>
-															<div class="location">
-																<i class="fas fa-map-marker-alt"></i>
-																Chicago
-															</div>
-									
-									
-															<div class="review">
-																<i class="fas fa-star"></i>
-																<i class="fas fa-star"></i>
-																<i class="fas fa-star"></i>
-																<i class="far fa-star"></i>
-																<i class="far fa-star"></i>
-																<span>(2 Reviews)</span>
-															</div>
-									
-														</div>
-													</div>
-												</div>
-												<div class="col-lg-4 col-md-6 col-sm-12 wow fadeInLeft">
-													<div class="listing-item effect-item">
-														<div class="photo image-effect">
-															<a href="https://demo.phpscriptpoint.com/carpoint/listing-detail/15/2019-vw-e-golf-sel-premium"><img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_featured_photos/7d29e4eb6fd995ec98f8465e927f1006.jpg" alt=""></a>
-															<div class="brand">
-																<a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/volkswagen">Volkswagen</a>
-															</div>
-															<div class="wishlist">
-																<a href="https://demo.phpscriptpoint.com/carpoint/customer/wishlist/add/15">
-																	<i class="fas fa-heart"></i>
-																</a>
-															</div>
-															<div class="featured-text">Featured</div>
-														</div>
-														<div class="text">
-									
-															<div class="type-price">
-																<div class="type">
-																	<div class="inner-used">
-																		Used Car
+																<div class="text">
+											
+																	<div class="type-price">
+																		<div class="type">
+																			<div class="inner-new">
+																				New Car
+																			</div>
+																		</div>
+																		<div class="price">
+																			$242,990
+																		</div>
 																	</div>
-																</div>
-																<div class="price">
-																	$29,990
-																</div>
-															</div>
-									
-															<h3>
-																<a href="https://demo.phpscriptpoint.com/carpoint/listing-detail/15/2019-vw-e-golf-sel-premium">2019 VW e-golf SEL Premium</a>
-															</h3>
-															<div class="location">
-																<i class="fas fa-map-marker-alt"></i>
-																Colorado
-															</div>
-									
-									
-															<div class="review">
-																<i class="far fa-star"></i>
-																<i class="far fa-star"></i>
-																<i class="far fa-star"></i>
-																<i class="far fa-star"></i>
-																<i class="far fa-star"></i>
-																<span>(0 Reviews)</span>
-															</div>
-									
-														</div>
-													</div>
-												</div>
-												<div class="col-lg-4 col-md-6 col-sm-12 wow fadeInUp">
-													<div class="listing-item effect-item">
-														<div class="photo image-effect">
-															<a href="https://demo.phpscriptpoint.com/carpoint/listing-detail/7/2020-bmw-m340-i"><img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_featured_photos/de51e0ec9808b68b5cad2aa3ae33c739.jpg" alt=""></a>
-															<div class="brand">
-																<a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/bmw">BMW</a>
-															</div>
-															<div class="wishlist">
-																<a href="https://demo.phpscriptpoint.com/carpoint/customer/wishlist/add/7">
-																	<i class="fas fa-heart"></i>
-																</a>
-															</div>
-															<div class="featured-text">Featured</div>
-														</div>
-														<div class="text">
-									
-															<div class="type-price">
-																<div class="type">
-																	<div class="inner-used">
-																		Used Car
+											
+																	<h3>
+																		<a href="https://demo.phpscriptpoint.com/carpoint/listing-detail/14/2019-lamborghini-urus-base">2019 Lamborghini Urus Base</a>
+																	</h3>
+																	<div class="location">
+																		<i class="fas fa-map-marker-alt"></i>
+																		NewYork
 																	</div>
-																</div>
-																<div class="price">
-																	$50,800
-																</div>
-															</div>
-									
-															<h3>
-																<a href="https://demo.phpscriptpoint.com/carpoint/listing-detail/7/2020-bmw-m340-i">2020 BMW M340 i</a>
-															</h3>
-															<div class="location">
-																<i class="fas fa-map-marker-alt"></i>
-																Los Angeles
-															</div>
-									
-									
-															<div class="review">
-																<i class="fas fa-star"></i>
-																<i class="fas fa-star"></i>
-																<i class="fas fa-star"></i>
-																<i class="fas fa-star"></i>
-																<i class="fas fa-star"></i>
-																<span>(1 Reviews)</span>
-															</div>
-									
-														</div>
-													</div>
-												</div>
-												<div class="col-lg-4 col-md-6 col-sm-12 wow fadeInRight">
-													<div class="listing-item effect-item">
-														<div class="photo image-effect">
-															<a href="https://demo.phpscriptpoint.com/carpoint/listing-detail/12/2022-mazda-mx-5-miata-grand-touring"><img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_featured_photos/657e270e48cebafa381b724042c03f63.jpg" alt=""></a>
-															<div class="brand">
-																<a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/mazda">Mazda</a>
-															</div>
-															<div class="wishlist">
-																<a href="https://demo.phpscriptpoint.com/carpoint/customer/wishlist/add/12">
-																	<i class="fas fa-heart"></i>
-																</a>
-															</div>
-															<div class="featured-text">Featured</div>
-														</div>
-														<div class="text">
-									
-															<div class="type-price">
-																<div class="type">
-																	<div class="inner-used">
-																		Used Car
+											
+											
+																	<div class="review">
+																		<i class="far fa-star"></i>
+																		<i class="far fa-star"></i>
+																		<i class="far fa-star"></i>
+																		<i class="far fa-star"></i>
+																		<i class="far fa-star"></i>
+																		<span>(0 Reviews)</span>
 																	</div>
-																</div>
-																<div class="price">
-																	$32,450
+											
 																</div>
 															</div>
-									
-															<h3>
-																<a href="https://demo.phpscriptpoint.com/carpoint/listing-detail/12/2022-mazda-mx-5-miata-grand-touring">2022 Mazda MX-5 Miata Grand Touring</a>
-															</h3>
-															<div class="location">
-																<i class="fas fa-map-marker-alt"></i>
-																Los Angeles
-															</div>
-									
-									
-															<div class="review">
-																<i class="far fa-star"></i>
-																<i class="far fa-star"></i>
-																<i class="far fa-star"></i>
-																<i class="far fa-star"></i>
-																<i class="far fa-star"></i>
-																<span>(0 Reviews)</span>
-															</div>
-									
 														</div>
-													</div>
-												</div-->
+														<div class="col-lg-4 col-md-6 col-sm-12 wow fadeInRight">
+															<div class="listing-item effect-item">
+																<div class="photo image-effect">
+																	<a href="https://demo.phpscriptpoint.com/carpoint/listing-detail/6/2019-nissan-murano-s"><img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_featured_photos/2bf25c0c094e8963d3bb24109cf2beed.jpg" alt=""></a>
+																	<div class="brand">
+																		<a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/nissan">Nissan</a>
+																	</div>
+																	<div class="wishlist">
+																		<a href="https://demo.phpscriptpoint.com/carpoint/customer/wishlist/add/6">
+																			<i class="fas fa-heart"></i>
+																		</a>
+																	</div>
+																	<div class="featured-text">Featured</div>
+																</div>
+																<div class="text">
+											
+																	<div class="type-price">
+																		<div class="type">
+																			<div class="inner-used">
+																				Used Car
+																			</div>
+																		</div>
+																		<div class="price">
+																			$24,900
+																		</div>
+																	</div>
+											
+																	<h3>
+																		<a href="https://demo.phpscriptpoint.com/carpoint/listing-detail/6/2019-nissan-murano-s">2019 Nissan Murano S</a>
+																	</h3>
+																	<div class="location">
+																		<i class="fas fa-map-marker-alt"></i>
+																		Chicago
+																	</div>
+											
+											
+																	<div class="review">
+																		<i class="fas fa-star"></i>
+																		<i class="fas fa-star"></i>
+																		<i class="fas fa-star"></i>
+																		<i class="far fa-star"></i>
+																		<i class="far fa-star"></i>
+																		<span>(2 Reviews)</span>
+																	</div>
+											
+																</div>
+															</div>
+														</div>
+														<div class="col-lg-4 col-md-6 col-sm-12 wow fadeInLeft">
+															<div class="listing-item effect-item">
+																<div class="photo image-effect">
+																	<a href="https://demo.phpscriptpoint.com/carpoint/listing-detail/15/2019-vw-e-golf-sel-premium"><img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_featured_photos/7d29e4eb6fd995ec98f8465e927f1006.jpg" alt=""></a>
+																	<div class="brand">
+																		<a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/volkswagen">Volkswagen</a>
+																	</div>
+																	<div class="wishlist">
+																		<a href="https://demo.phpscriptpoint.com/carpoint/customer/wishlist/add/15">
+																			<i class="fas fa-heart"></i>
+																		</a>
+																	</div>
+																	<div class="featured-text">Featured</div>
+																</div>
+																<div class="text">
+											
+																	<div class="type-price">
+																		<div class="type">
+																			<div class="inner-used">
+																				Used Car
+																			</div>
+																		</div>
+																		<div class="price">
+																			$29,990
+																		</div>
+																	</div>
+											
+																	<h3>
+																		<a href="https://demo.phpscriptpoint.com/carpoint/listing-detail/15/2019-vw-e-golf-sel-premium">2019 VW e-golf SEL Premium</a>
+																	</h3>
+																	<div class="location">
+																		<i class="fas fa-map-marker-alt"></i>
+																		Colorado
+																	</div>
+											
+											
+																	<div class="review">
+																		<i class="far fa-star"></i>
+																		<i class="far fa-star"></i>
+																		<i class="far fa-star"></i>
+																		<i class="far fa-star"></i>
+																		<i class="far fa-star"></i>
+																		<span>(0 Reviews)</span>
+																	</div>
+											
+																</div>
+															</div>
+														</div>
+														<div class="col-lg-4 col-md-6 col-sm-12 wow fadeInUp">
+															<div class="listing-item effect-item">
+																<div class="photo image-effect">
+																	<a href="https://demo.phpscriptpoint.com/carpoint/listing-detail/7/2020-bmw-m340-i"><img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_featured_photos/de51e0ec9808b68b5cad2aa3ae33c739.jpg" alt=""></a>
+																	<div class="brand">
+																		<a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/bmw">BMW</a>
+																	</div>
+																	<div class="wishlist">
+																		<a href="https://demo.phpscriptpoint.com/carpoint/customer/wishlist/add/7">
+																			<i class="fas fa-heart"></i>
+																		</a>
+																	</div>
+																	<div class="featured-text">Featured</div>
+																</div>
+																<div class="text">
+											
+																	<div class="type-price">
+																		<div class="type">
+																			<div class="inner-used">
+																				Used Car
+																			</div>
+																		</div>
+																		<div class="price">
+																			$50,800
+																		</div>
+																	</div>
+											
+																	<h3>
+																		<a href="https://demo.phpscriptpoint.com/carpoint/listing-detail/7/2020-bmw-m340-i">2020 BMW M340 i</a>
+																	</h3>
+																	<div class="location">
+																		<i class="fas fa-map-marker-alt"></i>
+																		Los Angeles
+																	</div>
+											
+											
+																	<div class="review">
+																		<i class="fas fa-star"></i>
+																		<i class="fas fa-star"></i>
+																		<i class="fas fa-star"></i>
+																		<i class="fas fa-star"></i>
+																		<i class="fas fa-star"></i>
+																		<span>(1 Reviews)</span>
+																	</div>
+											
+																</div>
+															</div>
+														</div>
+														<div class="col-lg-4 col-md-6 col-sm-12 wow fadeInRight">
+															<div class="listing-item effect-item">
+																<div class="photo image-effect">
+																	<a href="https://demo.phpscriptpoint.com/carpoint/listing-detail/12/2022-mazda-mx-5-miata-grand-touring"><img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_featured_photos/657e270e48cebafa381b724042c03f63.jpg" alt=""></a>
+																	<div class="brand">
+																		<a href="https://demo.phpscriptpoint.com/carpoint/listing/brand/mazda">Mazda</a>
+																	</div>
+																	<div class="wishlist">
+																		<a href="https://demo.phpscriptpoint.com/carpoint/customer/wishlist/add/12">
+																			<i class="fas fa-heart"></i>
+																		</a>
+																	</div>
+																	<div class="featured-text">Featured</div>
+																</div>
+																<div class="text">
+											
+																	<div class="type-price">
+																		<div class="type">
+																			<div class="inner-used">
+																				Used Car
+																			</div>
+																		</div>
+																		<div class="price">
+																			$32,450
+																		</div>
+																	</div>
+											
+																	<h3>
+																		<a href="https://demo.phpscriptpoint.com/carpoint/listing-detail/12/2022-mazda-mx-5-miata-grand-touring">2022 Mazda MX-5 Miata Grand Touring</a>
+																	</h3>
+																	<div class="location">
+																		<i class="fas fa-map-marker-alt"></i>
+																		Los Angeles
+																	</div>
+											
+											
+																	<div class="review">
+																		<i class="far fa-star"></i>
+																		<i class="far fa-star"></i>
+																		<i class="far fa-star"></i>
+																		<i class="far fa-star"></i>
+																		<i class="far fa-star"></i>
+																		<span>(0 Reviews)</span>
+																	</div>
+											
+																</div>
+															</div>
+														</div-->
 
 	</div>
 </div></div><div class="testimonial" style="background-image:url('https://img.sixt.com/1600/f77b34fe-b837-4a74-81a0-ace8fde63bad.jpg');">
-    <div class="testimonial-bg"></div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="heading">
-                    <h2>Testimonial</h2>
-                    <h3>What our clients tell about us</h3>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="testimonial-carousel owl-carousel">
-                    <div class="testimonial-item wow fadeInUp">
-                        <div class="photo">
-                            <img src="{{ asset('uploads/profile.jpg') }}" alt="Profile photo">
-                        </div>
-                        <div class="text">
-                            <p>Eu alii augue copiosae cum, duo ei quaeque tibique repudiare, tantas pertinax pro ad. An vis ferri singulis tractatos. Per in facer utamur qualisque, vim simul placerat ex, ex vidit omnium convenire vix. At sea inani numquam tractatos. Persius adipisci rationibus at cum, qui cu aperiam volutpat periculis. Stet docendi adipisci mei ei.</p>
-                            <h3>Mohammed Ahadjji</h3>
-                            <h4>CEO, XYZ Multimedia</h4>
-                        </div>
-                    </div>
-                    <div class="testimonial-item wow fadeInUp">
-                        <div class="photo">
-                            <img src="{{ asset('uploads/profile.jpg') }}" alt="Profile photo">
-                        </div>
-                        <div class="text">
-                            <p>Iisque corrumpit voluptatum vel et, et maluisset contentiones eos. Duo tantas adversarium eu, erant labores an mea. Ei perfecto tacimates mei. Per eirmod oporteat antiopam eu, duo in mucius admodum, nibh consul detracto cu sea. Nonumy iudicabit eu eam, at sed apeirian platonem liberavisse. Magna noster disputando pri eu.</p>
-                            <h3>Mohammed Ahadjji</h3>
-                            <h4>Director, ABC Media</h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="popular-city"><div class="container"><div class="row">
-<div class="col-md-12">
-	<div class="heading">
-		<h2>Locations</h2>
-		<h3>Please see all the car locations from here</h3>
-	</div>
-</div></div><div class="row">
-{% for loca in location %}
-
-
-	<div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp">
-		<div class="popular-city-item effect-item">
-			<div class="photo image-effect">
-				<img src="{{ asset('uploads/attachments/' ~ loca.name) }}" alt="">
+<div class="testimonial-bg"></div>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="heading">
+				<h2>Testimonial</h2>
+				<h3>What our clients tell about us</h3>
 			</div>
-			<div class="text">
-				<h4>{{loca.locale}}</h4>
-				{% set variable_name = 0 %}
-				{% for v in annonces %}
-					{% if v.voiture.location.locale == loca.locale %}
-						{% set variable_name = variable_name + 1 %}
-					{% endif %}
-				{% endfor %}
-				<p>{{ variable_name }}
-					Listings</p>
-			</div>
-			<a href="{{ path("annonce_with_location", {id: loca.id})}}"></a>
 		</div>
 	</div>
-{% endfor %}
-<!--div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp">
-			<div class="popular-city-item effect-item">
-				<div class="photo image-effect">
-					<img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_location_photos/7f2a3cc598783d96c6cb38822f297c4e.jpg" alt="">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="testimonial-carousel owl-carousel">
+				<div class="testimonial-item wow fadeInUp">
+					<div class="photo">
+						<img src="{{ asset('uploads/profile.jpg') }}" alt="Profile photo">
+					</div>
+					<div class="text">
+						<p>Eu alii augue copiosae cum, duo ei quaeque tibique repudiare, tantas pertinax pro ad. An vis ferri singulis tractatos. Per in facer utamur qualisque, vim simul placerat ex, ex vidit omnium convenire vix. At sea inani numquam tractatos. Persius adipisci rationibus at cum, qui cu aperiam volutpat periculis. Stet docendi adipisci mei ei.</p>
+						<h3>Mohammed Ahadjji</h3>
+						<h4>CEO, XYZ Multimedia</h4>
+					</div>
 				</div>
-				<div class="text">
-					<h4>Chicago</h4>
-					<p>2 Listings</p>
+				<div class="testimonial-item wow fadeInUp">
+					<div class="photo">
+						<img src="{{ asset('uploads/profile.jpg') }}" alt="Profile photo">
+					</div>
+					<div class="text">
+						<p>Iisque corrumpit voluptatum vel et, et maluisset contentiones eos. Duo tantas adversarium eu, erant labores an mea. Ei perfecto tacimates mei. Per eirmod oporteat antiopam eu, duo in mucius admodum, nibh consul detracto cu sea. Nonumy iudicabit eu eam, at sed apeirian platonem liberavisse. Magna noster disputando pri eu.</p>
+						<h3>Mohammed Ahadjji</h3>
+						<h4>Director, ABC Media</h4>
+					</div>
 				</div>
-				<a href="https://demo.phpscriptpoint.com/carpoint/listing/location/chicago"></a>
 			</div>
 		</div>
-		<div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp">
-			<div class="popular-city-item effect-item">
-				<div class="photo image-effect">
-					<img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_location_photos/eb44f9a13791129efbf73b6557bb6301.jpg" alt="">
-				</div>
-				<div class="text">
-					<h4>San Diego</h4>
-					<p>1 Listings</p>
-				</div>
-				<a href="https://demo.phpscriptpoint.com/carpoint/listing/location/san-diego"></a>
+	</div>
+</div></div><div class="popular-city">
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="heading">
+				<h2>Locations</h2>
+				<h3>Please see all the car locations from here</h3>
 			</div>
 		</div>
-		<div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp">
-			<div class="popular-city-item effect-item">
-				<div class="photo image-effect">
-					<img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_location_photos/da979a83a7ee727dd73f0fc30bbb4ee0.jpg" alt="">
+	</div>
+	<div class="row">
+		{% for loca in location %}
+
+
+			<div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp">
+				<div class="popular-city-item effect-item">
+					<div class="photo image-effect">
+						<img src="{{ asset('uploads/attachments/' ~ loca.name) }}" alt="">
+					</div>
+					<div class="text">
+						<h4>{{loca.locale}}</h4>
+						{% set variable_name = 0 %}
+						{% for v in annonces %}
+							{% if v.voiture.location.locale == loca.locale %}
+								{% set variable_name = variable_name + 1 %}
+							{% endif %}
+						{% endfor %}
+						<p>{{ variable_name }}
+							Listings</p>
+					</div>
+					<a href="{{ path("annonce_with_location", {id: loca.id})}}"></a>
 				</div>
-				<div class="text">
-					<h4>NewYork</h4>
-					<p>1 Listings</p>
-				</div>
-				<a href="https://demo.phpscriptpoint.com/carpoint/listing/location/newyork"></a>
 			</div>
-		</div>
-		<div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp">
-			<div class="popular-city-item effect-item">
-				<div class="photo image-effect">
-					<img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_location_photos/be19037990394911430d0994c988ad15.jpg" alt="">
+		{% endfor %}
+		<!--div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp">
+					<div class="popular-city-item effect-item">
+						<div class="photo image-effect">
+							<img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_location_photos/7f2a3cc598783d96c6cb38822f297c4e.jpg" alt="">
+						</div>
+						<div class="text">
+							<h4>Chicago</h4>
+							<p>2 Listings</p>
+						</div>
+						<a href="https://demo.phpscriptpoint.com/carpoint/listing/location/chicago"></a>
+					</div>
 				</div>
-				<div class="text">
-					<h4>Boston</h4>
-					<p>1 Listings</p>
+				<div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp">
+					<div class="popular-city-item effect-item">
+						<div class="photo image-effect">
+							<img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_location_photos/eb44f9a13791129efbf73b6557bb6301.jpg" alt="">
+						</div>
+						<div class="text">
+							<h4>San Diego</h4>
+							<p>1 Listings</p>
+						</div>
+						<a href="https://demo.phpscriptpoint.com/carpoint/listing/location/san-diego"></a>
+					</div>
 				</div>
-				<a href="https://demo.phpscriptpoint.com/carpoint/listing/location/boston"></a>
-			</div>
-		</div>
-		<div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp">
-			<div class="popular-city-item effect-item">
-				<div class="photo image-effect">
-					<img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_location_photos/8c252c3932d5514d03df53ef2bf2f578.jpg" alt="">
+				<div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp">
+					<div class="popular-city-item effect-item">
+						<div class="photo image-effect">
+							<img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_location_photos/da979a83a7ee727dd73f0fc30bbb4ee0.jpg" alt="">
+						</div>
+						<div class="text">
+							<h4>NewYork</h4>
+							<p>1 Listings</p>
+						</div>
+						<a href="https://demo.phpscriptpoint.com/carpoint/listing/location/newyork"></a>
+					</div>
 				</div>
-				<div class="text">
-					<h4>Colorado</h4>
-					<p>1 Listings</p>
+				<div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp">
+					<div class="popular-city-item effect-item">
+						<div class="photo image-effect">
+							<img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_location_photos/be19037990394911430d0994c988ad15.jpg" alt="">
+						</div>
+						<div class="text">
+							<h4>Boston</h4>
+							<p>1 Listings</p>
+						</div>
+						<a href="https://demo.phpscriptpoint.com/carpoint/listing/location/boston"></a>
+					</div>
 				</div>
-				<a href="https://demo.phpscriptpoint.com/carpoint/listing/location/colorado"></a>
-			</div>
-		</div>
-		<div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp">
-			<div class="popular-city-item effect-item">
-				<div class="photo image-effect">
-					<img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_location_photos/13ec36fb7431b072dd2d0dedcb9a0327.jpg" alt="">
+				<div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp">
+					<div class="popular-city-item effect-item">
+						<div class="photo image-effect">
+							<img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_location_photos/8c252c3932d5514d03df53ef2bf2f578.jpg" alt="">
+						</div>
+						<div class="text">
+							<h4>Colorado</h4>
+							<p>1 Listings</p>
+						</div>
+						<a href="https://demo.phpscriptpoint.com/carpoint/listing/location/colorado"></a>
+					</div>
 				</div>
-				<div class="text">
-					<h4>Portland</h4>
-					<p>0 Listings</p>
+				<div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp">
+					<div class="popular-city-item effect-item">
+						<div class="photo image-effect">
+							<img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_location_photos/13ec36fb7431b072dd2d0dedcb9a0327.jpg" alt="">
+						</div>
+						<div class="text">
+							<h4>Portland</h4>
+							<p>0 Listings</p>
+						</div>
+						<a href="https://demo.phpscriptpoint.com/carpoint/listing/location/portland"></a>
+					</div>
 				</div>
-				<a href="https://demo.phpscriptpoint.com/carpoint/listing/location/portland"></a>
-			</div>
-		</div>
-		<div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp">
-			<div class="popular-city-item effect-item">
-				<div class="photo image-effect">
-					<img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_location_photos/76729b551dd233ab8e1e4d4ccfa894d3.jpg" alt="">
-				</div>
-				<div class="text">
-					<h4>Oakland</h4>
-					<p>0 Listings</p>
-				</div>
-				<a href="https://demo.phpscriptpoint.com/carpoint/listing/location/oakland"></a>
-			</div>
-		</div--></div></div></div>{% endblock %}
+				<div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp">
+					<div class="popular-city-item effect-item">
+						<div class="photo image-effect">
+							<img src="https://demo.phpscriptpoint.com/carpoint/uploads/listing_location_photos/76729b551dd233ab8e1e4d4ccfa894d3.jpg" alt="">
+						</div>
+						<div class="text">
+							<h4>Oakland</h4>
+							<p>0 Listings</p>
+						</div>
+						<a href="https://demo.phpscriptpoint.com/carpoint/listing/location/oakland"></a>
+					</div>
+				</div-->
+	</div>
+</div></div>{% endblock %}

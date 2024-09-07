@@ -20,9 +20,16 @@ class AnnoncesRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Annonces::class);
     }
- /**
+  /**
      * Recherche les annonces en fonction du formulaire
-     * @return void 
+     *
+     * @param string|null $mots
+     * @param int|null $type
+     * @param int|null $brand
+     * @param int|null $modele
+     * @param int|null $location
+     * 
+     * @return \Doctrine\ORM\Query Returns a Doctrine Query object
      */
     public function search($mots = null, $type = null, $brand = null, $modele = null, $location = null)
     {
@@ -66,10 +73,8 @@ class AnnoncesRepository extends ServiceEntityRepository
                 ->setParameter('location', $location);
         }
 
-        $query->setMaxResults(10);
-        return $query->getQuery()->getResult();
+        return $query->getQuery();  // Return the query object for pagination
     }
-
     
 
     /*public function search($mots = null, $type = null, $brand = null){

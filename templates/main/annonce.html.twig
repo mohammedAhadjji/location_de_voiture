@@ -3,6 +3,8 @@
 {% block title %}Listing{% endblock %}
 
 {% block body %}
+
+
 <div class="page-banner" style="background-image: url('{{ asset('uploads/attachments/panel.jpg')}}')">
     <div class="page-banner-bg"></div>
     <h1>Listing</h1>
@@ -29,42 +31,63 @@
 
         <!-- Formulaire de filtrage -->
         <div class="col-lg-4 col-md-6 col-sm-12 filter-sidebar">
-            <form id="searchFormId" >
+           <form id="searchFormId" action="{{ path('liste_annonces') }}" method="POST">
+							<input type="hidden" name="_token" value="{{ csrf_token('search') }}">
+                            <input type="hidden" name="page" id="page-input" value="1">
+
                 <div class="listing-filter">
                     <div class="lf-heading">Filters</div>
                     <div class="lf-widget">
-                        <input type="text" id="text" name="text" class="form-control" placeholder="Find anything ...">
+                        <input type="text" id="text" name="text" value="{{ mots }}" class="form-control" placeholder="Find anything ...">
                     </div>
                     <div class="lf-widget">
                         <h2>Type</h2>
                         <select name="listing_type" class="form-control" id="listing_type">
                             <option value="">All</option>
-                            {% for type in types %}
-                                <option value="{{ type.id }}">{{ type.title }}</option>
+                            {% for typee in types %}
+                            {% if type == typee %}
+                                <option value="{{ typee.id }}" selected>{{ typee.title }}</option>
+                            {% else %}
+                                <option value="{{ typee.id }}">{{ typee.title }}</option>
+                                {% endif %}
                             {% endfor %}
                         </select>
                     </div>
                     <div class="lf-widget">
                         <h2>Brands</h2>
-                        <div class="form-check">
-                            <input name="brand" class="form-check-input" type="radio" value="" id="brand_all" checked>
-                            <label class="form-check-label" for="brand_all">All</label>
-                        </div>
-                        {% for brand in brandslisting %}
-                            <div class="form-check">
-                                <input name="brand" class="form-check-input" type="radio" value="{{ brand.id }}" id="brand_{{ brand.id }}">
-                                <label class="form-check-label" for="brand_{{ brand.id }}"><img src="{{ asset('uploads/attachments/' ~ brand.getLogos()[0].name) }}" width="53px" height="40px" alt="{{ brand.getName() }}">  {{ brand.getName() }}</label>
-                            </div>
-                        {% endfor %}
+            
+            {% if brand is null %}
+    <div class="form-check">
+        <input name="brand" class="form-check-input" type="radio" value="" id="brand_all" checked>
+        <label class="form-check-label" for="brand_all">All</label>
+    </div>
+    {% else %}
+    <div class="form-check">
+        <input name="brand" class="form-check-input" type="radio" value="" id="brand_all" >
+        <label class="form-check-label" for="brand_all">All</label>
+    </div>
+    {% endif %}
+    
+    {% for brande in brandslisting %}
+        <div class="form-check">
+            <input name="brand" class="form-check-input" type="radio" value="{{ brande.id }}" id="brand_{{ brande.id }}"
+            {% if brand == brande.id %} checked {% endif %}>
+            <label class="form-check-label" for="brand_{{ brande.id }}">
+                <img src="{{ asset('uploads/attachments/' ~ brande.getLogos()[0].name) }}" width="53px" height="40px" alt="{{ brande.getName() }}">
+                {{ brande.getName() }}
+            </label>
+        </div>
+    {% endfor %}
                     </div>
                     <div class="lf-widget">
                         <h2>Locations</h2>
                         {% for locat in locationListing %}
-                            <div class="form-check">
-                                <input name="location" class="form-check-input" type="radio" value="{{ locat.id }}" id="location_{{ locat.id }}">
-                                <label class="form-check-label" for="location_{{ locat.id }}">{{ locat.locale }}</label>
-                            </div>
-                        {% endfor %}
+        <div class="form-check">
+            <input name="location" class="form-check-input" type="radio" value="{{ locat.id }}" id="location_{{ locat.id }}"
+            {% if location == locat.id %} checked {% endif %}>
+            <label class="form-check-label" for="location_{{ locat.id }}">{{ locat.locale }}</label>
+        </div>
+    {% endfor %}
                     </div>
                     <div class="form-group">
                         <input type="submit" class="form-control filter-button btn btn-primary" value="Filter">
@@ -83,104 +106,204 @@
                 {% endif %}
             </div>
             <div class="col-12">
-                <div class="psp_pagination d-flex justify-content-center" >
-                    <nav aria-label="Pagination">
-                        <ul class="pagination"></ul>
-                    </nav>
-                </div>
-            </div>
+    
+    <div class="form-group">
+   
+      {#  <label for="pageSelect">Select Page:</label>
+        <select id="pageSelect" class="form-control" name="page">
+            {% for page in 1..Annonces.pageCount %}
+                <option value="{{ page }}" {% if page == Annonces.currentPageNumber %}selected{% endif %}>
+                    {{ page }}
+                </option>
+            {% endfor %}
+        </select>#}
+    </div>
+</div>
+</div>
+<style>
+  .pagination {
+    display: flex;
+    justify-content: center;
+  }
+  .selected-page {
+    background-color: #007bff;
+    color: white;
+}
+</style>
+<div class="container">
+ <nav aria-label="Page navigation example">
+  <ul class="pagination">
+  
+    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+    {% for page in 1..Annonces.pageCount %}
+                <li class="page-item ">
+                    <a class="page-link" href="#" data-page="{{ page }}">{{ page }}</a>
+                </li>
+            {% endfor %}
+    {#<li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>#}
+    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+  </ul>
+</nav></div>
+<script>/*
+    document.getElementById('pageSelect').addEventListener('change', function() {
+        // Automatically submit the form when the page is selected
+        document.getElementById('paginationForm').submit();
+    });*/
+</script>
+
+</div>
+
         </div>
     </div>
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const form = document.getElementById('searchFormId');
-        const resultContainer = document.getElementById('annoncesContainer');
-       
-        form.addEventListener('change', function () {
-            const text = document.getElementById('text').value || '';
-            const type = document.getElementById('listing_type').value || '';
-            const brand = document.querySelector('input[name="brand"]:checked')?.value || '';
-            const location = document.querySelector('input[name="location"]:checked')?.value || '';
-              event.preventDefault();
-           resultContainer.innerHTML = '';//<img src="{{ asset('loading-gif.gif') }}" alt="Chargement en cours...">
-			resultContainer.innerHTML = '<div class="col-lg-9 col-md-10 col-sm-12 wow fadeInUp d-flex justify-content-center align-items-center"  style="display:flex;justify-content:center;align-items:center ;padding:50px"><img src="{{ asset('loading-gif.gif') }}"  alt="Chargement en cours..." width="50px"  height="auto"></div>';
+document.addEventListener('click', function (e) {
+    if (e.target.closest('.pagination a')) {
+        e.preventDefault();
+        const page = e.target.dataset.page;
+        
+        // Mettre à jour le champ caché pour la page
+        document.getElementById('page-input').value = page;
 
-		    const xhr = new XMLHttpRequest();
-            xhr.open('GET', `{{ path('api_annonces_search') }}?mots=${encodeURIComponent(text)}&type=${encodeURIComponent(type)}&brand=${encodeURIComponent(brand)}&location=${encodeURIComponent(location)}`);
+        // Envoyer une requête AJAX pour récupérer la nouvelle liste paginée
+       /* const form = document.getElementById('filter-form');
+        const formData = new FormData(form);
+        const url = form.action;
 
-            xhr.onload = function () {
-                if (xhr.status === 200) {
-                    try {
-                        const data = JSON.parse(xhr.responseText);
-                        if (Array.isArray(data) && data.length > 0) {
-                            resultContainer.innerHTML = '';
-                            data.forEach(annonce => {
-                                const imageUrl = annonce.voiture.images?.[0]?.name ? `{{ asset('uploads/attachments/') }}${annonce.voiture.images[0].name}` : '';
-                                const brandName = annonce.voiture.brand?.name || 'Unknown Brand';
-                                const typeTitle = annonce.voiture.type?.title || 'Unknown Type';
-                                const modelName = annonce.voiture.modele?.name || 'Unknown Model';
-                                const carYear = annonce.voiture.annee ? new Date(annonce.voiture.annee).getFullYear() : 'Unknown Year';
-                                const location = annonce.voitureLocale || 'Unknown Location';
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: formData
+        })
+        .then(response => response.text())
+        .then(data => {
+            // Mettre à jour la liste des annonces avec le contenu AJAX renvoyé
+            document.getElementById('annonces-list').innerHTML = data;
+        })
+        .catch(error => console.error('Erreur avec la pagination AJAX:', error));*/
+    }
+});
 
-                                const html = `
-                                    <div class="col-lg-5 col-md-4 col-sm-12 wow fadeInUp">
-                                        <div class="listing-item effect-item">
-                                            <div class="photo image-effect">
-                                                <a href="/annonces/detail/${annonce.id}">
-                                                    <img src="${imageUrl}" alt="Image voiture">
+ document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('searchFormId');
+    const resultContainer = document.getElementById('annoncesContainer');
+    const pageInput = document.getElementById('page-input');
+
+    // Fonction pour effectuer la recherche AJAX
+    function performSearch() {
+        const text = document.getElementById('text').value || '';
+        const page = pageInput.value || 1;
+        const type = document.getElementById('listing_type').value || '';
+        const brand = document.querySelector('input[name="brand"]:checked')?.value || '';
+        const location = document.querySelector('input[name="location"]:checked')?.value || '';
+
+        event.preventDefault();
+        resultContainer.innerHTML = '<div class="col-lg-9 col-md-10 col-sm-12 wow fadeInUp d-flex justify-content-center align-items-center" style="display:flex;justify-content:center;align-items:center; padding:50px"><img src="{{ asset('loading-gif.gif') }}" alt="Chargement en cours..." width="50px" height="auto"></div>';
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', `{{ path('api_annonces_search') }}?mots=${encodeURIComponent(text)}&type=${encodeURIComponent(type)}&brand=${encodeURIComponent(brand)}&location=${encodeURIComponent(location)}&page=${encodeURIComponent(page)}`);
+
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                try {
+                    const data = JSON.parse(xhr.responseText);
+                    resultContainer.innerHTML = '';
+                    if (Array.isArray(data) && data.length > 0) {
+                        data.forEach(annonce => {
+                            const imageUrl = annonce.voiture.images?.[0]?.name ? `{{ asset('uploads/attachments/') }}${annonce.voiture.images[0].name}` : '';
+                            const brandName = annonce.voiture.brand?.name || 'Unknown Brand';
+                            const typeTitle = annonce.voiture.type?.title || 'Unknown Type';
+                            const carYear = annonce.voiture.annee ? new Date(annonce.voiture.annee).getFullYear() : 'Unknown Year';
+                            const location = annonce.voitureLocale || 'Unknown Location';
+
+                            const html = `
+                                <div class="col-lg-5 col-md-4 col-sm-12 wow fadeInUp">
+                                    <div class="listing-item effect-item">
+                                        <div class="photo image-effect">
+                                            <a href="/annonces/detail/${annonce.id}">
+                                                <img src="${imageUrl}" alt="Image voiture">
+                                            </a>
+                                            <div class="brand">
+                                                <a href="#" style="background-color: #0056b3;">
+                                                    ${brandName}
                                                 </a>
-                                                <div class="brand">
-                                                    <a href="#" style="background-color: #0056b3;">
-                                                        ${brandName}
-                                                    </a>
-                                                </div>
-                                                <div class="wishlist">
-                                                    <a href="/annonces/detail/${annonce.id}">
-                                                        <i class="fas fa-heart"></i>
-                                                    </a>
-                                                </div>
-                                                <div class="featured-text">vues ${annonce.occur} <i class="fa-solid fa-eye"></i></div>
                                             </div>
-                                            <div class="text">
-                                                <div class="type-price">
-                                                    <div class="type">
-                                                        <div class="inner-used">${typeTitle}</div>
-                                                    </div>
-                                                    <div class="price">MAD ${annonce.prix_locat / 100 }.00 dh</div>
+                                            <div class="wishlist">
+                                                <a href="/annonces/detail/${annonce.id}">
+                                                    <i class="fas fa-heart"></i>
+                                                </a>
+                                            </div>
+                                            <div class="featured-text">vues ${annonce.occur} <i class="fa-solid fa-eye"></i></div>
+                                        </div>
+                                        <div class="text">
+                                            <div class="type-price">
+                                                <div class="type">
+                                                    <div class="inner-used">${typeTitle}</div>
                                                 </div>
-                                                <h3>
-                                                    <a href="#">
-                                                        ${carYear} ${annonce.title} ${brandName}
-                                                    </a>
-                                                </h3>
-                                                <div class="location" style="color: #0056b3;">
-                                                    <i class="fas fa-map-marker-alt"></i> ${location}
-                                                </div>
+                                                <div class="price">MAD ${annonce.prix_locat / 100}.00 dh</div>
+                                            </div>
+                                            <h3>
+                                                <a href="#">
+                                                    ${carYear} ${annonce.title} ${brandName}
+                                                </a>
+                                            </h3>
+                                            <div class="location" style="color: #0056b3;">
+                                                <i class="fas fa-map-marker-alt"></i> ${location}
                                             </div>
                                         </div>
-                                    </div>`;
-                                
-                                resultContainer.insertAdjacentHTML('beforeend', html);
-                            });
-                        } else {
-                            resultContainer.innerHTML = '<p>No listings found.</p>';
-                        }
-                    } catch (error) {
-                        resultContainer.innerHTML = '<p>There was an error processing the data.</p>';
+                                    </div>
+                                </div>`;
+                            
+                            resultContainer.insertAdjacentHTML('beforeend', html);
+                        });
+                    } else {
+                        resultContainer.innerHTML = '<p>No listings found.</p>';
                     }
-                } else {
-                    resultContainer.innerHTML = '<p>Error fetching listings.</p>';
+                } catch (error) {
+                    resultContainer.innerHTML = '<p>There was an error processing the data.</p>';
                 }
-            };
+            } else {
+                resultContainer.innerHTML = '<p>Error fetching listings.</p>';
+            }
+        };
 
-            xhr.onerror = function () {
-                resultContainer.innerHTML = '<p>Network error, please try again later.</p>';
-            };
+        xhr.onerror = function () {
+            resultContainer.innerHTML = '<p>Network error, please try again later.</p>';
+        };
 
-            xhr.send();
+        xhr.send();
+    }
+
+    // Fonction pour mettre à jour la classe de pagination sélectionnée
+   function updatePaginationSelected(target) {
+        const paginationLinks = document.querySelectorAll('.pagination a');
+        paginationLinks.forEach(link => {
+            link.classList.remove('selected-page', 'active'); // Retirer les classes 'selected-page' et 'active'
         });
+        target.classList.add('selected-page', 'active'); // Ajouter les classes 'selected-page' et 'active' au lien cliqué
+    }
+
+    // Événements pour détecter les changements sur le formulaire et la pagination
+    form.addEventListener('change', performSearch); // Pour les champs select et radio
+
+    // Pagination click event listener
+    document.addEventListener('click', function (e) {
+        if (e.target.closest('.pagination a')) {
+            e.preventDefault();
+            const page = e.target.getAttribute('data-page');
+            if (page) {
+                pageInput.value = page;  // Mettre à jour le champ caché avec la nouvelle page
+                updatePaginationSelected(e.target);  // Mettre à jour la sélection de la pagination
+                performSearch();  // Exécuter la recherche AJAX avec la nouvelle page
+            }
+        }
     });
+});
+
 </script>
 {% endblock %}
