@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Profile{% endblock %}
+
+{% block body %}
+  <style>
+    
+    </style>
+<div class="page-banner" style="background-image: url('{{ asset('uploads/attachments/panel.jpg')}}')">
+    <div class="page-banner-bg"></div>
+    <h1>Edit Profile Photo</h1>
+    <nav>
+        <ol class="breadcrumb justify-content-center">
+            <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Home</a></li>
+            <li class="breadcrumb-item active">Edit Profile Photo</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                {% include 'partial/_saidbar_user_dashbord.html.twig'  %}
+            </div>
+            <div class="col-md-9">
+             
+    <div id='calendrier'style=""></div>
+
+            </div>
+        </div>
+    </div>
+</div>
+   <script>
+            window.onload = () => {
+                let calendarElt = document.querySelector("#calendrier")
+        
+                let calendar = new FullCalendar.Calendar(calendarElt, {
+                    initialView: 'dayGridMonth',
+                    locale: 'MA',
+                    timeZone: 'Europe/Paris',
+                    headerToolbar: {
+                        start: 'prev,next today',
+                        center: 'title',
+                        end: 'dayGridMonth,timeGridWeek'
+                    },
+                    events: {{ data|raw }},
+                    editable: true,
+                    eventResizableFromStart: true
+                })
+        
+                calendar.on('eventChange', (e) => {
+                    let url = `/api/${e.event.id}/edit`
+                    let donnees = {
+                        "title": e.event.title,
+                        "description": e.event.extendedProps.description,
+                        "start": e.event.start,
+                        "end": e.event.end,
+                        "backgroundColor": e.event.backgroundColor,
+                        "borderColor": e.event.borderColor,
+                        "textColor": e.event.textColor,
+                        "allDay": e.event.allDay
+                    }
+                    
+                    let xhr = new XMLHttpRequest
+        
+                    xhr.open("PUT", url)
+                    xhr.send(JSON.stringify(donnees))
+                })
+        
+                calendar.render()
+            }
+        </script>
+{% endblock %}

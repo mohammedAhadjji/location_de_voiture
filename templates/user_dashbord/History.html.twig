@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Profile{% endblock %}
+
+{% block body %}
+<div class="page-banner" style="background-image: url('{{ asset('uploads/attachments/panel.jpg')}}')">
+    <div class="page-banner-bg"></div>
+    <h1>Edit Profile Photo</h1>
+    <nav>
+        <ol class="breadcrumb justify-content-center">
+            <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Home</a></li>
+            <li class="breadcrumb-item active">Edit Profile Photo</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                {% include 'partial/_saidbar_user_dashbord.html.twig'  %}
+            </div>
+            <div class="col-md-9">
+    <div class="table-responsive-md">
+        <table class="table table-bordered">
+            <thead>
+                <tr class="table-primary">
+                    <th scope="col">#</th>
+                    <th scope="col">Nom Complet</th>
+                    <th scope="col">Montant</th>
+                    <th scope="col">Adresse</th>
+                    <th scope="col">Référence</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ order.fullname }}</td>
+                    <td>{{ order.amount }} MAD</td>
+                    <td>{{ order.adresse }}, {{ order.city }}</td>
+                    <td>{{ order.reference }}</td>
+                    <td>{{ order.date|date('d M, Y H:i:s') }}</td>
+                    <td>
+                        <a href="#" class="btn btn-warning btn-sm btn-block mb-2">Invoice</a>
+                        <a href="#" class="btn btn-secondary btn-sm btn-block mb-2">History Detail</a>
+                        <a href="#" class="btn btn-primary btn-sm btn-block">Order Detail</a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="7" class="text-center">Aucune commande trouvée.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

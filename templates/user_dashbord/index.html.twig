@@ -22,7 +22,7 @@
 			<div class="col-md-9">
 
 				<div class="row">
-					<div class="col-md-6">
+					{#<div class="col-md-6">
 						<div class="dashboard-box dashboard-box-1">
 							<div class="text">Active Listing Items</div>
 							<div class="number">2</div>
@@ -33,48 +33,53 @@
 							<div class="text">Pending Listing Items</div>
 							<div class="number">0</div>
 						</div>
-					</div>
+					</div>#}
 
 										<div class="col-md-12">
 						<div class="dashboard-box dashboard-box-3">
 							<div class="table-responsive">
-								<table class="table table-bordered">
-									<tbody><tr>
-										<td class="w-300">Active Package Name</td>
-										<td>Free</td>
-									</tr>
-									<tr>
-										<td>Package Start Date</td>
-										<td>
-																						15 April, 2022
-										</td>
-									</tr>
-									<tr>
-										<td>Package End Date</td>
-										<td>
-																						16 April, 2028
-										</td>
-									</tr>
-									<tr>
-										<td>Listing Allowed</td>
-										<td>
-											1
-										</td>
-									</tr>
-									<tr>
-										<td>Days Remaining</td>
-										<td>
-											
-																						1339
-																					</td>
-									</tr>
-									<tr>
-										<td>Featured Listing Allowed?</td>
-										<td>
-											No
-										</td>
-									</tr>
-								</tbody></table>
+								<h1>  {{ user.firstname }}  {{ user.name }}</h1>
+
+    <table class="table table-bordered">
+        <tbody>
+            <tr>
+                <td>Nom</td>
+                <td>{{ user.name }}</td>
+            </tr>
+            <tr>
+                <td>Prénom</td>
+                <td>{{ user.firstname }}</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <td>Téléphone</td>
+                <td>{{ user.phone ? user.phone : 'Non spécifié' }}</td>
+            </tr>
+            <tr>
+                <td>Ville</td>
+                <td>{{ user.ville ? user.ville : 'Non spécifiée' }}</td>
+            </tr>
+            <tr>
+                <td>Pays</td>
+                <td>{{ user.pays ? user.pays : 'Non spécifié' }}</td>
+            </tr>
+            
+           
+            <tr>
+                <td>Photo de Profil</td>
+                <td>
+                    {% if user.photo %}
+                        <img src="{{ asset('uploads/profile_pictures/' ~ user.photo) }}" alt="Photo de {{ user.name }}" width="100">
+                    {% else %}
+                        Aucune photo disponible
+                    {% endif %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
 							</div>
 						</div>
 					</div>

@@ -66,7 +66,7 @@ class MainController extends AbstractController
        
         $annonce = $ano;
         $sittingGenerale = $this->entityManager->getRepository(SittingGenerale::class)->find(1);
-
+       //dd($sittingGenerale);
 
         return $this->render('main/index.html.twig', [
             'Brands' => $data1,
@@ -77,34 +77,7 @@ class MainController extends AbstractController
         ]);
     }
 
-    #[Route('/calendra', name: 'app_calendar')]
-    public function calendra(ReservationRepository $Reservation): Response
-    {
-        $sittingGenerale = $this->entityManager->getRepository(SittingGenerale::class)->find(1);
-        $events = $Reservation->findAll();
-
-        $rdvs = [];
-
-        foreach ($events as $event) {
-            $rdvs[] = [
-                'id' => $event->getId(),
-                'start' => $event->getStart()->format('Y-m-d H:i:s'),
-                'end' => $event->getEnd()->format('Y-m-d H:i:s'),
-                'title' => $event->getTitle(),
-                'description' => $event->getDescription(),
-                'backgroundColor' => $event->getBackgroundColor(),
-                'borderColor' => $event->getBorderColor(),
-                'textColor' => $event->getTextColor(),
-                'allDay' => $event->isAllDay(),
-            ];
-        }
-
-        $data = json_encode($rdvs);
-        return $this->render('main/calendra.html.twig', [
-            'data' => $data,
-            'sittig' => $sittingGenerale
-        ]);
-    }
+   
     #[Route('/annonces/withlocation/{id}', name: 'annonce_with_location')]
     public function annonces(Location $location)
     {

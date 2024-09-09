@@ -30,6 +30,7 @@ class AnnoncesSearchService
      */
     public function searchAnnonces($mots = null, $type = null, $brand = null, $modele = null, $location = null, $page = 1, $limit = 10)
     {
+        
         // Fetch annonces from the repository based on filters
         $query = [];
         $query = $this->annoncesRepository->search($mots, $type, $brand, $modele, $location);

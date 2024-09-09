@@ -74,8 +74,9 @@ class AjaxController extends AbstractController
         $brand = $request->query->get('brand');
         $modele = $request->query->get('modele');
         $location = $request->query->get('location');
+        $page = $request->query->get('page');
 
-        $annonces = $this->annoncesSearchService->searchAnnonces($mots, $type, $brand, $modele, $location);
+        $annonces = $this->annoncesSearchService->searchAnnonces($mots, $type, $brand, $modele, $location,$page);
 
         // Sérialisation des données en JSON
         $jsonContent = $this->serializer->serialize($annonces, 'json', ['groups' => 'annonces']);

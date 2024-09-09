@@ -73,6 +73,8 @@ class CartController extends AbstractController
                             'quantity' => $quantity,
                             'taux' => $taux,
                             'reduction' => $reduction->getReduction(),
+                            'date'=> $date
+
                         ];
                         $total += $newPrice * $quantity;
                     }
@@ -83,6 +85,7 @@ class CartController extends AbstractController
                         'quantity' => $quantity,
                         'taux' => 0,
                         'reduction' => 0,
+                        'date'=> $date
                     ];
                     $total += $product->getPrixLocat() * $quantity;
                 }

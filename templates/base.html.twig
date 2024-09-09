@@ -28,9 +28,13 @@
         
         <title>{% block title %}Welcome!{% endblock %}</title>
         
-
+{% if sittig is not empty %}
+   
 		<link rel="icon" type="image/png" href="{{ asset('uploads/attachments/' ~sittig.faviconImg ) }}">
+         {% else %}
+        <link rel="icon" type="image/png" href="https://demo.phpscriptpoint.com/carpoint/uploads/site_photos/c1171d7cd44a7f181fb14af3e3545026.png">
 
+{% endif %}
 	<!-- All CSS -->
 <link rel="stylesheet" href="https://demo.phpscriptpoint.com/carpoint/frontend/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://demo.phpscriptpoint.com/carpoint/frontend/css/jquery-ui.css">
@@ -187,7 +191,13 @@
         </style>
         
         <!--link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>"-->
-        <link rel="icon" type="image/png" href="{{ asset('uploads/attachments/' ~sittig.faviconImg ) }}">
+       {% if sittig is not empty %}
+   
+		<link rel="icon" type="image/png" href="{{ asset('uploads/attachments/' ~sittig.faviconImg ) }}">
+         {% else %}
+        <link rel="icon" type="image/png" href="https://demo.phpscriptpoint.com/carpoint/uploads/site_photos/c1171d7cd44a7f181fb14af3e3545026.png">
+
+{% endif %}
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
             <!--bootstrap5
@@ -264,22 +274,113 @@
                 </div>
             </div>
         </div>
-
-		<!-- Start Navbar Area -->
+<!-- Start Navbar Area -->
 <div class="navbar-area" id="stickymenu">
 
 	<!-- Menu For Mobile Device -->
 	<div class="mobile-nav">
-		<a href="{{ path('app_home') }}" class="logo">{% if sittig %}
-                   <img src="{{ asset('uploads/attachments/' ~sittig.logoImg ) }}" alt="">
-                    {% else %}
-                    {{ ''}}
-                {% endif %}
+		<a href="{{ path('app_home') }}" class="logo">
+			{% if sittig is null %}
+				{{ ' ' }}
+			{% else %}
+				<img src="{{ asset('uploads/attachments/' ~ sittig.logoImg ) }}" alt="Logo" class="img-fluid">
+			{% endif %}
+		</a>
+	</div>
+
+	<!-- Menu For Desktop Device -->
+	<div class="main-nav">
+		<div class="container">
+			<nav class="navbar navbar-expand-md navbar-light">
+				<a class="navbar-brand" href="{{ path('app_home') }}">
+					<img src="{{ asset('uploads/attachments/' ~ sittig.logoImg ) }}" alt="Logo" class="img-fluid">
+				</a>
+
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item">
+							<a href="{{ path('app_home') }}" class="nav-link">Home</a>
+						</li>
+						<li class="nav-item">
+							<a href="/liste/annonces" class="nav-link">Listings</a>
+						</li>
+						<li class="nav-item">
+							<a href="{{path('app_f_a_q')}}" class="nav-link">FAQ</a>
+						</li>
+						<li class="nav-item dropdown">
+							<a href="javascript:void(0);" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
+							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<li class="nav-item">
+									<a href="/locations" class="dropdown-item">Location</a>
+								</li>
+								<li class="nav-item">
+									<a href="/brands" class="dropdown-item">Brand</a>
+								</li>
+							</ul>
+						</li>
+						<li class="nav-item">
+							<a href="/liste/blogs" class="nav-link">Blog</a>
+						</li>
+						<li class="nav-item">
+							<a href="{{path('app_cantact')}}" class="nav-link">Contact</a>
+						</li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+	</div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Sélectionner la structure actuelle
+    const mobileNavContainer = document.querySelector('.mobile-nav.mean-container');
+
+    // Vérifier si l'élément existe
+    if (mobileNavContainer) {
+        // Créer la nouvelle structure
+        const newMobileNav = document.createElement('div');
+        newMobileNav.classList.add('mobile-nav');
+
+        const logoLink = document.createElement('a');
+        logoLink.href = "https://demo.phpscriptpoint.com/carpoint";
+        logoLink.classList.add('logo');
+
+        const logoImg = document.createElement('img');
+        logoImg.src = "https://demo.phpscriptpoint.com/carpoint/uploads/site_photos/a7eb55f8e8c41cbaee0760d15b226f4d.png";
+        logoImg.alt = "";
+
+        // Ajouter l'image au lien, puis le lien au nouvel élément mobile-nav
+        logoLink.appendChild(logoImg);
+        newMobileNav.appendChild(logoLink);
+
+        // Remplacer l'ancien mobile-nav par le nouveau
+        mobileNavContainer.parentNode.replaceChild(newMobileNav, mobileNavContainer);
+    }
+});
+</script>
+<!-- End Navbar Area -->
+
+	{#	<!-- Start Navbar Area -->
+<div class="navbar-area" id="stickymenu">
+
+	<!-- Menu For Mobile Device -->
+	<div class="mobile-nav">
+		<a href="{{ path('app_home') }}" class="logo">
+        {% if sittig is null %}
+          {{ ' ' }}  
+        {% else %}
+          <img src="{{ asset('uploads/attachments/' ~ sittig.logoImg ) }}" alt="">
+         {% endif %}
 			
 		</a>
 	</div>
 
 	<!-- Menu For Desktop Device -->
+    
 	<div class="main-nav">
 		<div class="container">
 			<nav class="navbar navbar-expand-md navbar-light">
@@ -339,11 +440,22 @@
 			</nav>
 		</div>
 	</div>
-</div>
+</div>#}
 <!-- End Navbar Area -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  //js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10&appId=323620764400430"; 
+  js.src = "{{ asset('assetes/js/connect.facebook.js') }}";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
+<script type="text/javascript" async="" charset="utf-8" src="https://www.gstatic.com/recaptcha/releases/EGbODne6buzpTnWrrBprcfAY/recaptcha__fr.js" crossorigin="anonymous" integrity="sha384-FWrystXVodFpXHQlhxFZicR48qQzMYJGdh/mPnTUWewlj7aNzFhfj8aEyZlAX0UU"></script>
         {% block body %}{% endblock %}
-
+<script src="https://demo.phpscriptpoint.com/carpoint/frontend/js/custom.js"></script>
+<script src="https://demo.phpscriptpoint.com/carpoint/frontend/js/ltr.js"></script>
 		<div class="footer-area">
             <div class="container">
                 <div class="row">
@@ -448,6 +560,20 @@
             <script src="https://demo.phpscriptpoint.com/carpoint/frontend/js/ltr.js"></script>
         
         
-        
+         <script src="https://demo.phpscriptpoint.com/carpoint/frontend/js/custom.js"></script>
+    <script src="https://demo.phpscriptpoint.com/carpoint/frontend/js/ltr.js"></script>
+
+
+
+
+{% for message in app.flashes('success') %}
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: '',
+                html: '<p>{{ message }}</p>'
+            });
+        </script>
+    {% endfor %}
     </body>
 </html>

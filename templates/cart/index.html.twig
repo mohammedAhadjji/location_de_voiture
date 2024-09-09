@@ -13,67 +13,79 @@
 </div>
 <main class="container" style="min-height: 300px; margin-top: 4%">
 
-    <section class="row justify-content-center align-items-center">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header"><h1 class="container">Panier</h1></div>
+   <section class="row justify-content-center align-items-center">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h1 class="container">Panier</h1>
+            </div>
 
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Voiture</th>
-                                <th>Prix</th>
-                                <th>Nombre De Jours</th>
-                                <th>Taux</th>
-                                <th>Réduction</th>
-                                <th>Total</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for element in data %}
-                            <tr>
-                                <td>
-                                    <a href="{{ path("annonce_detail", {id: element.product.id}) }}"><img src="{{ asset('uploads/attachments/'~element.product.voiture.images[0].name) }}" width="50px" height="auto" alt=""></a> : {{ element.product.voiture.annee|date('Y') }} {{ element.product.voiture.modele.name }} {{ element.product.voiture.modele.brand.name }}
-                                </td>
-                                <td>{{ element.product.prix_locat / 100 }} MAD</td>
-                                <td>{{ element.quantity }}</td>
-                                <td>{{ element.taux }} %</td>
-                                <td>{{ element.reduction }} %</td>
-                                <td>{{ element.quantity * element.product.prix_locat / 100 }} MAD</td>
-                                <td>
-                                    <a href="{{ path('cart_add', {id: element.product.id}) }}" class="btn btn-success">+</a>
-                                    <a href="{{ path('cart_remove', {id: element.product.id}) }}" class="btn btn-warning">-</a>
-                                    <a href="{{ path('cart_delete', {id: element.product.id}) }}" class="btn btn-danger">Supprimer</a>
-                                </td>
-                            </tr>
-                            {% else %}
-                            <tr>
-                                <td colspan="6">Votre panier est vide</td>
-                            </tr>
-                            {% endfor %}
-
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td colspan="5"><b>Total</b></td>
-                                <td>{{ total / 100 }} MAD</td>
-                                <td>
-                                    <a href="{{ path('cart_empty') }}" class="btn btn-danger">Vider</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2"></td>
-                                <td><a href="{{path('add_request')}}" class="btn btn-danger" style="padding: 8px 20px;">Finaliser ma commande</a></td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Voiture</th>
+                            <th class="d-none d-md-table-cell">Prix</th>
+                            <th class="d-none d-md-table-cell">Nombre De Jours</th>
+                            <th class="d-none d-md-table-cell">Taux</th>
+                            <th class="d-none d-md-table-cell">Réduction</th>
+                            <th>Total</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for element in data %}
+                        <tr>
+                            <td>
+                                <a href="{{ path('annonce_detail', {id: element.product.id}) }}">
+                                    <img src="{{ asset('uploads/attachments/'~element.product.voiture.images[0].name) }}" 
+                                         class="img-fluid" width="50px" height="auto" alt="">
+                                </a>
+                                <div class="d-block d-md-none">
+                                    {{ element.product.voiture.annee|date('Y') }} {{ element.product.voiture.modele.name }} {{ element.product.voiture.modele.brand.name }}
+                                </div>
+                            </td>
+                            <td class="d-none d-md-table-cell">{{ element.product.prix_locat / 100 }} MAD</td>
+                            <td class="d-none d-md-table-cell">{{ element.quantity }}</td>
+                            <td class="d-none d-md-table-cell">{{ element.taux }} %</td>
+                            <td class="d-none d-md-table-cell">{{ element.reduction }} %</td>
+                            <td>{{ element.quantity * element.product.prix_locat / 100 }} MAD</td>
+                            <td>
+                                <div class="d-flex flex-column flex-md-row">
+                                    <a href="{{ path('cart_add', {id: element.product.id}) }}" class="btn btn-success btn-sm mb-2 mb-md-0 me-md-1">+</a>
+                                    <a href="{{ path('cart_remove', {id: element.product.id}) }}" class="btn btn-warning btn-sm mb-2 mb-md-0 me-md-1">-</a>
+                                    <a href="{{ path('cart_delete', {id: element.product.id}) }}" class="btn btn-danger btn-sm">Supprimer</a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="7" class="text-center">Votre panier est vide</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="5"><b>Total</b></td>
+                            <td>{{ total / 100 }} MAD</td>
+                            <td>
+                                <a href="{{ path('cart_empty') }}" class="btn btn-danger btn-sm">Vider</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5"></td>
+                            <td colspan="2" class="text-center">
+                                <a href="{{ path('add_request') }}" class="btn btn-danger btn-block">Finaliser ma commande</a>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
+
 </main>
 
 <script>

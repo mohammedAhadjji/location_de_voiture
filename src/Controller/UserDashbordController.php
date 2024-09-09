@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\SittingGenerale;
 use App\Entity\Users;
 use App\Entity\ImageProfile;
+use App\Entity\Order;
 use App\Form\ProfileType;
 use App\Form\UserType;
+use App\Repository\ReservationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,9 +29,26 @@ class UserDashbordController extends AbstractController
     #[Route('', name: 'dashbord')]
     public function index(): Response
     {
+        $user=$this->getUser();
         $sittingGenerale = $this->entityManager->getRepository(SittingGenerale::class)->find(1);
         return $this->render('user_dashbord/index.html.twig', [
             'sittig' => $sittingGenerale,
+            'user' => $user,
+        ]);
+    }
+
+    #[Route('/History', name: 'History')]
+    public function History(): Response
+    {
+        $user=$this->getUser();
+        $sittingGenerale = $this->entityManager->getRepository(SittingGenerale::class)->find(1);
+      //clientId  
+      $order = $this->entityManager->getRepository(Order::class)->findBy(['clientId' => $user->getId()]);
+     // dd($order);
+        return $this->render('user_dashbord/History.html.twig', [
+            'sittig' => $sittingGenerale,
+            'user' => $user,
+            'orders' => $order,
         ]);
     }
 
@@ -95,7 +114,36 @@ if ($file && $file->isValid()) {
         ]);
     }
     
-    
+    #[Route('/calendra', name: 'calendar')]
+    public function calendra(ReservationRepository $Reservation): Response
+    {
+        $sittingGenerale = $this->entityManager->getRepository(SittingGenerale::class)->find(1);
+        $events = $Reservation->findAll();//client
+        $client = $this->getUser();
+        $reservations = $Reservation->findByClient($client);
+
+        $rdvs = [];
+
+        foreach ($events as $event) {
+            $rdvs[] = [
+                'id' => $event->getId(),
+                'start' => $event->getStart()->format('Y-m-d H:i:s'),
+                'end' => $event->getEnd()->format('Y-m-d H:i:s'),
+                'title' => $event->getTitle(),
+                'description' => $event->getDescription(),
+                'backgroundColor' => $event->getBackgroundColor(),
+                'borderColor' => $event->getBorderColor(),
+                'textColor' => $event->getTextColor(),
+                'allDay' => $event->isAllDay(),
+            ];
+        }
+
+        $data = json_encode($rdvs);
+        return $this->render('user_dashbord/calendar.html.twig', [
+            'data' => $data,
+            'sittig' => $sittingGenerale
+        ]);
+    }
     
     #[Route('/edit/password', name: 'edit_password')]
     public function editpass(Request $request, UserPasswordHasherInterface $userPasswordHasher): Response

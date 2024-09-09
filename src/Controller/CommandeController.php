@@ -39,6 +39,7 @@ class CommandeController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
+    
     #[Route('/request/add', name: 'add_request')]
     public function infoRequest(Request $request, Session $session): Response
     {
@@ -70,7 +71,7 @@ class CommandeController extends AbstractController
             $order->setUserId($user_id);
             $order->setAmount($Total);
             $order->setLighneOrder($ligneCommande);
-            $order->setStatus("pas paye en cour"); // 0 => en cours, 1 => succès, -1 => échec, -2 annulation
+            $order->setStatus("0"); // 0 => en cours, 1 => succès, -1 => échec, -2 annulation
             $em->persist($order);
             $em->flush();
 
@@ -397,65 +398,65 @@ class CommandeController extends AbstractController
 
         return $this->redirectToRoute('app_login');
     }
-
     private function calculeTotal($session)
-    {
-        if ($this->getUser()) {
-            $panier = $session->get("panier", []);
-            $totalAmount = 0; // Montant total après réduction et taxes
-            $subtotalAmount = 0; // Montant avant réduction et taxes
-            $totalReduction = 0; // Montant total des réductions
-            $content = [];
-            $tax = 0; //
-            $date = $session->get('date', []);
-            $seasonRepository = $this->entityManager->getRepository(Season::class);
-            $currentDateTime = new DateTime();
-    
-            // Récupération de la saison actuelle
-            $currentSeason = $seasonRepository->createQueryBuilder('s')
-                ->where(':currentDateTime >= s.date_debut AND :currentDateTime <= s.date_fin')
-                ->setParameter('currentDateTime', $currentDateTime)
-                ->getQuery()
-                ->getOneOrNullResult();
-    
-            // Taux de la saison actuelle
-            $taux = $currentSeason ? $currentSeason->getTaux() : 0;
-    
-            foreach ($panier as $id => $quantity) {
-                $product = $this->annonceRepo->find($id);
-    
-                if ($product && $currentSeason) {
-                    // Récupération de la réduction applicable
-                    $reduction = $this->entityManager->getRepository(Reduction::class)->createQueryBuilder('s')
-                        ->where(':quantity >= s.min_day AND :quantity <= s.max_day')
-                        ->setParameter('quantity', $quantity)
-                        ->getQuery()
-                        ->getOneOrNullResult();
-    
-                    $subtotal = $product->getPrixLocat() * $quantity;
-                    $subtotalAmount += $subtotal;
-    
-                    $reductionAmount = $reduction ? ($subtotal * $reduction->getReduction()) / 100 : 0;
-                    $totalReduction += $reductionAmount;
-    
-                    $totalAfterReduction = $subtotal - $reductionAmount;
-                    $totalWithTax = $totalAfterReduction + ($totalAfterReduction * $taux / 100);
-                    
-                    $tax += ($totalAfterReduction * $taux / 100);
-                    $totalAmount += $totalWithTax;
-                    $content[] = [
-                        'product' => $product,
-                        'quantity' => $quantity,
-                        'taux' => $taux,
-                        'reduction' => $reduction ? $reduction->getReduction() : 0
-                    ];
-                }
+{
+    if ($this->getUser()) {
+        $panier = $session->get("panier", []);
+        $totalAmount = 0; 
+        $subtotalAmount = 0; 
+        $totalReduction = 0; 
+        $content = [];
+        $tax = 0; //
+        $date = $session->get('date', []);
+        $seasonRepository = $this->entityManager->getRepository(Season::class);
+        $currentDateTime = new DateTime();
+
+        $currentSeason = $seasonRepository->createQueryBuilder('s')
+            ->where(':currentDateTime >= s.date_debut AND :currentDateTime <= s.date_fin')
+            ->setParameter('currentDateTime', $currentDateTime)
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        $taux = $currentSeason ? $currentSeason->getTaux() : 0;
+
+        foreach ($panier as $id => $quantity) {
+            $product = $this->annonceRepo->find($id);
+
+            if ($product) {
+               
+                $reduction = $this->entityManager->getRepository(Reduction::class)->createQueryBuilder('s')
+                    ->where(':quantity >= s.min_day AND :quantity <= s.max_day')
+                    ->setParameter('quantity', $quantity)
+                    ->getQuery()
+                    ->getOneOrNullResult();
+                
+               
+                $subtotal = $product->getPrixLocat() * $quantity;
+                $subtotalAmount += $subtotal;
+
+                
+                $reductionAmount = $reduction ? ($subtotal * $reduction->getReduction()) / 100 : 0;
+                $totalReduction += $reductionAmount;
+
+                $totalAfterReduction = $subtotal - $reductionAmount;
+                $totalWithTax = $totalAfterReduction + ($totalAfterReduction * $taux / 100);
+                $tax += ($totalAfterReduction * $taux / 100);
+                $totalAmount += $totalWithTax;
+                $content[] = [
+                    'product' => $product,
+                    'quantity' => $quantity,
+                    'taux' => $taux,
+                    'reduction' => $reduction ? $reduction->getReduction() : 0,
+                    'date' => $date
+                ];
             }
-    
-            return [$totalAmount, $subtotalAmount, $totalReduction, $content, $tax];
         }
+        return [$totalAmount, $subtotalAmount, $totalReduction, $content, $tax];
     }
-    
+
+    return [0, 0, 0, [], 0]; // Si utilisateur non connecte
+}
+
 
     private function getLignComand($session)
     {
