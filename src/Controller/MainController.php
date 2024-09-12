@@ -92,9 +92,7 @@ class MainController extends AbstractController
 
         $AnnoncesRepository = $this->entityManager->getRepository(Annonces::class);
         $annonces = $AnnoncesRepository->findBy(['voitureLocale' => $location->getLocale()]);
-
-        // Récupérez la SittingGenerale (assurez-vous que l'id 1 existe dans votre base de données)
-        $sittingGenerale = $this->entityManager->getRepository(SittingGenerale::class)->find(1);
+ $sittingGenerale = $this->entityManager->getRepository(SittingGenerale::class)->find(1);
 
         return $this->render('annonces/index.html.twig', [
             'annonces' => $annonces,
@@ -104,10 +102,7 @@ class MainController extends AbstractController
     }
     #[Route('/annonces/withbrand/{id}', name: 'annonce_with_brand')]
     public function annoncesBrand(Brand $brand)
-    {
-        // Récupérez toutes les voitures liées à la location
-        // Récupérez toutes les annonces liées à la location
-        /*$annonces = [];
+    { /*$annonces = [];
 
       foreach ($location->getVoitures() as $voiture) {
           $annoncesDeLaVoiture[] = $voiture->getAnnonces();
@@ -118,7 +113,6 @@ class MainController extends AbstractController
         //  $annonces = $AnnoncesRepository->findBy(['brandVoiture' => $brand->getName()]);
         $annonces = $AnnoncesRepository->findBy(['brandVoiture' => $brand->getName()], ['occur' => 'ASC']);
 
-        // Récupérez la SittingGenerale (assurez-vous que l'id 1 existe dans votre base de données)
         $sittingGenerale = $this->entityManager->getRepository(SittingGenerale::class)->find(1);
 
         return $this->render('annonces/indexBrand.html.twig', [
@@ -146,8 +140,7 @@ class MainController extends AbstractController
         if ($ReportForm->isSubmitted() && $ReportForm->isValid()) {
             $donneesFormulaire = $ReportForm->getData();
 
-            // Assurez-vous que les clés correspondent à celles du formulaire
-            $from = $donneesFormulaire['email'] ?? "";
+           $from = $donneesFormulaire['email'] ?? "";
             $to = "mohammed.ahadjji@ump.ac.ma";
             $subject = 'Rapport de ' . $annonce->__toString();
             $message = $donneesFormulaire['name'] . '<br/>' .
@@ -162,7 +155,6 @@ class MainController extends AbstractController
         if ($sendMailForm->isSubmitted() && $sendMailForm->isValid()) {
             $donneesFormulaire = $sendMailForm->getData();
 
-            // Assurez-vous que les clés correspondent à celles du formulaire
             $from = $donneesFormulaire['email'] ?? "";
             $to = "mohammed.ahadjji@ump.ac.ma";
             $subject = 'Rapport de ' . $annonce->__toString();
@@ -178,7 +170,6 @@ class MainController extends AbstractController
             $user = $this->getUser();
 
             if (!$user) {
-                // Si l'utilisateur n'est pas connecté, redirigez vers la page de connexion
                 return $this->redirectToRoute('app_login');
             }
 
@@ -194,11 +185,9 @@ class MainController extends AbstractController
                 $reservationDate = new \DateTime($reservationDate);
             }
 
-            // Calcul de la date de fin
-            $interval = new \DateInterval('P' . $numberOfDays . 'D');
+           $interval = new \DateInterval('P' . $numberOfDays . 'D');
             $endDate = (clone $reservationDate)->add($interval);
 
-            // Ajoutez la réservation au panier
             $id = $annonce->getId();
             $panier = $session->get('panier', []);
 
@@ -211,8 +200,7 @@ class MainController extends AbstractController
             $session->set('date', $reservationDate);
             $session->set('panier', $panier);
 
-            // Redirigez vers la page du panier
-            return $this->redirectToRoute('cart_index');
+           return $this->redirectToRoute('cart_index');
         }
 
         $annonce->setOccur($annonce->getOccur() + 1);
@@ -224,8 +212,7 @@ class MainController extends AbstractController
         $dataBrand = $BrandRepository->findBy([], ['id' => 'desc']);
         $dataLocat = $LocationRepository->findBy([], ['id' => 'desc']);
 
-        // Récupérez la SittingGenerale (assurez-vous que l'id 1 existe dans votre base de données)
-        $sittingGenerale = $entityManager->getRepository(SittingGenerale::class)->find(1);
+      $sittingGenerale = $entityManager->getRepository(SittingGenerale::class)->find(1);
 
         return $this->render('annonces/show.html.twig', [
             'annonce' => $annonce,
@@ -256,7 +243,6 @@ class MainController extends AbstractController
 
         $dataBrand = $BrandRepository->findBy([], ['id' => 'desc']);
 
-        // Récupérez la SittingGenerale (assurez-vous que l'id 1 existe dans votre base de données)
         $sittingGenerale = $this->entityManager->getRepository(SittingGenerale::class)->find(1);
 
         return $this->render('main/showbrand.html.twig', [
@@ -285,7 +271,6 @@ class MainController extends AbstractController
         $data = $locationRepository->findBy([], ['id' => 'desc']);
         $annoncesRepository = $this->entityManager->getRepository(Annonces::class);
         $annonces = $annoncesRepository->findBy([], ['occur' => 'ASC']);
-        // Récupérez la SittingGenerale (assurez-vous que l'id 1 existe dans votre base de données)
         $sittingGenerale = $this->entityManager->getRepository(SittingGenerale::class)->find(1);
 
         return $this->render('main/showlocation.html.twig', [
@@ -299,7 +284,6 @@ class MainController extends AbstractController
     #[Route('/liste/annonces', name: 'liste_annonces')]
     public function annoces(AnnoncesRepository $AnnoncesRepository, Request $request ,PaginatorInterface $paginator): Response
     {
-        // Récupération des paramètres de la requête
         $mots = $request->request->get('text');
         $type = $request->request->get('type');
         $brand = $request->request->get('brand');
@@ -308,16 +292,13 @@ class MainController extends AbstractController
         $page = $request->request->getInt('page', 1);
         $limit = $request->request->getInt('limit',10 );
 
-        // Vérifier si des paramètres de filtrage sont présents dans la requête
         if ($mots || $type || $brand || $model || $location) {
-            // Effectuer la recherche avec les paramètres
             $annonces = $this->annoncesSearchService->searchAnnonces($mots, $type, $brand, $model, $location,$page = $request->query->getInt('page', 1), $limit);
-            $data = $annonces;  // No pagination for filtered results
+            $data = $annonces;  
         } else {
-            $page = $request->query->getInt('page', 1);  // Default to page 1 if no page is set
+            $page = $request->query->getInt('page', 1);  
             $limit = $request->request->getInt('limit',10 );
             
-            // Afficher le contenu par défaut si aucun paramètre de filtrage
             $data = $paginator->paginate( $AnnoncesRepository->findBy([], ['occur' => 'DESC']),$page,$limit);
            
         }
@@ -355,10 +336,9 @@ class MainController extends AbstractController
         $data = $blogsRepo->findBy(['active' => true], ['id' => 'ASC']);
 
         if (isset($data[7])) {
-            // Remove the 8th element (array index is 7 because it's 0-based)
+            
             unset($data[7]);
 
-            // Re-index the array to fill the gap
             $data = array_values($data);
         }
 
@@ -400,7 +380,6 @@ class MainController extends AbstractController
         //  $annonces = $AnnoncesRepository->findBy(['brandVoiture' => $brand->getName()]);
         $blogs = $blogRepository->findBy(['categorie' => $categorie], ['id' => 'ASC']);
 
-        // Récupérez la SittingGenerale (assurez-vous que l'id 1 existe dans votre base de données)
         $sittingGenerale = $this->entityManager->getRepository(SittingGenerale::class)->find(1);
 
         return $this->render('blogs/blogs_with_categories.html.twig', [

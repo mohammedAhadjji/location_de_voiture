@@ -41,7 +41,11 @@
                     					<span>(0 Reviews)</span>
 				</div>
 				<div class="call">
-					<i class="fas fa-phone-volume"></i> (606) 862-0015
+					<i class="fas fa-phone-volume"></i>  {% if sittig %} (+212) 
+                   {{ sittig.footerPhone }}
+                    {% else %}
+                    {{ ''}}
+                {% endif %}
 				</div>
 				<div class="listing-items">
 					<a href="{{ path("annonce_with_brand", {id: annonce.voiture.location.id})}}">

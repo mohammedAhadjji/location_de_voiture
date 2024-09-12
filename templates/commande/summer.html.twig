@@ -2,6 +2,16 @@
 {% block stylesheets %}
 {{parent()}}
  <link type="text/css" rel="stylesheet" href="{{ asset('css/waitMe.css') }}">
+ <style>
+@media (max-width: 768px) {
+    .first-column {
+        order: 2;
+    }
+    .second-column {
+        order: 1;
+    }
+}
+</style>
 {% endblock %}
 
 {% block body %}
@@ -28,7 +38,7 @@
                 <span>Résumé de la Commande</span>
             </h5>
             <div class="row mt-4">
-                <div class="col-md-6">
+                <div class="col-md-6 first-column">
                     <form id="form_cmi" method="post" action="{{ path('request_sendData') }}">
                         <input type="hidden" name="clientid" value="{{ clientId }}">
                         <input type="hidden" name="amount" value="{{ total }}">
@@ -95,7 +105,7 @@
                 </div>
 
                 <!-- Récapitulatif -->
-                <div class="col-md-6">
+                <div class="col-md-6 second-column">
                     <div class="element-box el-tablo four" style="background: #f8f9fa; border-radius: 15px; padding: 20px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); text-align: right;">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="el-icon" style="height: auto;">

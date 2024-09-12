@@ -1,0 +1,9 @@
+navbar:
+    home: 'Home'
+    listings: 'Listings'
+    faq: 'FAQ'
+    location: 'Location'
+    pages: 'Pages'
+    brand: 'Brand'
+    blog: 'Blog'
+    contact: 'Contact'

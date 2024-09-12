@@ -4,6 +4,7 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    locale: 'en|ar|fr'
     product_attachments: /uploads/attachments
     img_voiture: /uploads/attachments
     img_brand: /uploads/brands
@@ -16,6 +17,10 @@ services:
     App\Services\MailService:
         autowire: true
         autoconfigure: true
+    App\EventListener\LocaleListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.request }
+    
     App\Services\SeasonalPricingService:
         autowire: true
         autoconfigure: true

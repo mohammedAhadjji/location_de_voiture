@@ -3,7 +3,16 @@
 {% block title %}Listing{% endblock %}
 
 {% block body %}
-
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  //js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10&appId=323620764400430"; 
+  js.src = "{{ asset('assetes/js/connect.facebook.js') }}";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+    
 
 <div class="page-banner" style="background-image: url('{{ asset('uploads/attachments/panel.jpg')}}')">
     <div class="page-banner-bg"></div>

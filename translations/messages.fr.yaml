@@ -1,0 +1,9 @@
+navbar:
+    home: 'Accueil'
+    listings: 'Annonces'
+    faq: 'FAQ'
+    location: 'Emplacement'
+    pages: 'Pages'
+    brand: 'Marque'
+    blog: 'Blog'
+    contact: 'Contact'

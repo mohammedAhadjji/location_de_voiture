@@ -10,6 +10,8 @@ use App\Form\ProfileType;
 use App\Form\UserType;
 use App\Repository\ReservationRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Tools\Pagination\Paginator;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,17 +40,23 @@ class UserDashbordController extends AbstractController
     }
 
     #[Route('/History', name: 'History')]
-    public function History(): Response
+    public function History( Request $request,PaginatorInterface $paginator): Response
     {
         $user=$this->getUser();
         $sittingGenerale = $this->entityManager->getRepository(SittingGenerale::class)->find(1);
-      //clientId  
-      $order = $this->entityManager->getRepository(Order::class)->findBy(['clientId' => $user->getId()]);
-     // dd($order);
+        $page = $request->query->getInt('page', 1);
+        $limit = $request->query->getInt('limit', 4);
+       //dd($page);
+  $order =$paginator->paginate(  $this->entityManager->getRepository(Order::class)->findBy(
+        ['clientId' => $user->getId()], 
+        ['date' => 'DESC'] 
+    ),$page, $limit);
         return $this->render('user_dashbord/History.html.twig', [
             'sittig' => $sittingGenerale,
             'user' => $user,
             'orders' => $order,
+            'page' => $page,
+            'limit' => $limit,
         ]);
     }
 

@@ -1,3 +1,11 @@
+# config/routes.yaml
+
+# Import all routes defined in controller classes using attributes
 controllers:
-    resource: ../src/Controller/
+    resource: '../src/Controller/'
     type: attribute
+change_language:
+    path: /change-language
+    controller: App\Controller\LanguageController::changeLanguage
+    methods: [POST]
+

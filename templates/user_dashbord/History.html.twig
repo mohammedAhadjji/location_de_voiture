@@ -22,6 +22,48 @@
             </div>
             <div class="col-md-9">
     <div class="table-responsive-md">
+    <div>
+   <style>
+    .a.active {
+        font-weight: bold;
+        color: white !important;
+        background-color: #007bff;
+    }
+    .a {
+        padding: 8px 10px;
+        border: 1px solid #0eee;
+        margin-right: 5px;
+        text-decoration: none;
+    }
+    .conty {
+        padding: 10px;
+    }
+</style>
+
+<div class="container conty">
+    <span>Show:</span>
+    <div class="container conty">
+        <a  href="{{ path('app_user_History', { 'page': orders.currentPageNumber, 'limit': 4 }) }}" 
+           class="{{ limit == 4 ? 'active' : '' }} a">
+           4
+        </a>
+        <a href="{{ path('app_user_History', { 'page': orders.currentPageNumber, 'limit': 10 }) }}" 
+           class="{{ limit == 10 ? 'active' : '' }} a">
+           10
+        </a>
+        <a href="{{ path('app_user_History', { 'page': orders.currentPageNumber, 'limit': 20 }) }}" 
+           class="{{ limit == 20 ? 'active' : '' }} a">
+           20
+        </a>
+        <a href="{{ path('app_user_History', { 'page': orders.currentPageNumber, 'limit': 50 }) }}" 
+           class="{{ limit == 50 ? 'active' : '' }} a">
+           50
+        </a>
+    </div>
+    <span>items per page</span>
+</div>
+
+</div>
         <table class="table table-bordered">
             <thead>
                 <tr class="table-primary">
@@ -56,6 +98,9 @@
                 {% endfor %}
             </tbody>
         </table>
+         <div class="pagination">
+    {{ knp_pagination_render(orders) }}
+</div>
     </div>
 </div>
 
