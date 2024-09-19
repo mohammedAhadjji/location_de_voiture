@@ -1,96 +1,238 @@
 {% extends 'base.html.twig' %}
 
-    {% block title %}blogs_details
-    {% endblock %}
-    
-    {% block body %}
-        <!-- End Navbar Area -->
+{% block title %}Blogs Details{% endblock %}
 
-		
-<div class="page-banner" style="background-image: url('{{ asset('uploads/attachments/panel.jpg')}}')">
-<div class="page-banner-bg"></div>
-<h1> {{blog.title}} </h1>
-<nav>
-    <ol class="breadcrumb justify-content-center">
-        <li class="breadcrumb-item"><a href="/">Home</a></li>
-        <li class="breadcrumb-item"><a href="/liste/blogs">Blogs</a></li>
-        <li class="breadcrumb-item active"> {{blog.title}} </li>
-    </ol>
-</nav>
+{% block body %}
+<style>
+    .comments-list {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .comment-item {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .comment-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 15px;
+    }
+
+    .comment-body {
+        flex-grow: 1;
+    }
+
+    .comment-author {
+        font-weight: bold;
+        font-size: 1.1em;
+        color: #333;
+        margin-bottom: 5px;
+    }
+
+    .comment-content {
+        font-size: 1em;
+        color: #555;
+        margin-bottom: 5px;
+    }
+
+    .comment-actions {
+        margin-top: 5px;
+        font-size: 0.9em;
+    }
+
+    .comment-actions button {
+        background: none;
+        border: none;
+        color: #007bff;
+        cursor: pointer;
+        padding: 0;
+        font-size: 0.9em;
+    }
+
+    .comment-actions button:hover {
+        text-decoration: underline;
+    }
+
+    .comment-replies {
+        padding-left: 50px;
+        margin-top: 10px;
+    }
+
+    .comment-form {
+        margin-top: 40px;
+    }
+
+    .comment-form h2 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+    }
+
+    /* Responsive Design for Mobile */
+    @media (max-width: 768px) {
+        .comment-item {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 10px;
+        }
+
+        .comment-avatar {
+            margin-bottom: 10px;
+        }
+
+        .comment-body {
+            width: 100%;
+        }
+
+        .comment-actions {
+            font-size: 0.8em;
+        }
+
+        .comment-author {
+            font-size: 1em;
+        }
+
+        .comment-content {
+            font-size: 0.9em;
+        }
+
+        .comment-form h2 {
+            font-size: 1.2em;
+        }
+    }
+</style>
+
+<!-- Page Banner -->
+<div class="page-banner" style="background-image: url('{{ asset('uploads/attachments/panel.jpg') }}')">
+    <div class="page-banner-bg"></div>
+    <h1>{{ blog.title }}</h1>
+    <nav>
+        <ol class="breadcrumb justify-content-center">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/liste/blogs">Blogs</a></li>
+            <li class="breadcrumb-item active">{{ blog.title }}</li>
+        </ol>
+    </nav>
 </div>
 
 <div class="page-content">
-<div class="container">
-    <div class="row">
-        <div class="col-md-8">
-            <div class="blog-item-single">
-                <div class="featured-photo">
-                    <img src="{{asset('/uploads/attachments/' ~blog.images[0].name)}}">
-                </div>
-                <div class="text">
-                    <p> {{blog.content|raw}} </p>
-                </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="blog-item-single">
+                    <div class="featured-photo">
+                        <img src="{{ asset('/uploads/attachments/' ~ blog.images[0].name) }}" alt="Blog Image">
+                    </div>
+                    <div class="text">
+                        <p>{{ blog.content|raw }}</p>
+                    </div>
 
+                    <!-- Comments Section -->
+                    <div class="comment mt_40">
+                        <h2 class="mb_25">{{ comments|length }} Comments</h2>
 
-                                    <div class="comment mt_40">
+                        {% if comments is empty %}
+                            <div class="text-danger">No comments found.</div>
+                        {% else %}
+                            <ul class="comments-list">
+                                {% for comment in comments %}
+                                 {% if comment.parent is null %}
+                                    <li class="comment-item">
+                                        <img src="{{ asset('avatar.jpg') }}" alt="Avatar" class="comment-avatar">
+                                        <div class="comment-body">
+                                            <div class="comment-author">{{ comment.name }}</div>
+                                            <div class="comment-content">{{ comment.contenu }}</div>
+                                            <div class="comment-actions">
+                                                <button class="reply-button" data-comment-id="{{ comment.id }}">Reply</button>
+                                            </div>
 
-                    <h2 class="mb_25">0 Comments</h2>
-
-                                                <div class="text-danger">No Comment Found</div>
-                    
-
-                    <h2 class="mt_50 mb_20">Post Comment</h2>
-                    <form action="https://demo.phpscriptpoint.com/carpoint/post/comment" method="post">
-                        <input type="hidden" name="_token" value="voFt0I2FTLCVsDNXX06py6UfEWUQXxJo7xumLPWX">							<input type="hidden" name="blog_id" value="3">
-                        <input type="hidden" name="post_slug" value="libris-impetus-molestiae-te-eu-ius-ludus">
-                        <input type="hidden" name="comment_status" value="Pending">
+                                            {% if comment.fils is not empty %}
+                                                <ul class="comment-replies">
+                                                    {% for reply in comment.fils %}
+                                                        <li class="comment-item">
+                                                            <img src="{{ asset('avatar.jpg') }}" alt="Avatar" class="comment-avatar">
+                                                            <div class="comment-body">
+                                                                <div class="comment-author">{{ reply.name }}</div>
+                                                                <div class="comment-content">{{ reply.contenu }}</div>
+                                                                <div class="comment-actions">
+                                                                    {#<button class="reply-button" data-comment-id="{{ reply.id }}">Reply</button>#}
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            {% endif %}
+                                        </div>
+                                    </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                        <h2 class="mt_50 mb_20">Post Comment</h2>
+                        {{ form_start(form, {'attr': {'class': 'comment-form'}}) }}
                         <div class="row mb_20">
                             <div class="col">
-                                <label for="">Name</label>
-                                <input type="text" class="form-control" name="person_name">
+                                {{ form_label(form.name) }}
+                                {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
                             </div>
                             <div class="col">
-                                <label for="">Email</label>
-                                <input type="email" class="form-control" name="person_email">
+                                {{ form_label(form.email) }}
+                                {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
                             </div>
+                            <input type="hidden" id="parent-comment-id" name="parent_comment_id" value="">
                         </div>
                         <div class="row mb_20">
                             <div class="col">
-                                <label for="">Comment</label>
-                                <textarea name="person_comment" class="form-control h-200" cols="30" rows="10"></textarea>
+                                {{ form_label(form.contenu) }}
+                                {{ form_widget(form.contenu, {'attr': {'class': 'form-control h-200'}}) }}
                             </div>
                         </div>
-                                                    <div class="row">
+                        <div class="row">
                             <div class="col">
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </div>
-                    </form>
+                        {{ form_end(form) }}
+                    </div>
 
                 </div>
-                
             </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="sidebar">
-                <div class="widget">
-                    <h3>Categories</h3>
-                    <div class="type-1">
-                        <ul>
-                            {% for category in categories %}
-                                 <li><a href="{{ path("blogs_with_categorie", {id: category.id})}}"> {{category.title}} </a></li>
-                                                           
-                            {% endfor %}
-                                                            </ul>
+            <div class="col-md-4">
+                <div class="sidebar">
+                    <div class="widget">
+                        <h3>Categories</h3>
+                        <div class="type-1">
+                            <ul>
+                                {% for category in categories %}
+                                    <li><a href="{{ path('blogs_with_categorie', { id: category.id }) }}">{{ category.title }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
-</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.reply-button').forEach(function (button) {
+            button.addEventListener('click', function () {
+                const commentId = this.getAttribute('data-comment-id');
+                document.getElementById('parent-comment-id').value = commentId;
 
+                // Scroll to the comment form
+                document.querySelector('.comment-form').scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    });
+</script>
 
-    {% endblock %}
+{% endblock %}

@@ -27,6 +27,9 @@ class Categories
     #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Blogs::class)]
     private Collection $blogs;
 
+    #[ORM\ManyToOne(inversedBy: 'categories')]
+    private ?SittingGenerale $sittingGenerale = null;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -122,6 +125,18 @@ class Categories
                 $blog->setCategorie(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSittingGenerale(): ?SittingGenerale
+    {
+        return $this->sittingGenerale;
+    }
+
+    public function setSittingGenerale(?SittingGenerale $sittingGenerale): static
+    {
+        $this->sittingGenerale = $sittingGenerale;
 
         return $this;
     }

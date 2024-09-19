@@ -45,6 +45,9 @@ class Brand
     #[Groups(['brand'])]
     private Collection $logos;
 
+    #[ORM\ManyToOne(inversedBy: 'brands')]
+    private ?SittingGenerale $sittingGenerale = null;
+
     public function __construct()
     {
 
@@ -211,6 +214,18 @@ class Brand
                 $logo->setBrand(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSittingGenerale(): ?SittingGenerale
+    {
+        return $this->sittingGenerale;
+    }
+
+    public function setSittingGenerale(?SittingGenerale $sittingGenerale): static
+    {
+        $this->sittingGenerale = $sittingGenerale;
 
         return $this;
     }

@@ -156,7 +156,7 @@ req.send();
 		<div class="row">
 			<div class="col-md-12">
 				<div class="heading">
-					<h2>Brands</h2>
+					<h2>{{ 'brands.title'|trans }}</h2>
 					<h3>Please see all the car brands from here</h3>
 				</div>
 			</div>
@@ -287,7 +287,10 @@ req.send();
 				<p>You can submit your car on this website. But before submission, we suggest you to view our video guideline and we are sure it will help you very much to understand the review and submission process.</p>
 			</p>
 			<div class="video-section">
-				<a class="video-button" href="https://www.youtube.com/watch?v=3Yghm2uxiEM">
+			{% if sittig %}<a class="video-button" href="{{ sittig.iframeVideo|raw }}"target="_blank" >{% else %}
+									<a class="video-button" href="https://www.youtube.com/watch?v=3Yghm2uxiEM" target="_blank">
+								{% endif %}
+				
 					<i class="far fa-play-circle"></i>
 				</a>
 			</div>
@@ -647,12 +650,16 @@ req.send();
 			</div>
 		</div>
 	</div>
+	<style>
+	.owl-carousel {
+     display: block;}
+	</style>
 	<div class="row">
 		<div class="col-md-12">
 			<div class="testimonial-carousel owl-carousel">
 				<div class="testimonial-item wow fadeInUp">
 					<div class="photo">
-						<img src="{{ asset('uploads/profile.jpg') }}" alt="Profile photo">
+						<img src="{{ asset('uploads/profile_pictures/66decf2397661.jpg') }}" alt="Profile photo">
 					</div>
 					<div class="text">
 						<p>Eu alii augue copiosae cum, duo ei quaeque tibique repudiare, tantas pertinax pro ad. An vis ferri singulis tractatos. Per in facer utamur qualisque, vim simul placerat ex, ex vidit omnium convenire vix. At sea inani numquam tractatos. Persius adipisci rationibus at cum, qui cu aperiam volutpat periculis. Stet docendi adipisci mei ei.</p>
@@ -660,7 +667,7 @@ req.send();
 						<h4>CEO, XYZ Multimedia</h4>
 					</div>
 				</div>
-				<div class="testimonial-item wow fadeInUp">
+				{#<div class="testimonial-item wow fadeInUp">
 					<div class="photo">
 						<img src="{{ asset('uploads/profile.jpg') }}" alt="Profile photo">
 					</div>
@@ -669,7 +676,7 @@ req.send();
 						<h3>Mohammed Ahadjji</h3>
 						<h4>Director, ABC Media</h4>
 					</div>
-				</div>
+				</div>#}
 			</div>
 		</div>
 	</div>

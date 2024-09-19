@@ -156,6 +156,7 @@ if ($file && $file->isValid()) {
     #[Route('/edit/password', name: 'edit_password')]
     public function editpass(Request $request, UserPasswordHasherInterface $userPasswordHasher): Response
     {
+        if ($this->getUser()) {
         $user = $this->getUser();
         $password = $request->request->get('pass');
         $passwordConf = $request->request->get('pass2');
@@ -173,7 +174,7 @@ if ($file && $file->isValid()) {
                 $this->addFlash('error', 'Les deux mots de passe ne sont pas identiques');
             }
         } 
-    
+        }
         $sittingGenerale = $this->entityManager->getRepository(SittingGenerale::class)->find(1);
     
         return $this->render('user_dashbord/editpassword.html.twig', [

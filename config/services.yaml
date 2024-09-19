@@ -10,17 +10,21 @@ parameters:
     img_brand: /uploads/brands
     #images_deirectory: '%kernel.project_dir%/public/uploads/attachments'
 services:
-    # default configuration for services in *this* file
+    
     _defaults:
-        autowire: true      # Automatically injects dependencies in your services.
-        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        autowire: true      
+        autoconfigure: true 
     App\Services\MailService:
         autowire: true
         autoconfigure: true
+
     App\EventListener\LocaleListener:
+        arguments:
+            $defaultLocale: '%locale%'  # Ensure this is pulling from your default locale
         tags:
             - { name: kernel.event_listener, event: kernel.request }
-    
+
+
     App\Services\SeasonalPricingService:
         autowire: true
         autoconfigure: true

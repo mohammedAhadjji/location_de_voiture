@@ -12,10 +12,12 @@ use App\Entity\Annonces;
 use App\Entity\Location;
 use App\Form\RapporType;
 use App\Entity\Categories;
+use App\Entity\Comments;
 use App\Form\SendMailType;
 use App\Form\AddWishFormType;
 use App\Services\MailService;
 use App\Entity\SittingGenerale;
+use App\Form\CommentsType;
 use App\Form\SerchAnnoncesType;
 use App\Repository\BlogsRepository;
 use App\Repository\BrandRepository;
@@ -350,20 +352,37 @@ class MainController extends AbstractController
         ]);
     }
     #[Route('/liste/blogs/detail/{id}', name: 'blogs_detail')]
-    public function blogedetails(Blogs $blog): Response
-    {
+    public function blogDetails(Blogs $blog, Request $request, EntityManagerInterface $entityManager): Response
+{
+    $comments = $entityManager->getRepository(Comments::class)->findBy(['blog' => $blog]);
 
-        $data = $blog;
-        $categorie = $this->entityManager->getRepository(Categories::class)->findBy([], ['id' => 'desc']);
+    $newComment = new Comments();
+    $form = $this->createForm(CommentsType::class, $newComment);
 
-        $sittingGenerale = $this->entityManager->getRepository(SittingGenerale::class)->find(1);
+    $form->handleRequest($request);
+    if ($form->isSubmitted() && $form->isValid()) {
+        $newComment->setBlog($blog);
+        $parentCommentId = $request->request->get('parent_comment_id');
+        if ($parentCommentId) {
+            $parentComment = $entityManager->getRepository(Comments::class)->find($parentCommentId);
+            $newComment->setParent($parentComment);
+        }
+        $entityManager->persist($newComment);
+        $entityManager->flush();
 
-        return $this->render('blogs/blog_detail.html.twig', [
-            'blog' => $data,
-            'sittig' => $sittingGenerale,
-            'categories' => $categorie
-        ]);
+        return $this->redirectToRoute('blogs_detail', ['id' => $blog->getId()]);
     }
+    $sittingGenerale = $this->entityManager->getRepository(SittingGenerale::class)->find(1);
+    $categorie = $this->entityManager->getRepository(Categories::class)->findAll();
+    return $this->render('blogs/blog_detail.html.twig', [
+        'blog' => $blog,
+        'comments' => $comments,
+        'categories' => $categorie,
+        'sittig' => $sittingGenerale,
+        'form' => $form->createView(),
+    ]);
+}
+
     #[Route('/blogs/withcategorie/{id}', name: 'blogs_with_categorie')]
     public function blogswithCate(Categories $categorie)
     {

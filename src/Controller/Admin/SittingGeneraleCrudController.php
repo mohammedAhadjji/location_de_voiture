@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\SittingGenerale;
+use Doctrine\ORM\EntityManagerInterface;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ColorField;
@@ -13,8 +14,12 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\HiddenField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TelephoneField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use JetBrains\PhpStorm\Immutable;
+use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
+use EasyCorp\Bundle\EasyAdminBundle\Form\Type\FileUploadType;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class SittingGeneraleCrudController extends AbstractCrudController
 {
@@ -37,7 +42,33 @@ class SittingGeneraleCrudController extends AbstractCrudController
             ColorField::new('theme_color'),
             TextField::new('footer_adrss'),
             EmailField::new('footer_mail'),
-            TelephoneField::new('footer_phone')
+            TelephoneField::new('footer_phone'),
+            TextField::new('iframe_video'),
+            /*Field::new('name_file')
+                ->setFormType(VichFileType::class)
+                ->setLabel('Upload Video')
+                ->onlyOnForms(), 
+            TextField::new('video')
+                ->onlyOnIndex(), 
+                TextField::new('name_file')
+                ->setFormType(VichFileType::class)
+                TextField::new('name_file')
+                ->setFormType(FileUploadType::class)
+                ->setCustomOption('basePath', 'uploads/files')
+                ->setCustomOption('uploadDir', __DIR__ . '/../../public/uploads/files')
+               ->setCustomOption('uploadedFileNamePattern', '[year][month][day]-[slug].[extension]')*/
+            
+               TextField::new('name_file')
+               ->setFormType(VichFileType::class)
+               ->setLabel('Upload Video')
+               ->onlyOnForms(),
+               
+           TextField::new('video') // Ce champ stocke le nom du fichier
+               ->onlyOnIndex(),
+
+                //->setCustomOption('uploadedFileNamePattern', '[year][month][day]-[slug].[extension]')
+    
+        
         ];
     }
     public function configureActions(Actions $actions): Actions
@@ -55,5 +86,15 @@ class SittingGeneraleCrudController extends AbstractCrudController
         
         return $actions;
     }
+    public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
+{
+    if ($entityInstance->getNameFile()) {
+        $entityInstance->setUpdatedAt(new \DateTimeImmutable());
+    }
+
+    $entityManager->persist($entityInstance);
+    $entityManager->flush();
+}
+
     
 }

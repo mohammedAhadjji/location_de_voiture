@@ -33,6 +33,9 @@ class Location
     #[ORM\ManyToMany(targetEntity: Brand::class, inversedBy: 'locations')]
     private Collection $Brands;
 
+    #[ORM\ManyToOne(inversedBy: 'location')]
+    private ?SittingGenerale $sittingGenerale = null;
+
     public function __construct()
     {
         $this->voitures = new ArrayCollection();
@@ -134,6 +137,18 @@ class Location
     public function removeBrand(Brand $brand): static
     {
         $this->Brands->removeElement($brand);
+
+        return $this;
+    }
+
+    public function getSittingGenerale(): ?SittingGenerale
+    {
+        return $this->sittingGenerale;
+    }
+
+    public function setSittingGenerale(?SittingGenerale $sittingGenerale): static
+    {
+        $this->sittingGenerale = $sittingGenerale;
 
         return $this;
     }

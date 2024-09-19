@@ -1,17 +1,15 @@
 <?php
 namespace App\EventListener;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class LocaleListener
 {
-    private $defaultLocale;
-    private $session;
-    private $request;
+    private string $defaultLocale;
+    private SessionInterface $session;
 
-    public function __construct($defaultLocale = 'en', SessionInterface $session,Request $request)
+    public function __construct(string $defaultLocale = 'en', SessionInterface $session)
     {
         $this->defaultLocale = $defaultLocale;
         $this->session = $session;
@@ -20,9 +18,14 @@ class LocaleListener
     public function onKernelRequest(RequestEvent $event)
     {
         $request = $event->getRequest();
+
+        // Only process the master request (avoid sub-requests)
+        if (!$event->isMainRequest()) {
+            return;
+        }
+
+        // Set locale from session or fallback to default
         $locale = $this->session->get('_locale', $this->defaultLocale);
-        
         $request->setLocale($locale);
     }
-    
 }

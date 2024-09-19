@@ -5,18 +5,19 @@ namespace App\Entity;
 use App\Repository\BlogsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Symfony\Component\Form\FormTypeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Comments;
 
 #[ORM\Entity(repositoryClass: BlogsRepository::class)]
 class Blogs
-{
-    public function __construct()
+{ public function __construct()
     {
-        $this->created_at = new \DateTime(); // Initialize created_at with the current timestamp
+        $this->created_at = new \DateTime(); 
         $this->images = new ArrayCollection();
-    }
+       
+            $this->comments = new ArrayCollection();
+        }
     
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -47,6 +48,11 @@ class Blogs
     #[ORM\ManyToOne(inversedBy: 'blogs')]
     private ?Categories $categorie = null;
 
+
+    #[ORM\OneToMany(mappedBy: 'blog', targetEntity: Comments::class, cascade: ['persist', 'remove'])]
+    private Collection $comments;
+
+   
     public function getId(): ?int
     {
         return $this->id;
@@ -163,6 +169,36 @@ class Blogs
     public function setCategorie(?Categories $categorie): static
     {
         $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Comments>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comments $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+            $comment->setBlog($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comments $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getBlog() === $this) {
+                $comment->setBlog(null);
+            }
+        }
 
         return $this;
     }

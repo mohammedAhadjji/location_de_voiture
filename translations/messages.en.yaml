@@ -7,3 +7,16 @@ navbar:
     brand: 'Brand'
     blog: 'Blog'
     contact: 'Contact'
+sidebar:
+    dashboard: 'Dashboard'
+    payment_history: 'Payments History'
+    wishlist: 'Wishlist'
+    edit_profile: 'Edit Profile'
+    edit_password: 'Edit Password'
+    edit_photo: 'Edit Photo'
+    logout: 'Logout'
+brands:
+    title: 'Brands'
+footer:
+    menu: 'Footer Menu'
+

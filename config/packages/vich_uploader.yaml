@@ -1,26 +1,31 @@
 vich_uploader:
     db_driver: orm
-
     mappings:
-       products:
+        video:
+            uri_prefix: /uploads/files
+            upload_destination: '%kernel.project_dir%/public/uploads/files'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+            delete_on_update: true
+            delete_on_remove: true
+        products:
             uri_prefix: '%product_attachments%'
             upload_destination: '%kernel.project_dir%/public%product_attachments%'
             namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
             delete_on_update: true
             delete_on_remove: true
-       profile_pictures:  # Nouveau mapping pour profile_pictures
-            uri_prefix: '/uploads/profile_pictures'  # URI relative pour accéder aux images
-            upload_destination: '%kernel.project_dir%/public/uploads/profile_pictures'  # Chemin de destination pour les uploads
-            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer  # Génère un nom unique pour les fichiers uploadés
-            delete_on_update: true  # Supprime l'ancien fichier lors de la mise à jour
+        profile_pictures:  
+            uri_prefix: '/uploads/profile_pictures'
+            upload_destination: '%kernel.project_dir%/public/uploads/profile_pictures' 
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer  
+            delete_on_update: true  
             delete_on_remove: true 
-       image_voiture:
+        image_voiture:
             uri_prefix: '%img_voiture%'
             upload_destination: '%kernel.project_dir%/public%img_voiture%'
             namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
             delete_on_update: false
             delete_on_remove: false
-       image:
+        image:
             uri_prefix: '%img_brand%'
             upload_destination: '%kernel.project_dir%/public%img_brand%'
             namer: Vich\UploaderBundle\Naming\SmartUniqueNamer

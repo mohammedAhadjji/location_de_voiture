@@ -7,3 +7,15 @@ navbar:
     brand: 'العلامة التجارية'
     blog: 'مدونة'
     contact: 'اتصل'
+sidebar:
+    dashboard: 'لوحة القيادة'
+    payment_history: 'تاريخ الدفع'
+    wishlist: 'قائمة الرغبات'
+    edit_profile: 'تعديل الملف الشخصي'
+    edit_password: 'تعديل كلمة المرور'
+    edit_photo: 'تعديل الصورة'
+    logout: 'تسجيل الخروج'
+brands:
+    title: 'العلامات التجارية'
+footer:
+    menu: 'قائمة '

@@ -40,7 +40,9 @@
                                 </div>
                             </div>
                         </div>
-                    {% endfor %}
+                   {% else %}
+        <li>{{ 'Not found.'|trans }}</li>
+    {% endfor %} 
                 </div>
             </div>
         </div>
