@@ -6,6 +6,7 @@ use App\Entity\Annonces;
 use App\Entity\Blogs;
 use App\Entity\Brand;
 use App\Entity\Categories;
+use App\Entity\Comments;
 use App\Entity\Config;
 use App\Entity\FAQ;
 use App\Entity\ImagesBlogs;
@@ -38,6 +39,7 @@ class DashboardController extends AbstractDashboardController
     private $entityManager;
     private $sittingGeneraleRepository;
     private $security;
+    private $image;
 
   
     public function __construct(EntityManagerInterface $entityManager,SittingGeneraleRepository $sittingGeneraleRepository, Security $security)
@@ -45,7 +47,8 @@ class DashboardController extends AbstractDashboardController
         $this->entityManager = $entityManager;
         $this->sittingGeneraleRepository = $sittingGeneraleRepository;
         $this->security = $security;
-    }
+        $this->image = '';
+     }
 
     #[Route('/admin', name: 'admin_')]
     public function index(): Response
@@ -54,7 +57,7 @@ class DashboardController extends AbstractDashboardController
         // Check if the SittingGenerale record with entity ID 1 exists
     $sittingGenerale = $this->entityManager->getRepository(SittingGenerale::class)->find(1);
     $config = $this->entityManager->getRepository(Config::class)->find(1);
-
+   //$this->image=$this->getUser()->getPhoto();
     if (!$sittingGenerale) {
         // If the record doesn't exist, create a new one
         $config = new Config();
@@ -83,11 +86,32 @@ class DashboardController extends AbstractDashboardController
         $userRepository = $this->entityManager->getRepository(Users::class);
         $usa = $userRepository->count(['isVerified' => 1]);
         $usina = $userRepository->count(['isVerified' => 0]);
+        $Reservation= $this->entityManager->getRepository(Reservation::class);
+  $events = $Reservation->findAll();//client
+ $rdvs = [];
 
+ foreach ($events as $event) {
+     $rdvs[] = [
+         'id' => $event->getId(),
+         'start' => $event->getStart()->format('Y-m-d H:i:s'),
+         'end' => $event->getEnd()->format('Y-m-d H:i:s'),
+         'title' => $event->getTitle(),
+         'description' => $event->getDescription(),
+         'backgroundColor' => $event->getBackgroundColor(),
+         'borderColor' => $event->getBorderColor(),
+         'textColor' => $event->getTextColor(),
+         'allDay' => $event->isAllDay(),
+     ];
+ }
+
+ $data = json_encode($rdvs);
+
+    
         // Option 3. You can render some custom template to display a proper dashboard with widgets, etc.
         // (tip: it's easier if your template extends from @EasyAdmin/page/content.html.twig)
         //
         return $this->render('admin/dashboard.html.twig', [
+            'data' => $data,
             'userCount' => $userCount,
             'annonceCount' => $annonceCount,
             'activeUser' => $usa,
@@ -100,7 +124,7 @@ class DashboardController extends AbstractDashboardController
         $sittingGenerale = $this->sittingGeneraleRepository->findOneBy([]);
         $logoUrl = $sittingGenerale ? '/uploads/attachments/' . $sittingGenerale->getLogoImg() : '';
 
-
+       // dd($this->image);
         return Dashboard::new()
             ->setTitle(sprintf('<img src="%s" style="height:50px;width:auto"> <br><small style="padding:10px"><small>Location de Voiture</small></small>', $logoUrl));
         }
@@ -155,6 +179,10 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Create Voiture', 'fas fa-plus', Voiture::class)->setAction(Crud::PAGE_NEW),
             MenuItem::linkToCrud('Show voiture', 'fas fa-bars', Voiture::class)
 
+        ]);
+        yield MenuItem::subMenu('Comments', 'fas fa-folder')->setSubItems([
+            MenuItem::linkToCrud('Create Comments', 'fas fa-plus', Comments::class)->setAction(Crud::PAGE_NEW),
+            MenuItem::linkToCrud('Show Comments', 'fas fa-bars', Comments::class)
         ]);
         yield MenuItem::subMenu('les Réservation', 'fas fa-folder')->setSubItems([
             MenuItem::linkToCrud('Create Reservation', 'fas fa-plus', Reservation::class)->setAction(Crud::PAGE_NEW),

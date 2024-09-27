@@ -1,22 +1,46 @@
+dashboard: "Dashboard"
+login_or_register: "Login or Register"
+contact_us: "Contact Us"
+contact:  # Correction de 'cantact' en 'contact'
+    phone: "Phone"
+    email: "Email"
+    address: "Address"
+    social_media: "Social Media"
+    form:
+        title: "Contact Form"
+        name: "Name *"
+        email: "Email Address *"
+        phone: "Phone Number"
+        message: "Message *"
+        submit: "Submit"
+home:
+    title: "Home"
 navbar:
-    home: 'Home'
-    listings: 'Listings'
-    faq: 'FAQ'
-    location: 'Location'
-    pages: 'Pages'
-    brand: 'Brand'
-    blog: 'Blog'
-    contact: 'Contact'
+    home: "Home"
+    listings: "Listings"
+    faq: "FAQ"
+    location: "Location"
+    pages: "Pages"
+    brand: "Brand"
+    blog: "Blog"
+    contact: "Contact"
 sidebar:
-    dashboard: 'Dashboard'
-    payment_history: 'Payments History'
-    wishlist: 'Wishlist'
-    edit_profile: 'Edit Profile'
-    edit_password: 'Edit Password'
-    edit_photo: 'Edit Photo'
-    logout: 'Logout'
+    dashboard: "Dashboard"
+    payment_history: "Payment History"
+    wishlist: "Wishlist"
+    edit_profile: "Edit Profile"
+    edit_password: "Edit Password"
+    edit_photo: "Edit Photo"
+    logout: "Logout"
 brands:
-    title: 'Brands'
+    title: "Brands"
 footer:
-    menu: 'Footer Menu'
-
+    menu: "Footer Menu"
+search:
+    title: "Find Your Desired Car"
+    description: "Easily find the perfect car by selecting your preferred brand, location, or model. Use the filters."
+    find_anything: "Find anything ..."
+    select_location: "Select location"
+    select_brand: "Select Brand"
+    select_model: "Select Model"
+    search: "Search"

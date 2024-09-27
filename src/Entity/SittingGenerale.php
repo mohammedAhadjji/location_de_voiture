@@ -68,6 +68,24 @@ class SittingGenerale
 
     #[Vich\UploadableField(mapping:'video',fileNameProperty:'video')]
     private ?File $name_file = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $copyright = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $facebook = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $twiter = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $linkdin = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $pinterest = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $youtube = null;
     
     public function getNameFile(): ?File
     {
@@ -332,6 +350,78 @@ class SittingGenerale
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getCopyright(): ?string
+    {
+        return $this->copyright;
+    }
+
+    public function setCopyright(?string $copyright): static
+    {
+        $this->copyright = $copyright;
+
+        return $this;
+    }
+
+    public function getFacebook(): ?string
+    {
+        return $this->facebook;
+    }
+
+    public function setFacebook(?string $facebook): static
+    {
+        $this->facebook = $facebook;
+
+        return $this;
+    }
+
+    public function getTwiter(): ?string
+    {
+        return $this->twiter;
+    }
+
+    public function setTwiter(?string $twiter): static
+    {
+        $this->twiter = $twiter;
+
+        return $this;
+    }
+
+    public function getLinkdin(): ?string
+    {
+        return $this->linkdin;
+    }
+
+    public function setLinkdin(?string $linkdin): static
+    {
+        $this->linkdin = $linkdin;
+
+        return $this;
+    }
+
+    public function getPinterest(): ?string
+    {
+        return $this->pinterest;
+    }
+
+    public function setPinterest(?string $pinterest): static
+    {
+        $this->pinterest = $pinterest;
+
+        return $this;
+    }
+
+    public function getYoutube(): ?string
+    {
+        return $this->youtube;
+    }
+
+    public function setYoutube(?string $youtube): static
+    {
+        $this->youtube = $youtube;
 
         return $this;
     }

@@ -36,6 +36,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
 use EasyCorp\Bundle\EasyAdminBundle\Contracts\Orm\EntityPaginatorInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class MainController extends AbstractController
 {
@@ -48,7 +49,7 @@ class MainController extends AbstractController
         $sittingGenerale = $this->entityManager->getRepository(SittingGenerale::class)->find(1);
     }
     #[Route('/', name: 'app_home')]
-    public function index(): Response
+    public function index(Session $session): Response
     {
 
         $BrandRepository = $this->entityManager->getRepository(Brand::class);
@@ -69,7 +70,7 @@ class MainController extends AbstractController
         $annonce = $ano;
         $sittingGenerale = $this->entityManager->getRepository(SittingGenerale::class)->find(1);
        //dd($sittingGenerale);
-
+//dd($session->get('_locale'));
         return $this->render('main/index.html.twig', [
             'Brands' => $data1,
             'sittig' => $sittingGenerale,
@@ -355,13 +356,23 @@ class MainController extends AbstractController
     public function blogDetails(Blogs $blog, Request $request, EntityManagerInterface $entityManager): Response
 {
     $comments = $entityManager->getRepository(Comments::class)->findBy(['blog' => $blog]);
-
+    $user =$this->getUser();
     $newComment = new Comments();
     $form = $this->createForm(CommentsType::class, $newComment);
 
     $form->handleRequest($request);
     if ($form->isSubmitted() && $form->isValid()) {
         $newComment->setBlog($blog);
+        $newComment->setIsVerify(false);
+        if($user){
+            $newComment->setAuth($user);
+           $image = $request->request->get('image');
+            if ($image) {
+                $imagePath = '/public/uploads/profile_pictures'. $image;
+               // dd($imagePath);
+              $newComment->setProfile($imagePath);
+            }
+        }
         $parentCommentId = $request->request->get('parent_comment_id');
         if ($parentCommentId) {
             $parentComment = $entityManager->getRepository(Comments::class)->find($parentCommentId);

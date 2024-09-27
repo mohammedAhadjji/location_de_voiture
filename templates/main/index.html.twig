@@ -6,15 +6,15 @@
 {% block body %}
 
 
+
 	<div class="search-section" style="background-image:url('{{ asset('mercedes.jpg') }}');">
 		<div class="bg"></div>
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
-					<h1>Find Your Desired Car</h1>
+					<h1>{{ 'search.title'|trans({}, null, app.session.get('_locale')) }}</h1>
 					<p>
-						Easily find the perfect car by selecting your preferred brand, location, or model. Use the filters
-					</p>
+						{{ 'search.description'|trans({}, null, app.session.get('_locale')) }}	</p>
 					<style>
 						@media(max-width:767px) {
 							.slec {
@@ -34,17 +34,17 @@
 							<input type="hidden" name="_token" value="{{ csrf_token('search') }}">
 							<div
 								class="input-group input-box mb-3">
-								{##}
-								<input type="text" class="form-control" placeholder="Find anything ..." name="text" style=" padding: 18.5px">
+								
+								<input type="text" class="form-control" placeholder="{{ 'search.find_anything'|trans({}, null, app.session.get('_locale')) }}" name="text" style=" padding: 18.5px">
 								<select id="location-select" name="location" class="form-control select2 slec" style="height:100%;padding: 7px;">
-									<option value="">Select location</option>
+									<option value="">{{ 'search.select_location'|trans({}, null, app.session.get('_locale')) }}</option>
 									{% for local in location %}
 										<option value="{{ local.id }}">{{ local.getLocale() }}</option>
 									{% endfor %}
 								</select>
 
-								<select id="brand-select" name="brand" class="form-control select2 slec" style="height:100%;padding: 7px;">
-									<option value="">Select Brand</option>
+								<select id="brand-select" name="brand" class="form-control select2 slec" style="height:100%;padding:  7px;">
+									<option value="">{{ 'search.select_brand'|trans({}, null, app.session.get('_locale')) }}	</option>
 									{% for brand in Brands %}
 										<option value="{{ brand.getId() }}">{{ brand.name }}</option>
 									{% endfor %}
@@ -52,7 +52,7 @@
 								</select>
 
 								<select id="model-select" name="model" class="form-control select2 slec" style="height:100%;padding: 7px;">
-									<option value="">Select Model</option>
+															<option value="">{{ 'search.select_model'|trans({}, null, app.session.get('_locale')) }}</option>
 									{% for modele in modeles %}
 										<option value="{{ modele.getId }}">{{ modele.name }}</option>
 									{% endfor %}
@@ -67,7 +67,7 @@
 							<div class="input-group-append sub">
 								<button type="submit" style="background-color: {{ sittig.ThemeColor }};height: 100%;padding: 7.5px;">
 									<i class="fa fa-search"></i>
-									Search</button>
+									{{ 'search.search'|trans({}, null, app.session.get('_locale')) }}</button>
 							</div>
 						</div>
 					</form>
@@ -156,7 +156,7 @@ req.send();
 		<div class="row">
 			<div class="col-md-12">
 				<div class="heading">
-					<h2>{{ 'brands.title'|trans }}</h2>
+					<h2>{{ 'brands.title'|trans({}, null, app.session.get('_locale')) }}</h2>
 					<h3>Please see all the car brands from here</h3>
 				</div>
 			</div>

@@ -34,6 +34,15 @@ class Comments
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
     private Collection $fils;
 
+    #[ORM\ManyToOne(inversedBy: 'comments')]
+    private ?Users $auth = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $profile = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $isVerify = null;
+
     public function __construct()
     {
         $this->fils = new ArrayCollection();
@@ -125,6 +134,42 @@ class Comments
                 $fil->setParent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAuth(): ?Users
+    {
+        return $this->auth;
+    }
+
+    public function setAuth(?Users $auth): static
+    {
+        $this->auth = $auth;
+
+        return $this;
+    }
+
+    public function getProfile(): ?string
+    {
+        return $this->profile;
+    }
+
+    public function setProfile(?string $profile): static
+    {
+        $this->profile = $profile;
+
+        return $this;
+    }
+
+    public function isIsVerify(): ?bool
+    {
+        return $this->isVerify;
+    }
+
+    public function setIsVerify(?bool $isVerify): static
+    {
+        $this->isVerify = $isVerify;
 
         return $this;
     }

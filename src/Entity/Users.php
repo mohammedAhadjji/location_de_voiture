@@ -71,11 +71,15 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'users', targetEntity: ImageProfile::class)]
     private Collection $image;
 
+    #[ORM\OneToMany(mappedBy: 'auth', targetEntity: Comments::class)]
+    private Collection $comments;
+
     public function __construct()
     {
         $this->reservations = new ArrayCollection();
         $this->blogs = new ArrayCollection();
         $this->image = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
     public function __toString(): string
     {
@@ -334,6 +338,36 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($image->getUsers() === $this) {
                 $image->setUsers(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Comments>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comments $comment): static
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+            $comment->setAuth($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comments $comment): static
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getAuth() === $this) {
+                $comment->setAuth(null);
             }
         }
 

@@ -1,21 +1,46 @@
+dashboard: "لوحة القيادة"
+login_or_register: "تسجيل الدخول أو التسجيل"
+contact_us: "اتصل بنا"
+contact:
+    phone: "الهاتف"
+    email: "البريد الإلكتروني"
+    address: "العنوان"
+    social_media: "وسائل التواصل الاجتماعي"
+    form:
+        title: "الاتصال"
+        name: "الاسم *"
+        email: "البريد الإلكتروني *"
+        phone: "رقم الهاتف"
+        message: "الرسالة *"
+        submit: "إرسال"
+home:
+    title: "الرئيسية"
 navbar:
-    home: 'الصفحة الرئيسية'
-    listings: 'قوائم'
-    faq: 'الأسئلة الشائعة'
-    location: 'الموقع'
-    pages: 'الصفحات'
-    brand: 'العلامة التجارية'
-    blog: 'مدونة'
-    contact: 'اتصل'
+    home: "الرئيسية"
+    listings: "الإعلانات"
+    faq: "الأسئلة الشائعة"
+    location: "الموقع"
+    pages: "الصفحات"
+    brand: "العلامة التجارية"
+    blog: "مدونة"
+    contact: "اتصال"
 sidebar:
-    dashboard: 'لوحة القيادة'
-    payment_history: 'تاريخ الدفع'
-    wishlist: 'قائمة الرغبات'
-    edit_profile: 'تعديل الملف الشخصي'
-    edit_password: 'تعديل كلمة المرور'
-    edit_photo: 'تعديل الصورة'
-    logout: 'تسجيل الخروج'
+    dashboard: "لوحة القيادة"
+    payment_history: "سجل الدفعات"
+    wishlist: "قائمة الرغبات"
+    edit_profile: "تعديل الملف الشخصي"
+    edit_password: "تغيير كلمة المرور"
+    edit_photo: "تعديل الصورة"
+    logout: "تسجيل الخروج"
 brands:
-    title: 'العلامات التجارية'
+    title: "العلامات التجارية"
 footer:
-    menu: 'قائمة '
+    menu: "قائمة التذييل"
+search:
+    title: "ابحث عن سيارتك المفضلة"
+    description: "ابحث بسهولة عن السيارة المثالية عن طريق اختيار العلامة التجارية أو الموقع أو الطراز المفضل لديك. استخدم الفلاتر."
+    find_anything: "ابحث عن أي شيء ..."
+    select_location: "اختر الموقع"
+    select_brand: "اختر العلامة التجارية"
+    select_model: "اختر الطراز"
+    search: "بحث"

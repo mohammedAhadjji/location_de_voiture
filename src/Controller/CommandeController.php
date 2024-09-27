@@ -273,7 +273,7 @@ class CommandeController extends AbstractController
             $session = $request->getSession();
 
             $postParams = array();
-            foreach ($_POST as $key => $value) {
+            foreach ($_POST as $key => $value) { 
                 array_push($postParams, $key);
             }
 

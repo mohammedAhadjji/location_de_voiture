@@ -126,10 +126,10 @@ if ($file && $file->isValid()) {
     public function calendra(ReservationRepository $Reservation): Response
     {
         $sittingGenerale = $this->entityManager->getRepository(SittingGenerale::class)->find(1);
-        $events = $Reservation->findAll();//client
+       // $events = $Reservation->findAll();//client
         $client = $this->getUser();
         $reservations = $Reservation->findByClient($client);
-
+        $events = $reservations;
         $rdvs = [];
 
         foreach ($events as $event) {

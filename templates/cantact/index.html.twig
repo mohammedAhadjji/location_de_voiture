@@ -5,11 +5,11 @@
 {% block body %}
 <div class="page-banner" style="background-image: url('{{ asset('uploads/attachments/panel.jpg')}}')">
 	<div class="page-banner-bg"></div>
-    <h1>Contact Us</h1>
+    <h1>{{ 'contact_us'|trans({}, null, app.session.get('_locale')) }}</h1>
 	<nav>
 		<ol class="breadcrumb justify-content-center">
-			<li class="breadcrumb-item"><a href="{{ path('app_home')}}">Home</a></li>
-			<li class="breadcrumb-item active">Contact Us</li>
+			<li class="breadcrumb-item"><a href="{{ path('app_home')}}">{{ 'navbar.home'|trans({}, null, app.session.get('_locale')) }}</a></li>
+			<li class="breadcrumb-item active">{{ 'contact_us'|trans({}, null, app.session.get('_locale')) }}</li>
 		</ol>
 	</nav>
 </div>
@@ -28,7 +28,7 @@
                         <i class="fas fa-map-marker-alt"></i>
                     </div>
                     <div class="contact-text">
-                        <h4>Address</h4>
+                        <h4>{{ 'contact.address'|trans({}, null, app.session.get('_locale')) }}</h4>
                         <p></p>
                         <p>
                         {{sittig.getFooterAdrss()}}
@@ -43,7 +43,7 @@
                         <i class="fas fa-phone-volume"></i>
                     </div>
                     <div class="contact-text">
-                        <h4>Phone Number</h4>
+                        <h4>{{ 'contact.phone'|trans({}, null, app.session.get('_locale')) }}</h4>
                          <p></p><p>
                        Office : {{sittig.getFooterPhone()}}
                             </p>
@@ -57,7 +57,7 @@
                         <i class="far fa-envelope"></i>
                     </div>
                     <div class="contact-text">
-                        <h4>Email Address</h4>
+                        <h4>{{ 'contact.social_media'|trans({}, null, app.session.get('_locale')) }}</h4>
                         <p>
                             </p><p></p>
                         <p>{{sittig.getFooterMail()}}</p>
@@ -75,7 +75,7 @@
                         </div>
                     {% endfor %}
                 {% endfor %}
-            <h4 class="contact-form-title mt_50 mb_20">Contact Form</h4>
+            <h4 class="contact-form-title mt_50 mb_20">{{ 'contact.form.title'|trans({}, null, app.session.get('_locale')) }}</h4>
             {{ form_start(form) }}
             <div class="row">
                 <div class="col-lg-4 col-md-12">

@@ -43,8 +43,14 @@ class SittingGeneraleCrudController extends AbstractCrudController
             TextField::new('footer_adrss'),
             EmailField::new('footer_mail'),
             TelephoneField::new('footer_phone'),
-            TextField::new('iframe_video'),
-            /*Field::new('name_file')
+            TextField::new('iframe_video') ->setLabel('URL Video'),
+            TextField::new('copyright'),
+
+
+            TextField::new('facebook'), TextField::new('twiter')->setLabel('twitter'), TextField::new('linkdin')->setLabel('linkedin'), TextField::new('pinterest'),
+            TextField::new('youtube'),
+
+           /* Field::new('name_file')
                 ->setFormType(VichFileType::class)
                 ->setLabel('Upload Video')
                 ->onlyOnForms(), 
@@ -58,7 +64,7 @@ class SittingGeneraleCrudController extends AbstractCrudController
                 ->setCustomOption('uploadDir', __DIR__ . '/../../public/uploads/files')
                ->setCustomOption('uploadedFileNamePattern', '[year][month][day]-[slug].[extension]')*/
             
-               TextField::new('name_file')
+            /*   TextField::new('name_file')
                ->setFormType(VichFileType::class)
                ->setLabel('Upload Video')
                ->onlyOnForms(),
@@ -68,7 +74,7 @@ class SittingGeneraleCrudController extends AbstractCrudController
 
                 //->setCustomOption('uploadedFileNamePattern', '[year][month][day]-[slug].[extension]')
     
-        
+        */
         ];
     }
     public function configureActions(Actions $actions): Actions

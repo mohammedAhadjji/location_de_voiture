@@ -1,90 +1,297 @@
 {% extends '@EasyAdmin/page/content.html.twig' %}
 
 {% block stylesheets %}
-    {{ parent() }}
+    
     <link rel="stylesheet" href="{{ asset('assets/css/admin_custom.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.css" integrity="sha256-uq9PNlMzB+1h01Ij9cx7zeE2OR2pLAfRw3uUUOOPKdA=" crossorigin="anonymous">
+<!--fullcalendra-->
+
+
+		<link
+		rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.css" integrity="sha256-uq9PNlMzB+1h01Ij9cx7zeE2OR2pLAfRw3uUUOOPKdA=" crossorigin="anonymous">
+<link rel="stylesheet" href="{{asset('css/fullcalendar.css')}}">
+		<!--end fullcalendra-->
+        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.js"></script>
+    <style>
+        .card {
+            transition: transform 0.3s;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .loading {
+            text-align: center;
+            font-size: 1.5em;
+            color: #007bff;
+        }
+        .comment-item {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s;
+        }
+        .comment-item:hover {
+            background-color: #f8f9fa;
+        }
+        .pagination {
+            justify-content: center;
+            margin-top: 20px;
+        }
+        #calendrier {
+    width: 100%;
+    height: 700px; 
+    margin: auto;
+}
+
+        @media(max-width: 767px) {
+            #calendrier {
+                width: 90%;
+                margin: 20% 5%;
+            }
+        }
+    </style>
 {% endblock %}
+
 {% block content %}
+<link
+		rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.css" integrity="sha256-uq9PNlMzB+1h01Ij9cx7zeE2OR2pLAfRw3uUUOOPKdA=" crossorigin="anonymous">
+
     <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-12 col-md-12 mb-2">
+                <h1 class="h3 mb-3 text-gray-800">Dashboard</h1>
+            </div>
+        </div>
 
-                
-    <div class="row">
-        <div class="col-xl-12 col-md-12 mb-2">
-            <h1 class="h3 mb-3 text-gray-800">Dashboard</h1>
+        <!-- Statistiques -->
+        <div class="row dashboard-page">
+            {% for stat in [
+                {title: 'Active Customers', value: activeUser, icon: 'user-friends'},
+                {title: 'Pending Customers', value: inactive, icon: 'user-friends'},
+                {title: 'Active Listings', value: annonceCount, icon: 'shopping-cart'},
+                {title: 'Pending Listings', value: 0, icon: 'cart-arrow-down'}
+            ] %}
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-success  h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-1">
+                                    <div class="h4 font-weight-bold text-success mb-1">{{ stat.title }}</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ stat.value }}</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-{{ stat.icon }} fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Commentaires -->
+        <div class="card border-left-success ">
+            <div class="container mt-1">
+                <h2 class="h4 mb-1 text-gray-800">Commentaires</h2>
+                <div id="comment-list" class="mb-1"></div>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination" id="pagination"></ul>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Réservations / Calendrier -->
+        <div class="card border-left-success ">
+            <div class="container mt-3">
+                <h2 class="h4 mb-1 text-gray-800">Réservations</h2>
+                <div id="reservations-list" class="mb-1">
+                    <div id='calendrier'></div>
+                </div>
+            </div>
         </div>
     </div>
+<!--fullcalendra-->
 
-    <!-- Box Start -->
-    <div class="row dashboard-page">
+		<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.js" integrity="sha256-DBxkGZLxKsLKhz054qUpBqtotG00r9AELGpSigJujLg=" crossorigin="anonymous"></script>
+		<!--end fullcalendra-->
+    <!-- Scripts -->
+    <script>
+      window.onload = () => {
+    let calendarElt = document.querySelector("#calendrier");
 
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="h4 font-weight-bold text-success mb-1">Active Customers</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ activeUser }}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-user-friends fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    // Initialize the FullCalendar
+    let calendar = new FullCalendar.Calendar(calendarElt, {
+        initialView: 'dayGridMonth',
+        locale: 'fr',  // Use 'fr' for French or 'ar' for Arabic
+        timeZone: 'Europe/Paris',
+        headerToolbar: {
+            start: 'prev,next today',
+            center: 'title',
+            end: 'dayGridMonth,timeGridWeek'
+        },
+        // Ensure your event data is properly formatted JSON
+        events: {{ data|raw }},
+        editable: true,
+        eventResizableFromStart: true
+    });
 
+    // Event handler for changes in the calendar (resizing, moving, etc.)
+    calendar.on('eventChange', (e) => {
+        let url = `/api/${e.event.id}/edit`;
+        
+        // Prepare the data to be sent
+        let donnees = {
+            "title": e.event.title,
+            "description": e.event.extendedProps.description,
+            "start": e.event.start.toISOString(),  // Convert dates to ISO string format
+            "end": e.event.end ? e.event.end.toISOString() : null,  // Optional end date
+            "backgroundColor": e.event.backgroundColor,
+            "borderColor": e.event.borderColor,
+            "textColor": e.event.textColor,
+            "allDay": e.event.allDay
+        };
 
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="h4 font-weight-bold text-success mb-1">Pending Customers</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ inactive }}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-user-friends fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        // Initialize XMLHttpRequest for updating the event
+        let xhr = new XMLHttpRequest();
+        xhr.open("PUT", url, true);  // Use true for asynchronous request
+        xhr.setRequestHeader('Content-Type', 'application/json');  // Set content type for JSON
+        xhr.onload = () => {
+            if (xhr.status === 200) {
+                console.log("Event updated successfully!");
+            } else {
+                console.error("Error updating event:", xhr.responseText);
+            }
+        };
+        xhr.onerror = () => {
+            console.error("Request failed.");
+        };
 
+        // Send the request with the data in JSON format
+        xhr.send(JSON.stringify(donnees));
+    });
 
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="h4 font-weight-bold text-success mb-1">Active Listings</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ annonceCount }}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-shopping-cart fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    // Render the calendar
+    calendar.render();
+};
 
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="h4 font-weight-bold text-success mb-1">Pending Listings</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">0</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-cart-arrow-down fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        document.addEventListener('DOMContentLoaded', function () {
+            const commentContainer = document.getElementById('comment-list');
+            const paginationContainer = document.getElementById('pagination');
+            let currentPage = 1;
+            const limit = 10;
 
-    </div>
-    <!-- // Box End -->
+            function loadNewComments(page = 1) {
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', `/comments/load?page=${page}&limit=${limit}`, true);
+                commentContainer.innerHTML = '<div class="loading">Chargement des commentaires...</div>';
 
-            </div>
-        {% endblock %} 
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        try {
+                            const response = JSON.parse(xhr.responseText);
+                            const comments = response.comments;
+                            const totalPages = response.totalPages;
+                            currentPage = response.currentPage;
+                            commentContainer.innerHTML = '';
+
+                            comments.forEach(comment => {
+                                const isVerifiedText = comment.isVerify ? 'Vérifié' : 'Non vérifié';
+                                const html = `
+                                    <div class="card border-left-success h-100 py-2">
+                                        <div class="comment-item m-2" id="comment-${comment.id}">
+                                            <p>Contenu du commentaire: <b>${comment.content}</b></p>
+                                            <p>Statut: <strong>${isVerifiedText}</strong></p>
+                                            <button class="btn btn-success" onclick="toggleVerify(${comment.id})">Autoriser l'affichage</button>
+                                            <button class="btn btn-danger" onclick="deleteComment(${comment.id})">Supprimer</button>
+                                        </div>
+                                    </div>`;
+                                commentContainer.insertAdjacentHTML('beforeend', html);
+                            });
+
+                            updatePagination(totalPages);
+                        } catch (error) {
+                            commentContainer.innerHTML = '<p>Erreur lors du traitement des commentaires.</p>';
+                        }
+                    } else {
+                        commentContainer.innerHTML = '<p>Erreur lors du chargement des commentaires.</p>';
+                    }
+                };
+
+                xhr.onerror = function () {
+                    commentContainer.innerHTML = '<p>Erreur réseau. Veuillez réessayer plus tard.</p>';
+                };
+
+                xhr.send();
+            }
+
+            function updatePagination(totalPages) {
+                paginationContainer.innerHTML = '';
+                for (let i = 1; i <= totalPages; i++) {
+                    const li = document.createElement('li');
+                    li.className = 'page-item' + (i === currentPage ? ' active' : '');
+                    li.innerHTML = `<a class="page-link" href="#" onclick="loadNewComments(${i}); return false;">${i}</a>`;
+                    paginationContainer.appendChild(li);
+                }
+
+                if (currentPage > 1) {
+                    const prevLi = document.createElement('li');
+                    prevLi.className = 'page-item';
+                    prevLi.innerHTML = `<a class="page-link" href="#" onclick="loadNewComments(${currentPage - 1}); return false;">Précédent</a>`;
+                    paginationContainer.insertBefore(prevLi, paginationContainer.firstChild);
+                }
+
+                if (currentPage < totalPages) {
+                    const nextLi = document.createElement('li');
+                    nextLi.className = 'page-item';
+                    nextLi.innerHTML = `<a class="page-link" href="#" onclick="loadNewComments(${currentPage + 1}); return false;">Suivant</a>`;
+                    paginationContainer.appendChild(nextLi);
+                }
+            }
+
+            loadNewComments();
+        });
+
+        function toggleVerify(commentId) {
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', `/comments/${commentId}/verify`, true);
+
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    const response = JSON.parse(xhr.responseText);
+                    if (response.success) {
+                        const commentStatus = document.querySelector(`#comment-${commentId} p:nth-child(2)`);
+                        commentStatus.innerHTML = `Statut: <strong>${response.newStatus ? 'Vérifié' : 'Non vérifié'}</strong>`;
+                    }
+                }
+            };
+
+            xhr.onerror = function () {
+                alert('Erreur lors de la modification du statut.');
+            };
+
+            xhr.send();
+        }
+
+        function deleteComment(commentId) {
+            const xhr = new XMLHttpRequest();
+            xhr.open('DELETE', `/comments/${commentId}/delete`, true);
+
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    const response = JSON.parse(xhr.responseText);
+                    if (response.success) {
+                        document.getElementById(`comment-${commentId}`).remove();
+                    }
+                }
+            };
+
+            xhr.onerror = function () {
+                alert('Erreur lors de la suppression du commentaire.');
+            };
+
+            xhr.send();
+        }
+    </script>
+{% endblock %}

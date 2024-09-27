@@ -1,21 +1,46 @@
+dashboard: "Tableau de bord"
+login_or_register: "Se connecter ou s'inscrire"
+contact_us: "Nous contacter"
+contact:
+    phone: "Téléphone"
+    email: "Email"
+    address: "Adresse"
+    social_media: "Réseaux sociaux"
+    form:
+        title: "Formulaire de contact"
+        name: "Nom *"
+        email: "Adresse e-mail *"
+        phone: "Numéro de téléphone"
+        message: "Message *"
+        submit: "Envoyer"
+home:
+    title: "Accueil"
 navbar:
-    home: 'Accueil'
-    listings: 'Annonces'
-    faq: 'FAQ'
-    location: 'Emplacement'
-    pages: 'Pages'
-    brand: 'Marque'
-    blog: 'Blog'
-    contact: 'Contact'
+    home: "Accueil"
+    listings: "Annonces"
+    faq: "FAQ"
+    location: "Emplacement"
+    pages: "Pages"
+    brand: "Marque"
+    blog: "Blog"
+    contact: "Contact"
 sidebar:
-    dashboard: 'Tableau de bord'
-    payment_history: 'Historique des paiements'
-    wishlist: 'Liste de souhaits'
-    edit_profile: 'Modifier le profil'
-    edit_password: 'Modifier le mot de passe'
-    edit_photo: 'Modifier la photo'
-    logout: 'Déconnexion'
+    dashboard: "Tableau de bord"
+    payment_history: "Historique des paiements"
+    wishlist: "Liste de souhaits"
+    edit_profile: "Modifier le profil"
+    edit_password: "Modifier le mot de passe"
+    edit_photo: "Modifier la photo"
+    logout: "Déconnexion"
 brands:
-    title: 'Marques'
+    title: "Marques"
 footer:
-    menu: 'Menu du pied de page'
+    menu: "Menu du pied de page"
+search:
+    title: "Trouvez votre voiture souhaitée"
+    description: "Trouvez facilement la voiture parfaite en sélectionnant votre marque, votre emplacement ou votre modèle préféré. Utilisez les filtres."
+    find_anything: "Trouver n'importe quoi ..."
+    select_location: "Sélectionnez l'emplacement"
+    select_brand: "Sélectionnez la marque"
+    select_model: "Sélectionnez le modèle"
+    search: "Rechercher"

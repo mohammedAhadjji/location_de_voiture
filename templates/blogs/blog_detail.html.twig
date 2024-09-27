@@ -143,34 +143,37 @@
                         {% else %}
                             <ul class="comments-list">
                                 {% for comment in comments %}
-                                 {% if comment.parent is null %}
-                                    <li class="comment-item">
-                                        <img src="{{ asset('avatar.jpg') }}" alt="Avatar" class="comment-avatar">
-                                        <div class="comment-body">
-                                            <div class="comment-author">{{ comment.name }}</div>
-                                            <div class="comment-content">{{ comment.contenu }}</div>
-                                            <div class="comment-actions">
-                                                <button class="reply-button" data-comment-id="{{ comment.id }}">Reply</button>
-                                            </div>
-
-                                            {% if comment.fils is not empty %}
-                                                <ul class="comment-replies">
-                                                    {% for reply in comment.fils %}
-                                                        <li class="comment-item">
-                                                            <img src="{{ asset('avatar.jpg') }}" alt="Avatar" class="comment-avatar">
-                                                            <div class="comment-body">
-                                                                <div class="comment-author">{{ reply.name }}</div>
-                                                                <div class="comment-content">{{ reply.contenu }}</div>
-                                                                <div class="comment-actions">
-                                                                    {#<button class="reply-button" data-comment-id="{{ reply.id }}">Reply</button>#}
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                    {% endfor %}
-                                                </ul>
+                                  {% if comment.parent is null and comment.isVerify %}
+                                        <li class="comment-item">
+                                            {% if comment.auth and comment.auth.photo is not empty %}
+                                                <img src="{{ asset('uploads/profile_pictures/' ~ comment.auth.photo) }}" alt="Avatar" class="comment-avatar">
+                                            {% else %}
+                                                <img src="{{ asset('avatar.jpg') }}" alt="Avatar" class="comment-avatar">
                                             {% endif %}
-                                        </div>
-                                    </li>
+                                            <div class="comment-body">
+                                                <div class="comment-author">{{ comment.name }}</div>
+                                                <div class="comment-content">{{ comment.contenu }}</div>
+                                                <div class="comment-actions">
+                                                    <button class="reply-button" data-comment-id="{{ comment.id }}">Reply</button>
+                                                </div>
+
+                                                {% if comment.fils is not empty %}
+                                                    <ul class="comment-replies">
+                                                        {% for reply in comment.fils  %}
+                                                        {% if reply.isVerify %}
+                                                            <li class="comment-item">
+                                                                <img src="{{ asset('avatar.jpg') }}" alt="Avatar" class="comment-avatar">
+                                                                <div class="comment-body">
+                                                                    <div class="comment-author">{{ reply.name }}</div>
+                                                                    <div class="comment-content">{{ reply.contenu }}</div>
+                                                                </div>
+                                                            </li>
+                                                             {% endif %}
+                                                        {% endfor %}
+                                                    </ul>
+                                                {% endif %}
+                                            </div>
+                                        </li>
                                     {% endif %}
                                 {% endfor %}
                             </ul>
@@ -180,12 +183,21 @@
                         <div class="row mb_20">
                             <div class="col">
                                 {{ form_label(form.name) }}
-                                {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+                                {% if app.user %}
+                                    {{ form_widget(form.name, {'attr': {'class': 'form-control', 'value': app.user.firstname ~ ' ' ~ app.user.name }}) }}
+                                {% else %}
+                                    {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+                                {% endif %}
                             </div>
                             <div class="col">
                                 {{ form_label(form.email) }}
-                                {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                                {% if app.user %}
+                                    {{ form_widget(form.email, {'attr': {'class': 'form-control', 'value': app.user.email}}) }}
+                                {% else %}
+                                    {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                                {% endif %}
                             </div>
+                             
                             <input type="hidden" id="parent-comment-id" name="parent_comment_id" value="">
                         </div>
                         <div class="row mb_20">
@@ -201,7 +213,6 @@
                         </div>
                         {{ form_end(form) }}
                     </div>
-
                 </div>
             </div>
             <div class="col-md-4">

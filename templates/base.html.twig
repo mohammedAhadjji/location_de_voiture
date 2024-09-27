@@ -283,7 +283,6 @@ window.wpcc.init({
 			{{ encore_entry_link_tags('app') }}
 
 			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
 			<style>
 				body {
 					background-color: #fff;
@@ -336,9 +335,9 @@ window.wpcc.init({
 									<input type="hidden" name="_token" value="{{ csrf_token('change_language') }}">
 									<select name="currency_name" class="nav-link" onchange="this.form.submit()">
 										{{ 'Current locale: ' ~ app.request.locale }}
-										<option value="en" {{ app.request.locale == 'en' ? 'selected' : '' }}>English</option>
-										<option value="fr" {{ app.request.locale == 'fr' ? 'selected' : '' }}>Français</option>
-										<option value="ar" {{ app.request.locale == 'ar' ? 'selected' : '' }}>عربى</option>
+										<option value="en" {{ app.session.get('_locale') == 'en' ? 'selected' : '' }}>English</option>
+										<option value="fr" {{ app.session.get('_locale') == 'fr' ? 'selected' : '' }}>Français</option>
+										<option value="ar" {{ app.session.get('_locale') == 'ar' ? 'selected' : '' }}>عربى</option>
 									</select>
 								</form>
 
@@ -355,11 +354,13 @@ document.getElementById('lang').submit();
 								{% if app.user %}
 									<a href="{{ path('app_user_dashbord') }}" class="nav-link">
 										<i class="fas fa-sign-in-alt"></i>
-										Dashboard</a>
+										{{ 'dashboard'|trans({}, null, app.session.get('_locale')) }}</a>
+
+
 								{% else %}
 									<a href="{{ path('app_login') }}" class="nav-link">
 										<i class="fas fa-sign-in-alt"></i>
-										Login or Register</a>
+										{{ 'login_or_register'|trans({}, null, app.session.get('_locale')) }}</a>
 
 								{% endif %}
 							</li>
@@ -389,33 +390,33 @@ document.getElementById('lang').submit();
 					<nav class="mean-nav" id="mobile-nav" style="display:none;">
 						<ul class="navbar-nav ml-auto">
 							<li class="nav-item">
-								<a href="{{ path('app_home') }}" class="nav-link">{{ 'navbar.home'|trans }}</a>
+								<a href="{{ path('app_home') }}" class="nav-link">{{ 'navbar.home'|trans({}, null, app.session.get('_locale')) }}</a>
 							</li>
 							<li class="nav-item">
-								<a href="/liste/annonces" class="nav-link">{{ 'navbar.listings'|trans }}</a>
+								<a href="/liste/annonces" class="nav-link">{{ 'navbar.listings'|trans({}, null, app.session.get('_locale')) }}</a>
 							</li>
 							<li class="nav-item">
-								<a href="{{path('app_f_a_q')}}" class="nav-link">{{ 'navbar.faq'|trans }}</a>
+								<a href="{{path('app_f_a_q')}}" class="nav-link">{{ 'navbar.faq'|trans({}, null, app.session.get('_locale')) }}</a>
 							</li>
 							<!-- Dropdown Menu for Mobile -->
 							<li class="nav-item dropdown">
 								<a href="javascript:void(0);" class="nav-link dropdown-toggle" id="mobileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									{{ 'navbar.pages'|trans }}
+									{{ 'navbar.pages'|trans({}, null, app.session.get('_locale')) }}
 								</a>
 								<ul class="dropdown-menu" aria-labelledby="mobileDropdown" style="display: none;">
 									<li class="nav-item">
-										<a href="/locations" class="dropdown-item">{{ 'navbar.location'|trans }}</a>
+										<a href="/locations" class="dropdown-item">{{ 'navbar.location'|trans({}, null, app.session.get('_locale')) }}</a>
 									</li>
 									<li class="nav-item">
-										<a href="/brands" class="dropdown-item">{{ 'navbar.brand'|trans }}</a>
+										<a href="/brands" class="dropdown-item">{{ 'navbar.brand'|trans({}, null, app.session.get('_locale')) }}</a>
 									</li>
 								</ul>
 							</li>
 							<li class="nav-item">
-								<a href="/liste/blogs" class="nav-link">{{ 'navbar.blog'|trans }}</a>
+								<a href="/liste/blogs" class="nav-link">{{ 'navbar.blog'|trans({}, null, app.session.get('_locale')) }}</a>
 							</li>
 							<li class="nav-item">
-								<a href="{{path('app_cantact')}}" class="nav-link">{{ 'navbar.contact'|trans }}</a>
+								<a href="{{path('app_cantact')}}" class="nav-link">{{ 'navbar.contact'|trans({}, null, app.session.get('_locale')) }}</a>
 							</li>
 						</ul>
 					</nav>
@@ -450,32 +451,32 @@ document.getElementById('lang').submit();
 						<div class="collapse navbar-collapse" id="navbarSupportedContent">
 							<ul class="navbar-nav ml-auto">
 								<li class="nav-item">
-									<a href="{{ path('app_home') }}" class="nav-link">{{ 'navbar.home'|trans }}</a>
+									<a href="{{ path('app_home') }}" class="nav-link">{{ 'navbar.home'|trans({}, null, app.session.get('_locale')) }}</a>
 								</li>
 								<li class="nav-item">
-									<a href="/liste/annonces" class="nav-link">{{ 'navbar.listings'|trans }}</a>
+									<a href="/liste/annonces" class="nav-link">{{ 'navbar.listings'|trans({}, null, app.session.get('_locale')) }}</a>
 								</li>
 								<li class="nav-item">
-									<a href="{{path('app_f_a_q')}}" class="nav-link">{{ 'navbar.faq'|trans }}</a>
+									<a href="{{path('app_f_a_q')}}" class="nav-link">{{ 'navbar.faq'|trans({}, null, app.session.get('_locale')) }}</a>
 								</li>
 								<li class="nav-item dropdown">
 									<a href="javascript:void(0);" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-										{{ 'navbar.pages'|trans }}
+										{{ 'navbar.pages'|trans({}, null, app.session.get('_locale')) }}
 									</a>
 									<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 										<li class="nav-item">
-											<a href="/locations" class="dropdown-item">{{ 'navbar.location'|trans }}</a>
+											<a href="/locations" class="dropdown-item">{{ 'navbar.location'|trans({}, null, app.session.get('_locale')) }}</a>
 										</li>
 										<li class="nav-item">
-											<a href="/brands" class="dropdown-item">{{ 'navbar.brand'|trans }}</a>
+											<a href="/brands" class="dropdown-item">{{ 'navbar.brand'|trans({}, null, app.session.get('_locale')) }}</a>
 										</li>
 									</ul>
 								</li>
 								<li class="nav-item">
-									<a href="/liste/blogs" class="nav-link">{{ 'navbar.blog'|trans }}</a>
+									<a href="/liste/blogs" class="nav-link">{{ 'navbar.blog'|trans({}, null, app.session.get('_locale')) }}</a>
 								</li>
 								<li class="nav-item">
-									<a href="{{path('app_cantact')}}" class="nav-link">{{ 'navbar.contact'|trans }}</a>
+									<a href="{{path('app_cantact')}}" class="nav-link">{{ 'navbar.contact'|trans({}, null, app.session.get('_locale')) }}</a>
 								</li>
 							</ul>
 						</div>
@@ -528,7 +529,7 @@ mobileDropdownMenu.style.display = 'none';
 				<div class="row">
 					<div class="col-lg-3 col-md-4 col-sm-6">
 						<div class="footer-item footer-service">
-							<h2>Categories</h2>
+							<h2>{{ 'brands.title'|trans }}</h2>
                             <ul class="fmain">
 							{% for brand in sittig.brands %}
         <li>
@@ -615,10 +616,10 @@ mobileDropdownMenu.style.display = 'none';
 						<div class="footer-item footer-service">
 							<div class="footer-social-link">
 								<ul>
-									<li><a href="https://www.facebook.com/" style="background-color: {{ sittig.ThemeColor }};" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
-									<li><a href="https://www.twitter.com" style="background-color: {{ sittig.ThemeColor }};" target="_blank"><i class="fab fa-twitter"></i></a></li>
-									<li><a href="https://www.linkedin.com" style="background-color: {{ sittig.ThemeColor }};" target="_blank"><i class="fab fa-linkedin-in"></i></a></li>
-									<li><a href="https://www.pinterest.com" style="background-color: {{ sittig.ThemeColor }};" target="_blank"><i class="fab fa-pinterest-p"></i></a></li>
+									<li><a href="{% if sittig %}{{ sittig.facebook }}{% else %}{{ 'https://www.facebook.com/'}}{% endif %}" style="background-color: {% if sittig %}{{ sittig.ThemeColor }}{% else %}{{ '#28a745'}}{% endif %};" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+									<li><a href="{% if sittig %}{{ sittig.twiter }}{% else %}{{ 'https://www.twitter.com'}}{% endif %}" style="background-color: {% if sittig %}{{ sittig.ThemeColor }}{% else %}{{ '#28a745'}}{% endif %};" target="_blank"><i class="fab fa-twitter"></i></a></li>
+									<li><a href="{% if sittig %}{{ sittig.linkdin }}{% else %}{{ 'https://www.linkedin.com'}}{% endif %}" style="background-color: {% if sittig %}{{ sittig.ThemeColor }}{% else %}{{ '#28a745'}}{% endif %};" target="_blank"><i class="fab fa-linkedin-in"></i></a></li>
+									<li><a href="{% if sittig %}{{ sittig.pinterest }}{% else %}{{ 'https://www.pinterest.com'}}{% endif %}" style="background-color: {% if sittig %}{{ sittig.ThemeColor }}{% else %}{{ '#28a745'}}{% endif %};" target="_blank"><i class="fab fa-pinterest-p"></i></a></li>
 								</ul>
 							</div>
 						</div>
@@ -626,8 +627,12 @@ mobileDropdownMenu.style.display = 'none';
 				</div>
 				<div class="row">
 					<div class="col-md-12">
-						<div class="copyright">
-							<p>Copyright 2022. medtech. All Rights Reserved.</p>
+						<div class="copyright">{% if sittig %}
+								<p>{{ sittig.copyright }}</p>	
+								{% else %}
+									{{ '<p>Copyright 2022. medtech. All Rights Reserved.</p>'}}
+								{% endif %}
+							
 						</div>
 					</div>
 				</div>
