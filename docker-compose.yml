@@ -51,9 +51,21 @@ services:
       - 9110:80
     links:
       - db
-
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins-symfony
+    restart: "unless-stopped"
+    ports:
+      - "8081:8080"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+    networks:
+      - default
+    environment:
+      JENKINS_OPTS: --httpPort=8080
 volumes:
   db_data:
+  jenkins_home:
 
 networks:
   nginx-proxy:
